@@ -1,4 +1,4 @@
-﻿namespace IRIS.Conecta.Application.Features.Facutlties.DTOs
+﻿namespace IRIS.Conecta.Application.Features.Faculties.DTOs
 {
     public class FacultiesDto
     {

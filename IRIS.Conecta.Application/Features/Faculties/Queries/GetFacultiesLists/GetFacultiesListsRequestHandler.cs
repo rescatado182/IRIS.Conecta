@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using IRIS.Conecta.Application.Contracts.Persistence;
-using IRIS.Conecta.Application.Features.Facutlties.DTOs;
+using IRIS.Conecta.Application.Features.Faculties.DTOs;
 using MediatR;
 
-namespace IRIS.Conecta.Application.Features.Facutlties.Queries
+namespace IRIS.Conecta.Application.Features.Faculties.Queries.GetFacultiesLists
 {
     public class GetFacultiesListsRequestHandler : IRequestHandler<GetFacultiesListsRequest, List<FacultiesDto>>
     {
@@ -24,7 +24,7 @@ namespace IRIS.Conecta.Application.Features.Facutlties.Queries
             var data = _mapper.Map<List<FacultiesDto>>(faculties);
 
             return data;
-            
+
         }
     }
 }
