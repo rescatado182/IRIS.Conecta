@@ -6,9 +6,9 @@ namespace IRIS.Conecta.Domain.Entities.Masters
     {
         public int Id { get; set; }
 
-        public string Name { get; set; } = null!;
+        public string FacultyName { get; set; } = null!;
 
-        public ICollection<Department>? Departments { get; set; }
+        public virtual ICollection<Department> Departments { get; set; } = [];
 
         public int DepartmentsNumber => Departments == null || Departments.Count == 0 ? 0 : Departments.Count;
 

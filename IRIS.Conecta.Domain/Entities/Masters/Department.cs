@@ -6,15 +6,13 @@ namespace IRIS.Conecta.Domain.Entities.Masters
     {
         public int Id { get; set; }
 
-        public string Name { get; set; } = null!;
+        public string? DepartmentName { get; set; } = null!;
 
         public int FacultyId { get; set; }
 
-        public Faculty? Faculty { get; set; }
+        public required Faculty Faculty { get; set; }
 
-        public ICollection<RequestType>? RequestTypes { get; set; }
-
-        public int RequestTypesNumber => RequestTypes == null || RequestTypes.Count == 0 ? 0 : RequestTypes.Count;
+        public virtual ICollection<RequestType> RequestTypes { get; set; } = [];
 
     }
 }

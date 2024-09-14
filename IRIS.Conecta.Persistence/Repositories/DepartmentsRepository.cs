@@ -4,8 +4,9 @@ using IRIS.Conecta.Persistence.DatabaseContext;
 
 namespace IRIS.Conecta.Persistence.Repositories
 {
-    public class RequestTypesRepository(IRISConectaDatabaseContext context) : 
-        GenericRepository<RequestType>(context), IRequestTypeRepository
+
+    public class DepartmentsRepository(IRISConectaDatabaseContext context) :
+        GenericRepository<Department>(context), IDepartmentsRepository
     {
     }
 }

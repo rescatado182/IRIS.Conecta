@@ -1,9 +1,9 @@
-﻿using IRIS.Conecta.Application.Features.Faculties.DTOs;
+﻿using IRIS.Conecta.Application.Features.Faculties.Dtos;
 using MediatR;
 
 namespace IRIS.Conecta.Application.Features.Faculties.Queries.GetFacultiesLists
 {
-    public class GetFacultiesListsRequest : IRequest<List<FacultiesDto>>
+    public class GetFacultiesListsRequest : IRequest<List<FacultiesListDto>>
     {
     }
 }

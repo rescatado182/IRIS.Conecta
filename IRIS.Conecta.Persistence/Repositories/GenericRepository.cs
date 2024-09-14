@@ -11,7 +11,6 @@ namespace IRIS.Conecta.Persistence.Repositories
         public GenericRepository(IRISConectaDatabaseContext context)
         {
             _context = context;
-
         }
         public async Task<T> CreateAsync(T entity)
         {

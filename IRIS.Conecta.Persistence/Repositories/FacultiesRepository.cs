@@ -4,11 +4,8 @@ using IRIS.Conecta.Persistence.DatabaseContext;
 
 namespace IRIS.Conecta.Persistence.Repositories
 {
-    public class FacultiesRepository : GenericRepository<Faculty>, IFacultyRepository
+    public class FacultiesRepository(IRISConectaDatabaseContext context) : 
+        GenericRepository<Faculty>(context), IFacultyRepository
     {
-        public FacultiesRepository(IRISConectaDatabaseContext context) : base(context)
-        {
-            
-        }
     }
 }
