@@ -2,7 +2,7 @@
 
 namespace IRIS.Conecta.Application.Contracts.Persistence
 {
-    public interface IDepartmentsRepository : IGenericRepository<Department>
+    public interface IDepartmentRepository : IGenericRepository<Department>
     {
     }
 }

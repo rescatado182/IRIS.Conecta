@@ -6,7 +6,7 @@ namespace IRIS.Conecta.Persistence.Repositories
 {
 
     public class DepartmentsRepository(IRISConectaDatabaseContext context) :
-        GenericRepository<Department>(context), IDepartmentsRepository
+        GenericRepository<Department>(context), IDepartmentRepository
     {
     }
 }
