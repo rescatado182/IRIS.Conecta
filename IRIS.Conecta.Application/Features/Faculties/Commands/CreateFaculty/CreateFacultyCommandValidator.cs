@@ -6,6 +6,7 @@ namespace IRIS.Conecta.Application.Features.Faculties.Commands.CreateFaculty
     public class CreateFacultyCommandValidator : AbstractValidator<CreateFacultyCommand>
     {
         private readonly IFacultyRepository _facultyRepository;
+        private IDepartmentRepository departmentRepository;
 
         public CreateFacultyCommandValidator(IFacultyRepository facultyRepository)
         {
@@ -18,6 +19,6 @@ namespace IRIS.Conecta.Application.Features.Faculties.Commands.CreateFaculty
 
         }
 
-        
+
     }
 }
