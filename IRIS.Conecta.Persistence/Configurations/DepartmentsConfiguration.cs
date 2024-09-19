@@ -28,6 +28,7 @@ namespace IRIS.Conecta.Persistence.Configurations
                 .HasForeignKey(d => d.FacultyId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Departments_Faculties_FacultyId");
+            
         }
     }
 }
