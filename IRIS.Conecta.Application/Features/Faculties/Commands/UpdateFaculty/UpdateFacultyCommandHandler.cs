@@ -20,9 +20,9 @@ namespace IRIS.Conecta.Application.Features.Faculties.Commands.UpdateFaculty
         {
             // Validate incoming data
             var validator = new UpdateFacultyCommandValidator(_facultyRepository);
-            var validationResult = validator.ValidateAsync(request);
+            var validationResult = await validator.ValidateAsync(request);
 
-            if (!validationResult.IsCompletedSuccessfully) {
+            if ( !validationResult.IsValid ) {
                 throw new Exception("Faculty record invalid");
             }
 

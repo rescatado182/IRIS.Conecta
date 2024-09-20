@@ -6,6 +6,6 @@ namespace IRIS.Conecta.Application.Features.Departments.Commands.CreateDepartmen
     {
         public int Id { get; set; }
 
-        public string Name { get; set; } = string.Empty;
+        public string DepartmentName { get; set; } = string.Empty;
     }
 }

@@ -1,16 +1,8 @@
 ﻿using FluentValidation;
 using IRIS.Conecta.Application.Contracts.Persistence;
-using IRIS.Conecta.Application.Features.Faculties.Commands.CreateFaculty;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace IRIS.Conecta.Application.Features.Departments.Commands.CreateDepartments
 {
-
-
     public class CreateDepartmentCommandValidator : AbstractValidator<CreateDepartmentCommand>
     {
         private readonly IDepartmentRepository _departmentRepository;
@@ -20,11 +12,10 @@ namespace IRIS.Conecta.Application.Features.Departments.Commands.CreateDepartmen
         {
             _departmentRepository = departmentRepository;
 
-            RuleFor(p => p.Name)
+            RuleFor(p => p.DepartmentName)
                 .NotEmpty().WithMessage("{PropertyName} is required.")
                 .NotNull()
                 .MaximumLength(100).WithMessage("{PropertyName} must not exceed {ComparisonValue} characters.");
-
         }
 
 

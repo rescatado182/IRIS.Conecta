@@ -12,7 +12,7 @@ namespace IRIS.Conecta.Application.Features.Faculties.Commands.CreateFaculty
         {
             _facultyRepository = facultyRepository;
 
-            RuleFor(p => p.Name)
+            RuleFor(p => p.FacultyName)
                 .NotEmpty().WithMessage("{PropertyName} is required.")
                 .NotNull()
                 .MaximumLength(100).WithMessage("{PropertyName} must not exceed {ComparisonValue} characters.");

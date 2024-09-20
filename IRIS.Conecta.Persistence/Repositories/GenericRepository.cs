@@ -1,5 +1,6 @@
 ﻿using IRIS.Conecta.Application.Contracts.Persistence;
 using IRIS.Conecta.Domain.Base;
+using IRIS.Conecta.Domain.Entities.Masters;
 using IRIS.Conecta.Persistence.DatabaseContext;
 using Microsoft.EntityFrameworkCore;
 
@@ -37,7 +38,10 @@ namespace IRIS.Conecta.Persistence.Repositories
 
         public async Task UpdateAsync(T entity)
         {
-            _context.Entry(entity).State = EntityState.Modified;
+            //_context.Entry(entity).State = EntityState.Modified;
+            _context.Entry(entity).State = EntityState.Detached;
+            _context.ChangeTracker.Clear();
+            _context.Update(entity);
             await _context.SaveChangesAsync();
         }
 

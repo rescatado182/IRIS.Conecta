@@ -2,7 +2,6 @@
 {
     public class FacultiesDto
     {
-        public int Id { get; set; }
-        public string Name { get; set; } = null!;
+        public string FacultyName { get; set; } = null!;
     }
 }
