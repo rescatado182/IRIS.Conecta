@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using IRIS.Conecta.Application.Features.Faculties.Dtos;
 
 namespace IRIS.Conecta.Application.Features.Departments.DTOs
 {
     public class DepartmentsListDto
     {
         public int Id { get; set; }
+        public string DepartmentName { get; set; } = null!;
+        public int FacultyId { get; set; }
+        public required FacultiesDto Faculty { get; set; }
 
-        public string Name { get; set; } = null!;
-
-        public string RequestTypes { get; set; } = null!;
     }
 }

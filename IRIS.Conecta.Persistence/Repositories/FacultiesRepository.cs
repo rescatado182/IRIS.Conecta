@@ -9,23 +9,23 @@ namespace IRIS.Conecta.Persistence.Repositories
         GenericRepository<Faculty>(context), IFacultyRepository
     {
 
-        public async Task<Faculty> UpdateFacultyAsync(Faculty faculty)
-        {
-            var entity = await _context.Set<Faculty>()
-                .AsNoTracking()
-                .FirstOrDefaultAsync(e => e.Id == faculty.Id);
+        //public async Task<Faculty> UpdateFacultyAsync(Faculty faculty)
+        //{
+        //    var entity = await _context.Set<Faculty>()
+        //        .AsNoTracking()
+        //        .FirstOrDefaultAsync(e => e.Id == faculty.Id);
 
-            _context.Entry(faculty).State = EntityState.Detached;
+        //    _context.Entry(faculty).State = EntityState.Detached;
 
-            _context.ChangeTracker.Clear();
+        //    _context.ChangeTracker.Clear();
 
-            _context.Entry(entity).CurrentValues.SetValues(faculty);
-            _context.Update(entity);
+        //    _context.Entry(entity).CurrentValues.SetValues(faculty);
+        //    _context.Update(entity);
 
-            await _context.SaveChangesAsync();
+        //    await _context.SaveChangesAsync();
 
-            return faculty;
-        }
+        //    return faculty;
+        //}
         
     }
 }

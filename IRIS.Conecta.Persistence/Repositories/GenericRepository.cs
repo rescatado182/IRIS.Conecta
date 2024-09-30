@@ -6,13 +6,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace IRIS.Conecta.Persistence.Repositories
 {
-    public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
+    public class GenericRepository<T>(IRISConectaDatabaseContext context) : 
+        IGenericRepository<T> where T : BaseEntity
     {
-        protected readonly IRISConectaDatabaseContext _context;
-        public GenericRepository(IRISConectaDatabaseContext context)
-        {
-            _context = context;
-        }
+        protected readonly IRISConectaDatabaseContext _context = context;
+
         public async Task<T> CreateAsync(T entity)
         {
             await _context.AddAsync(entity);

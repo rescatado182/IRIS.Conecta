@@ -4,6 +4,6 @@ namespace IRIS.Conecta.Application.Contracts.Persistence
 {
     public interface IFacultyRepository : IGenericRepository<Faculty>
     {
-        Task<Faculty> UpdateFacultyAsync(Faculty faculty);
+        //Task<Faculty> UpdateFacultyAsync(Faculty faculty);
     }
 }

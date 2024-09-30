@@ -8,7 +8,7 @@ namespace IRIS.Conecta.Domain.Entities.Masters
         public string RequestName { get; set; } = null!;
         public int DepartmentId { get; set; }
 
-        public virtual required Department Department { get; set; }
+        public virtual Department Department { get; set; } = null!;
 
         public virtual ICollection<TemplateResponses> TemplateResponses { get; set; } = [];
 

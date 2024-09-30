@@ -5,13 +5,8 @@ namespace IRIS.Conecta.Application.Features.Faculties.Commands.CreateFaculty
 {
     public class CreateFacultyCommandValidator : AbstractValidator<CreateFacultyCommand>
     {
-        private readonly IFacultyRepository _facultyRepository;
-        private IDepartmentRepository departmentRepository;
-
-        public CreateFacultyCommandValidator(IFacultyRepository facultyRepository)
+        public CreateFacultyCommandValidator()
         {
-            _facultyRepository = facultyRepository;
-
             RuleFor(p => p.FacultyName)
                 .NotEmpty().WithMessage("{PropertyName} is required.")
                 .NotNull()

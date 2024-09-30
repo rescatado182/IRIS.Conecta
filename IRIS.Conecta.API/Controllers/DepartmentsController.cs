@@ -1,11 +1,9 @@
-﻿using IRIS.Conecta.Application.Features.Departments.Commands.CreateDepartments;
+﻿using IRIS.Conecta.Application.Features.Departments.Commands.CreateDepartment;
+using IRIS.Conecta.Application.Features.Departments.Commands.DeleteDepartment;
+using IRIS.Conecta.Application.Features.Departments.Commands.UpdateDepartment;
 using IRIS.Conecta.Application.Features.Departments.DTOs;
+using IRIS.Conecta.Application.Features.Departments.Queries.GetDepartmentById;
 using IRIS.Conecta.Application.Features.Departments.Queries.GetDepartmentsLists;
-using IRIS.Conecta.Application.Features.Faculties.Commands.CreateFaculty;
-using IRIS.Conecta.Application.Features.Faculties.Commands.DeleteFaculty;
-using IRIS.Conecta.Application.Features.Faculties.Commands.UpdateFaculty;
-using IRIS.Conecta.Application.Features.RequestTypes.DTOs.RequestTypes;
-using IRIS.Conecta.Application.Features.RequestTypes.Queries.GetRequestTypesLists;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,20 +12,22 @@ namespace IRIS.Conecta.API.Controllers
 
     [Route("api/[controller]")]
     [ApiController]
-    public class DepartmentsController : ControllerBase
+    public class DepartmentsController(IMediator mediator) : ControllerBase
     {
-        private readonly IMediator _mediator;
-
-        public DepartmentsController(IMediator mediator)
-        {
-            _mediator = mediator;
-        }
+        private readonly IMediator _mediator = mediator;
 
         [HttpGet]
-        public async Task<ActionResult<List<DepartmentsDto>>> Get()
+        public async Task<ActionResult<List<DepartmentDto>>> Get()
         {
             var departments = await _mediator.Send(new GetDepartmentsListsRequest());
             return Ok(departments);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<DepartmentDto>> Get(int id)
+        {
+            var department = await _mediator.Send(new GetDepartmentByIdQuery { Id = id });
+            return Ok(department);
         }
 
         [HttpPost]
@@ -45,9 +45,9 @@ namespace IRIS.Conecta.API.Controllers
         [ProducesResponseType(400)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult> Put(UpdateFacultyCommand facultyCommand)
+        public async Task<ActionResult> Put(UpdateDepartmentCommand departmentCommand)
         {
-            await _mediator.Send(facultyCommand);
+            await _mediator.Send(departmentCommand);
             return NoContent();
         }
 
@@ -57,7 +57,7 @@ namespace IRIS.Conecta.API.Controllers
         [ProducesDefaultResponseType]
         public async Task<ActionResult> Delete(int id)
         {
-            var command = new DeleteFacultyCommand { Id = id };
+            var command = new DeleteDepartmentCommand { Id = id };
             await _mediator.Send(command);
             return NoContent();
         }
