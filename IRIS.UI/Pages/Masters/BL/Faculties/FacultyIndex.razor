@@ -2,12 +2,13 @@
 
 <h3>Facultades</h3>
 
-@if (faculty is null)
+@if (Faculties is null)
 {
     <Progress Color="TablerColor.Red" Indeterminate />
 }
 else
 {
+
 <GenericList MyList="Faculties">
     <NoRecords>
         <p>Aun no hay facultades registrados.</p>
@@ -24,7 +25,8 @@ else
             <thead>
                 <tr>
                     <th>Facultad</th>
-                    <th style="width:210px">Departamentos</th>
+
+
                     <th style="width:210px"></th>
                 </tr>
             </thead>

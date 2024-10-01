@@ -18,6 +18,7 @@ namespace IRIS.UI.Pages.Masters.BL.Faculties
         [Inject] private NavigationManager NavigationManager { get; set; } = null!;
 
         public List<FacultiesVM>? Faculties { get; set; }
+
         private ToastOptions toastOptions = new ToastOptions();
 
         protected override async Task OnInitializedAsync()
@@ -32,7 +33,7 @@ namespace IRIS.UI.Pages.Masters.BL.Faculties
         {
 
 
-            var responseHttp = await Repository.GetAsync<List<Faculty>>("/api/Faculties");
+            var responseHttp = await Repository.GetAsync<List<FacultiesVM>>("/api/Faculties");
             if (responseHttp.Error)
             {
                 var message = await responseHttp.GetErrorMessageAsync();

@@ -12,22 +12,18 @@ namespace IRIS.UI.Wasm
         {
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
-            //builder.Services.AddCors(options =>
-            //{
-            //    options.AddPolicy("CorsPolicy",
-            //        builder => builder.AllowAnyOrigin()
-            //            .AllowAnyMethod()
-            //            .AllowAnyHeader());
-            //});
+
+
+
 
             builder.RootComponents.Add<App>("#app");
             builder.RootComponents.Add<HeadOutlet>("head::after");
 
-            builder.Services.AddHttpClient("Local", client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress));
+            //builder.Services.AddHttpClient("Local", client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress));
 
             builder.Services.AddHttpClient("GitHub", client => client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("TabBlazor", "1")));
 
-            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+            builder.Services.AddSingleton(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7225/") });
 
             builder.Services.AddScoped<IRepository, Repository>();
 
