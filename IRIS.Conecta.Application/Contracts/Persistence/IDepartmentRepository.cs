@@ -4,5 +4,6 @@ namespace IRIS.Conecta.Application.Contracts.Persistence
 {
     public interface IDepartmentRepository : IGenericRepository<Department>
     {
+        Task<List<Department>> GetDepartmentsWithFaculties();
     }
 }

@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
-using IRIS.Conecta.Application.Features.RequestTypes.DTOs.RequestTypes;
+using IRIS.Conecta.Application.Features.RequestTypes.Commands.CreateRequestType;
+using IRIS.Conecta.Application.Features.RequestTypes.Commands.UpdateRequestType;
+using IRIS.Conecta.Application.Features.RequestTypes.Dtos;
 using IRIS.Conecta.Domain.Entities.Masters;
 
 namespace IRIS.Conecta.Application.MappingProfiles
@@ -8,7 +10,11 @@ namespace IRIS.Conecta.Application.MappingProfiles
     {
         public RequestTypesProfile()
         {
-            CreateMap<RequestType, RequestTypesDTO>().ReverseMap();
+            CreateMap<RequestType, RequestTypesDto>().ReverseMap();
+            CreateMap<RequestType, RequestTypesListDto>();
+            CreateMap<CreateRequestTypeCommand, RequestType>();
+            CreateMap<UpdateRequestTypeCommand, RequestType>();
+
         }
     }
 }

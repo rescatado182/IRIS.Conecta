@@ -20,10 +20,10 @@ namespace IRIS.Conecta.Application.Features.Faculties.Commands.CreateFaculty
         public async Task<int> Handle(CreateFacultyCommand request, CancellationToken cancellationToken)
         {
             // Validate incoming data
-            var validator = new CreateFacultyCommandValidator(_facultyRepository);
-            var validationResult = validator.ValidateAsync(request);
+            var validator = new CreateFacultyCommandValidator();
+            var validationResult = await validator.ValidateAsync(request);
 
-            if( !validationResult.IsCompletedSuccessfully ) {
+            if( !validationResult.IsValid ) {
                 throw new Exception("Invalid Faculty record");
             }
 

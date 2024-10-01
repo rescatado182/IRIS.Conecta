@@ -26,9 +26,9 @@ namespace IRIS.Conecta.Persistence.Configurations
 
             builder.HasOne(d => d.Department).WithMany(p => p.RequestTypes)
                 .HasForeignKey(d => d.DepartmentId)
+                .IsRequired()
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_RequestTypes_Departments_DepartmentId");
-
 
         }
     }

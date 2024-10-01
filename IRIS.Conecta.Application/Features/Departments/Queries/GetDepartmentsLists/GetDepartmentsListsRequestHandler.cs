@@ -1,14 +1,7 @@
 ﻿using AutoMapper;
 using IRIS.Conecta.Application.Contracts.Persistence;
 using IRIS.Conecta.Application.Features.Departments.DTOs;
-using IRIS.Conecta.Application.Features.Faculties.Dtos;
-using IRIS.Conecta.Application.Features.Faculties.Queries.GetFacultiesLists;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace IRIS.Conecta.Application.Features.Departments.Queries.GetDepartmentsLists
 {
@@ -16,7 +9,6 @@ namespace IRIS.Conecta.Application.Features.Departments.Queries.GetDepartmentsLi
     {
         private readonly IDepartmentRepository _departmentRepository;
         private readonly IMapper _mapper;
-
 
         public GetDepartmentsListsRequestHandler(IDepartmentRepository departmentRepository, IMapper mapper)
         {
@@ -27,7 +19,7 @@ namespace IRIS.Conecta.Application.Features.Departments.Queries.GetDepartmentsLi
         public async Task<List<DepartmentsListDto>> Handle(GetDepartmentsListsRequest request, CancellationToken cancellationToken)
         {
             // Query Database
-            var departments = await _departmentRepository.GetAsync();
+            var departments = await _departmentRepository.GetDepartmentsWithFaculties();
 
             // convert data objects to DTO objects
             var data = _mapper.Map<List<DepartmentsListDto>>(departments);

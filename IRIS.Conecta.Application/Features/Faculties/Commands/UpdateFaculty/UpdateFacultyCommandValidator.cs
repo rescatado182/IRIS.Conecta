@@ -15,7 +15,7 @@ namespace IRIS.Conecta.Application.Features.Faculties.Commands.UpdateFaculty
             .NotNull()
             .MustAsync(FacultyMustExist);
 
-            RuleFor(p => p.Name)
+            RuleFor(p => p.FacultyName)
                 .NotEmpty().WithMessage("{PropertyName} is required")
                 .NotNull()
                 .MaximumLength(70).WithMessage("{PropertyName} must be fewer than 70 characters");

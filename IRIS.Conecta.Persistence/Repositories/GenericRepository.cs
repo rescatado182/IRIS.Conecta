@@ -1,17 +1,16 @@
 ﻿using IRIS.Conecta.Application.Contracts.Persistence;
 using IRIS.Conecta.Domain.Base;
+using IRIS.Conecta.Domain.Entities.Masters;
 using IRIS.Conecta.Persistence.DatabaseContext;
 using Microsoft.EntityFrameworkCore;
 
 namespace IRIS.Conecta.Persistence.Repositories
 {
-    public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
+    public class GenericRepository<T>(IRISConectaDatabaseContext context) : 
+        IGenericRepository<T> where T : BaseEntity
     {
-        protected readonly IRISConectaDatabaseContext _context;
-        public GenericRepository(IRISConectaDatabaseContext context)
-        {
-            _context = context;
-        }
+        protected readonly IRISConectaDatabaseContext _context = context;
+
         public async Task<T> CreateAsync(T entity)
         {
             await _context.AddAsync(entity);
@@ -37,7 +36,10 @@ namespace IRIS.Conecta.Persistence.Repositories
 
         public async Task UpdateAsync(T entity)
         {
-            _context.Entry(entity).State = EntityState.Modified;
+            //_context.Entry(entity).State = EntityState.Modified;
+            _context.Entry(entity).State = EntityState.Detached;
+            _context.ChangeTracker.Clear();
+            _context.Update(entity);
             await _context.SaveChangesAsync();
         }
 
