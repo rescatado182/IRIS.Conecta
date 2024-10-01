@@ -1,13 +1,8 @@
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using Microsoft.Extensions.DependencyInjection;
-using System;
 using System.Net.Http.Headers;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-
-using IRIS.UI.Services;
 using TabBlazor;
 using Microsoft.AspNetCore.Components.Web;
+using IRIS.Frontend.Repositories;
 
 namespace IRIS.UI.Wasm
 {
@@ -16,6 +11,15 @@ namespace IRIS.UI.Wasm
         public static async Task Main(string[] args)
         {
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
+
+            //builder.Services.AddCors(options =>
+            //{
+            //    options.AddPolicy("CorsPolicy",
+            //        builder => builder.AllowAnyOrigin()
+            //            .AllowAnyMethod()
+            //            .AllowAnyHeader());
+            //});
+
             builder.RootComponents.Add<App>("#app");
             builder.RootComponents.Add<HeadOutlet>("head::after");
 
@@ -24,6 +28,8 @@ namespace IRIS.UI.Wasm
             builder.Services.AddHttpClient("GitHub", client => client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("TabBlazor", "1")));
 
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+
+            builder.Services.AddScoped<IRepository, Repository>();
 
             builder.Services.AddTabler();
 

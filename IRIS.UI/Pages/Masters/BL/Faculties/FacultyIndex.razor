@@ -1,0 +1,50 @@
+﻿@page "/faculties"
+
+<h3>Facultades</h3>
+
+@if (faculty is null)
+{
+    <Progress Color="TablerColor.Red" Indeterminate />
+}
+else
+{
+<GenericList MyList="Faculties">
+    <NoRecords>
+        <p>Aun no hay facultades registrados.</p>
+    </NoRecords>
+    <Body>
+        <div class="mb-2 d-flex justify-content-between align-items-center">
+            <a href="/faculties/create" class="btn btn-primary">Nueva Facultad</a>
+
+        </div>
+
+
+        
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Facultad</th>
+                    <th style="width:210px">Departamentos</th>
+                    <th style="width:210px"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var faculty in Faculties!)
+                {
+                    <tr>
+                        <td>@faculty.FacultyName</td>
+
+                        <td>
+                            <a class="btn btn-warning btn-sm" href="/faculties/edit/@faculty.Id">Editar</a>
+                            <a class="btn btn-info btn-sm" href="/faculties/details/@faculty.Id">Detalles</a>
+                            <button class="btn btn-danger btn-sm" @onclick=@(() => DeleteAsync(faculty))>Borrar</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+
+    </Body>
+</GenericList>
+}

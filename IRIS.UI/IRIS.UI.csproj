@@ -42,8 +42,11 @@
     <Folder Include="Pages\BL\Tickets\Commons\" />
     <Folder Include="Pages\BL\Tickets\Templates\" />
     <Folder Include="Pages\Identity\" />
-    <Folder Include="Pages\Masters\BL\Faculties\" />
     <Folder Include="Pages\Shared\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\IRIS.Conecta.Domain\IRIS.Conecta.Domain.csproj" />
   </ItemGroup>
 
 </Project>
