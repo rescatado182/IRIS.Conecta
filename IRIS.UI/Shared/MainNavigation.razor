@@ -1,0 +1,55 @@
+﻿@using TabBlazor
+
+
+<Navbar Background="NavbarBackground.Light" Direction="NavbarDirection.Vertical" NavLinkMatch="Microsoft.AspNetCore.Components.Routing.NavLinkMatch.All">
+
+
+    <a href="https://www.itm.edu.co" class="navbar-brand navbar-brand-autodark">
+        <img src="logo/IrisLogo.png" alt="Tabler" class="navbar-brand-image me-2">
+        <h2 class="text-secondary">IRIS CONECTA</h2>
+    </a>
+
+    <NavbarMenu>
+        <NavbarMenuItem Text="Administración">
+            <MenuItemIcon>
+                <Icon class="icon" IconType="@TablerIcons.Settings" />
+            </MenuItemIcon>
+            <SubMenu>
+
+                <div class="dropdown-menu-columns">
+                    <div class="dropdown-menu-column">
+                        <NavbarMenuItem Text="Facultades" Href="docs/accordion" />
+                        <NavbarMenuItem Text="Departamentos" Href="docs/alerts" />
+                        <NavbarMenuItem Text="Tipos de Solicitud" Href="docs/avatars" />
+                        <NavbarMenuItem Text="Accesos">
+                            <SubMenu>
+                                <NavbarMenuItem Text="Usuarios" Href="docs/forms/checkboxes" />
+                                <NavbarMenuItem Text="Permisos" Href="docs/forms/datepickers" />
+                                <NavbarMenuItem Text="Roles" Href="docs/forms/item-selects" />
+                                <NavbarMenuItem Text="Formularios" Href="docs/forms/selects" />
+                            </SubMenu>
+                        </NavbarMenuItem>
+
+                    </div>
+
+                </div>
+            </SubMenu>
+        </NavbarMenuItem>
+        <NavbarMenuItem Text="Solicitudes">
+            <MenuItemIcon>
+                <Icon class="icon" IconType="@TablerIcons.Puzzle" />
+            </MenuItemIcon>
+            <SubMenu>
+
+                <div class="dropdown-menu-columns">
+                    <div class="dropdown-menu-column">
+                        <NavbarMenuItem Text="Crear" Href="docs/accordion" />
+                        <NavbarMenuItem Text="Consultar" Href="docs/alerts" />
+                        <NavbarMenuItem Text="Bandeja" Href="docs/avatars" />
+
+                    </div>
+                </div>
+            </SubMenu>
+        </NavbarMenuItem>
+    </NavbarMenu>
+</Navbar>
