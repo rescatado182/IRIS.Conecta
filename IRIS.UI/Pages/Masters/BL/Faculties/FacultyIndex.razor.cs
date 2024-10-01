@@ -1,22 +1,23 @@
-using IRIS.Conecta.Domain.Entities.Masters;
+
 using Microsoft.AspNetCore.Components;
 using System.Net;
 using TabBlazor.Services;
 using TabBlazor;
 using IRIS.Frontend.Repositories;
+using IRIS.UI.Models;
 
 namespace IRIS.UI.Pages.Masters.BL.Faculties
 {
     public partial class FacultyIndex
     {
-        private Faculty? faculty;
+        private FacultiesVM? faculty;
         [Inject] private IRepository Repository { get; set; } = null!;
 
         [Inject] private ToastService ToastService { get; set; } = null!;
 
         [Inject] private NavigationManager NavigationManager { get; set; } = null!;
 
-        public List<Faculty>? Faculties { get; set; }
+        public List<FacultiesVM>? Faculties { get; set; }
         private ToastOptions toastOptions = new ToastOptions();
 
         protected override async Task OnInitializedAsync()
@@ -42,7 +43,7 @@ namespace IRIS.UI.Pages.Masters.BL.Faculties
             Faculties = responseHttp.Response;
             return true;
         }
-        private async Task DeleteAsync(Faculty faculty)
+        private async Task DeleteAsync(FacultiesVM faculty)
         {
 
             //var result = await ShowToast($"¿Estas seguro de querer borrar: {faculty.FacultyName}?");

@@ -45,8 +45,4 @@
     <Folder Include="Pages\Shared\" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\IRIS.Conecta.Domain\IRIS.Conecta.Domain.csproj" />
-  </ItemGroup>
-
 </Project>
