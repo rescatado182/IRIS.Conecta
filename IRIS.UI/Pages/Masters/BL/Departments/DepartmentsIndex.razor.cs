@@ -57,24 +57,16 @@ namespace IRIS.UI.Pages.Masters.BL.Departments
         private async Task CreateAsync(DepartmentsVM department)
         {
 
-            var selectedFaculty = faculties.FirstOrDefault(f => f.Id == department.FacultyId);
-
-            if (selectedFaculty != null)
-            {
-                // Asignar el objeto Faculty completo al departamento
-                department.Faculty = selectedFaculty;
-
-                await ShowDialog($"Item Añadido: {department.DepartmentName}, Facultad: {department.Faculty.FacultyName}");
-            }
+            department.Faculty = (selectedFaculty = faculties.FirstOrDefault(f => f.Id == department.FacultyId)) != null ? selectedFaculty : department.Faculty;
+         
 
             var responseHttp = await Repository.PostAsync("/api/Departments", department);
             if (responseHttp.Error)
             {
                 var message = await responseHttp.GetErrorMessageAsync();
-
+                await ShowDialog($"Error: {message}");
 
             }
-
             return;
 
         }
@@ -108,10 +100,18 @@ namespace IRIS.UI.Pages.Masters.BL.Departments
 
         private Task<DepartmentsVM> AddItem()
         {
-           //return Task.FromResult(new DepartmentsVM());
-           return Task.FromResult(new DepartmentsVM { Faculty = new FacultiesVM { FacultyName = selectedFaculty != null ? selectedFaculty.FacultyName : "New", Id = selectedFaculty.Id } });
-        
+            //return Task.FromResult(new DepartmentsVM());
+            return Task.FromResult(new DepartmentsVM
+            {
+                Faculty = new FacultiesVM
+                {
+                    FacultyName = selectedFaculty != null ? selectedFaculty.FacultyName : "New",
+                    Id = selectedFaculty != null ? selectedFaculty.Id : 0
+                }
+            });
         }
+
+        
 
 
         private async Task OnItemEdit(DepartmentsVM department)
