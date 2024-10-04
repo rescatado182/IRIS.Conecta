@@ -3,19 +3,15 @@ using System.Net.Http.Headers;
 using TabBlazor;
 using Microsoft.AspNetCore.Components.Web;
 using IRIS.Frontend.Repositories;
+using TabBlazor.Services;
 
-namespace IRIS.UI.Wasm
+namespace IRIS.UI
 {
     public class Program
     {
         public static async Task Main(string[] args)
         {
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
-
-
-
-
-
             builder.RootComponents.Add<App>("#app");
             builder.RootComponents.Add<HeadOutlet>("head::after");
 
@@ -26,8 +22,11 @@ namespace IRIS.UI.Wasm
             builder.Services.AddSingleton(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7225/") });
 
             builder.Services.AddScoped<IRepository, Repository>();
-
+            builder.Services.AddScoped<IModalService, ModalService>();
+            builder.Services.AddDocs();
             builder.Services.AddTabler();
+
+
 
             await builder.Build().RunAsync();
         }

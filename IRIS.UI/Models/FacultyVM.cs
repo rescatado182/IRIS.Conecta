@@ -3,7 +3,7 @@
 namespace IRIS.UI.Models
 {
     public class FacultiesVM
-    {
+    { 
         public int Id { get; set; }
 
 

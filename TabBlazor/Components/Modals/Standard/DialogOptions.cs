@@ -12,7 +12,7 @@ namespace TabBlazor.Components.Modals
         public string SubText { get; set; }
         public IIconType IconType { get; set; }
 
-        public string CancelText { get; set; } = "Cancel";
+        public string CancelText { get; set; } = "Cancelar";
         public string OkText { get; set; } = "Ok";
 
         public TablerColor StatusColor = TablerColor.Default;

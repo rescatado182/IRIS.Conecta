@@ -25,7 +25,14 @@ namespace IRIS.UI.Services
     {
         public async Task<string> GetCodeSnippet(string className)
         {
-            var basePath = Directory.GetParent(Assembly.GetExecutingAssembly().Location).Parent.Parent.Parent.Parent.FullName;
+            var assemblyLocation = Assembly.GetExecutingAssembly().Location;
+            var basePath = Directory.GetParent(assemblyLocation)?.Parent?.Parent?.Parent?.Parent?.FullName;
+
+            if (basePath == null)
+            {
+                return "Unable to determine base path.";
+            }
+
             const string projectName = "IRIS.UI";
             var classPath = projectName + className.Substring(projectName.Length).Replace(".", Path.DirectorySeparatorChar.ToString());
             var codePath = Path.Combine(basePath, $"{classPath}.razor");
