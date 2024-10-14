@@ -20,6 +20,7 @@ namespace IRIS.Conecta.Persistence
             services.AddScoped<IFacultyRepository, FacultiesRepository>();
             services.AddScoped<IDepartmentRepository, DepartmentsRepository>();
             services.AddScoped<IRequestTypeRepository, RequestTypesRepository>();
+            services.AddScoped<ITicketsRepository, TicketsRepository>();
             services.AddScoped<ITemplateResponsesRepository, TemplateResponsesRepository>();            
 
             return services;

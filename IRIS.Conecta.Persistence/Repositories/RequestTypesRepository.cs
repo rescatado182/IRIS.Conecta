@@ -1,5 +1,5 @@
 ﻿using IRIS.Conecta.Application.Contracts.Persistence;
-using IRIS.Conecta.Domain.Entities.Masters;
+using IRIS.Conecta.Domain.Entities;
 using IRIS.Conecta.Persistence.DatabaseContext;
 using Microsoft.EntityFrameworkCore;
 

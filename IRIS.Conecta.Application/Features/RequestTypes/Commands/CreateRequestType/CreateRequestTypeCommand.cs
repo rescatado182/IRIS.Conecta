@@ -1,5 +1,4 @@
-﻿using IRIS.Conecta.Application.Features.RequestTypes.Dtos;
-using MediatR;
+﻿using MediatR;
 
 namespace IRIS.Conecta.Application.Features.RequestTypes.Commands.CreateRequestType
 {

@@ -2,7 +2,7 @@
 using IRIS.Conecta.Application.Features.RequestTypes.Commands.CreateRequestType;
 using IRIS.Conecta.Application.Features.RequestTypes.Commands.UpdateRequestType;
 using IRIS.Conecta.Application.Features.RequestTypes.Dtos;
-using IRIS.Conecta.Domain.Entities.Masters;
+using IRIS.Conecta.Domain.Entities;
 
 namespace IRIS.Conecta.Application.MappingProfiles
 {
@@ -14,7 +14,6 @@ namespace IRIS.Conecta.Application.MappingProfiles
             CreateMap<RequestType, RequestTypesListDto>();
             CreateMap<CreateRequestTypeCommand, RequestType>();
             CreateMap<UpdateRequestTypeCommand, RequestType>();
-
         }
     }
 }
