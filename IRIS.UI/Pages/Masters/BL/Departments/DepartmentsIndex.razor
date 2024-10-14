@@ -1,0 +1,49 @@
+﻿@page "/departments"
+@using DocumentFormat.OpenXml.InkML
+@using IRIS.Frontend.Repositories
+@using IRIS.UI.Models
+
+
+
+@if (departments is null)
+{
+    <Progress Color="TablerColor.Blue" Indeterminate />
+}
+else
+{
+
+
+    <Table Item="DepartmentsVM" Items="departments" PageSize="10" AddItemFactory="AddItem" OnItemEdited="OnItemEdit"
+           OnBeforeEdit="BeforeEdit" OnItemAdded="OnItemAdd" OnItemDeleted="OnItemDelete"
+           ShowCheckboxes MultiSelect Hover Responsive EditMode=TableEditMode.Popup EditPopupMutator=EditPopupOptions>
+        <HeaderTemplate>
+            <strong>Departamentos</strong>
+        </HeaderTemplate>
+
+        <ChildContent>
+
+            <Column Item="DepartmentsVM" Property="e=>e.DepartmentName" Title="Nombre" Sortable Searchable Groupable>
+                <EditorTemplate>
+                    <input type="text" class="form-control" @bind-value="@context.DepartmentName" />
+                </EditorTemplate>
+            </Column>
+
+            <Column Item="DepartmentsVM" Property="e=>e.Faculty.FacultyName" Title="Facultad" Sortable Searchable Groupable>
+                <EditorTemplate>
+                    <Select Items="faculties" @bind-SelectedValue="selectedFaculty" TextExpression="e=> e.FacultyName.ToString()" ValueExpression="e=> e.Id" Clearable />
+                </EditorTemplate>
+            </Column>
+
+            <div class="mt-3 hidden">
+                @if (selectedFaculty != null)
+                {
+                    <div>@selectedFaculty.FacultyName [@selectedFaculty.Id]</div>
+                }
+            </div>
+
+
+        </ChildContent>
+    </Table>
+
+
+}

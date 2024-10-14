@@ -1,0 +1,36 @@
+﻿@page "/faculties"
+@using DocumentFormat.OpenXml.InkML
+@using IRIS.Frontend.Repositories
+@using IRIS.UI.Models
+
+
+
+@if (faculties is null)
+{
+    <Progress Color="TablerColor.Blue" Indeterminate />
+}
+else{
+
+
+<Table Item="FacultiesVM" Items="faculties" PageSize="10" AddItemFactory="AddItem" OnItemEdited="OnItemEdit"
+           OnBeforeEdit="BeforeEdit" OnItemAdded="OnItemAdd" OnItemDeleted="OnItemDelete"
+           ShowCheckboxes MultiSelect Hover Responsive EditMode=TableEditMode.Popup EditPopupMutator=EditPopupOptions>
+    <HeaderTemplate>
+        <strong>Facultades</strong>
+    </HeaderTemplate>
+
+    <ChildContent>
+        <!-- Columna para el nombre de la facultad -->
+        <Column Item="FacultiesVM" Property="e=>e.FacultyName" Title="Nombre" Sortable Searchable Groupable>
+            <EditorTemplate>
+                <input type="text" class="form-control" @bind-value="@context.FacultyName" />
+            </EditorTemplate>
+        </Column>
+
+
+    </ChildContent>
+</Table>
+
+
+}
+
