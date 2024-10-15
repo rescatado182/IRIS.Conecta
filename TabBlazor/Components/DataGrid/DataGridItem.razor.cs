@@ -14,5 +14,6 @@ namespace TabBlazor
             .Add(BackgroundColor.GetColorClass("bg"))
             .Add(TextColor.GetColorClass("text"))
             .ToString();
+
     }
 }

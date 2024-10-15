@@ -1,0 +1,52 @@
+﻿@using IRIS.UI.Models
+<h3>Datos Académicos</h3>
+
+
+
+<DataGrid>
+
+    <DataGridItem Title="Facultad">
+        <Typeahead SearchMethod="SearchFaculties" @bind-SelectedValue="selectedFaculty"
+            Debounce="1" MinimumLength=1 SearchPlaceholderText="Buscar Facultad..."
+            ListWidth="100%"
+            SelectedTextExpression="e => e.FacultyName" ShowOptionOnFocus="true">
+        <ListTemplate>
+            @context.FacultyName
+        </ListTemplate>
+        </Typeahead>
+    </DataGridItem>
+
+    <DataGridItem Title="Programa">
+        <input type="text" class="form-control" />
+    </DataGridItem>
+
+    <DataGridItem Title="Proyecto de investigación (S/A)">
+        <input type="text" class="form-control" />
+    </DataGridItem>
+
+    <DataGridItem Title="Promedio crédito">
+        <input type="text" class="form-control" />
+    </DataGridItem>
+
+    <DataGridItem Title="Tipo de formación">
+        <Select Items="enumProgramType"
+            @bind-SelectedValue="selectedProgramType"
+            TextExpression="e => Enum.GetName(typeof(EnumProgramType), e)"
+             NoSelectedText="" 
+             />
+    </DataGridItem>
+
+    <DataGridItem Title="Semestre Matriculado">
+        <input type="text" class="form-control" />
+    </DataGridItem>
+
+    <DataGridItem Title="G. de investigación/Semillero (S/A)">
+        <input type="text" class="form-control" />
+    </DataGridItem>
+
+    <Checkbox Label="¿Pertenece a algún grupo cultural o deportivo institucional?" @bind-Value="isChecked" Switch />
+
+    </DataGrid>
+
+<br />
+<br />

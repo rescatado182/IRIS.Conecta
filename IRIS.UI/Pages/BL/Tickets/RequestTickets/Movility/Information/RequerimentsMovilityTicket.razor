@@ -1,0 +1,42 @@
+﻿<h3>Requerimientos</h3>
+
+<DataGrid>
+
+    <DataGridItem Title="Requerimientos solicitados">
+        <ItemSelect Items="enumRequirementsTypes"
+                    @bind-SelectedValues="selectedRequirementTypes"
+                    SelectedTextExpression="e => GetRequirementTypesDisplayName(e)"
+                    MultiSelect>
+            <ListTemplate>
+                @GetRequirementTypesDisplayName(@context)
+            </ListTemplate>
+        </ItemSelect>
+
+    </DataGridItem>
+
+
+</DataGrid>
+
+<DataGrid>
+    
+    <DataGridItem Title="Fecha de inicio">
+            <Datepicker @bind-SelectedDate="selectedInitialDate" />
+    </DataGridItem>
+
+    <DataGridItem Title="Fecha final">
+            <Datepicker @bind-SelectedDate="selectedFinalDate" />
+    </DataGridItem>
+
+    <DataGridItem Title="Valor de la inscripción">
+        <input type="text" class="form-control" />
+    </DataGridItem>
+</DataGrid>
+
+
+
+@*     <DataGridItem Title="Requerimientos solicitados">
+        <Select Items="enumRequirementsTypes"
+                @bind-SelectedValue="selectedRequirementTypes"
+                TextExpression="e => Enum.GetName(typeof(EnumRequirementsTypes), e)"
+                NoSelectedText="" />
+    </DataGridItem> *@

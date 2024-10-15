@@ -1,8 +1,4 @@
 ﻿@page "/requesttypes"
-@using DocumentFormat.OpenXml.InkML
-@using IRIS.Frontend.Repositories
-@using IRIS.UI.Models
-
 
 
 @if (requestTypes is null)
@@ -13,7 +9,7 @@ else
 {
 
 
-    <Table Item="RequestTypesVM" Items="requestTypes" PageSize="10" AddItemFactory="AddItem" OnItemEdited="OnItemEdit"
+    <Table Item="RequestTypeVM" Items="requestTypes" PageSize="10" AddItemFactory="AddItem" OnItemEdited="OnItemEdit"
            OnBeforeEdit="BeforeEdit" OnItemAdded="OnItemAdd" OnItemDeleted="OnItemDelete"
            ShowCheckboxes MultiSelect Hover Responsive EditMode=TableEditMode.Popup EditPopupMutator=EditPopupOptions>
         <HeaderTemplate>
@@ -22,13 +18,13 @@ else
 
         <ChildContent>
 
-            <Column Item="RequestTypesVM" Property="e=>e.RequestName" Title="Nombre" Sortable Searchable Groupable>
+            <Column Item="RequestTypeVM" Property="e=>e.RequestName" Title="Nombre" Sortable Searchable Groupable>
                 <EditorTemplate>
                     <input type="text" class="form-control" @bind-value="@context.RequestName" />
                 </EditorTemplate>
             </Column>
 
-            <Column Item="RequestTypesVM" Property="e=>e.Department.DepartmentName" Title="Departamento" Sortable Searchable Groupable>
+            <Column Item="RequestTypeVM" Property="e=>e.Department.DepartmentName" Title="Departamento" Sortable Searchable Groupable>
                 <EditorTemplate>
                     <Select Items="departments" @bind-SelectedValue="selectedDepartment" TextExpression="e=> e.DepartmentName.ToString()" ValueExpression="e=> e.Id" Clearable />
                 </EditorTemplate>

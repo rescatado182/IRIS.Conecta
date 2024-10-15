@@ -17,7 +17,7 @@ namespace IRIS.UI.Pages.Masters.BL.Faculties
         [Inject] IModalService ModalService { get; set; }
         [Inject] private IRepository Repository { get; set; } = null!;
         [Parameter] public bool ConfirmDelete { get; set; } = true;
-        public List<FacultiesVM>? faculties { get; set; }
+        public List<FacultyVM>? faculties { get; set; }
 
         private TableEditMode tableEditMode;
 
@@ -37,7 +37,7 @@ namespace IRIS.UI.Pages.Masters.BL.Faculties
         {
 
 
-            var responseHttp = await Repository.GetAsync<List<FacultiesVM>>("/api/Faculties");
+            var responseHttp = await Repository.GetAsync<List<FacultyVM>>("/api/Faculties");
             if (responseHttp.Error)
             {
                 var message = await responseHttp.GetErrorMessageAsync();
@@ -49,7 +49,7 @@ namespace IRIS.UI.Pages.Masters.BL.Faculties
             return true;
         }
 
-        private async Task CreateAsync(FacultiesVM faculty)
+        private async Task CreateAsync(FacultyVM faculty)
         {
             var responseHttp = await Repository.PostAsync("/api/faculties", faculty);
             if (responseHttp.Error)
@@ -63,10 +63,10 @@ namespace IRIS.UI.Pages.Masters.BL.Faculties
 
         }
 
-        private async Task DeleteAsync(FacultiesVM faculty)
+        private async Task DeleteAsync(FacultyVM faculty)
         {
 
-            var responseHttp = await Repository.DeleteAsync<FacultiesVM>($"api/faculties/{faculty.Id}");
+            var responseHttp = await Repository.DeleteAsync<FacultyVM>($"api/faculties/{faculty.Id}");
             if (responseHttp.Error)
             {
                 if (responseHttp.HttpResponseMessage.StatusCode == HttpStatusCode.NotFound)
@@ -78,7 +78,7 @@ namespace IRIS.UI.Pages.Masters.BL.Faculties
             }
         }
 
-        private async Task EditAsync(FacultiesVM faculty)
+        private async Task EditAsync(FacultyVM faculty)
         {
             var responseHttp = await Repository.PutAsync("/api/faculties", faculty);
             if (responseHttp.Error)
@@ -92,24 +92,24 @@ namespace IRIS.UI.Pages.Masters.BL.Faculties
 
 
 
-        private Task<FacultiesVM> AddItem()
+        private Task<FacultyVM> AddItem()
         {
-            return Task.FromResult(new FacultiesVM());
+            return Task.FromResult(new FacultyVM());
         }
 
-        private async Task OnItemEdit(FacultiesVM faculty)
+        private async Task OnItemEdit(FacultyVM faculty)
         {
             await EditAsync(faculty);
             await ShowDialog($"Item Editado: {faculty.FacultyName}");
         }
 
-        private async Task OnItemAdd(FacultiesVM faculty)
+        private async Task OnItemAdd(FacultyVM faculty)
         {
             await CreateAsync(faculty);
             await ShowDialog($"Item Añadido: {faculty.FacultyName}");
         }
 
-        private async Task OnItemDelete(FacultiesVM faculty)
+        private async Task OnItemDelete(FacultyVM faculty)
         {
             await DeleteAsync(faculty);
             await ShowDialog($"Item Eliminado: {faculty.FacultyName}");
@@ -117,7 +117,7 @@ namespace IRIS.UI.Pages.Masters.BL.Faculties
 
 
 
-        private void EditPopupOptions(TableEditPopupOptions<FacultiesVM> options)
+        private void EditPopupOptions(TableEditPopupOptions<FacultyVM> options)
         {
             if (options.IsAddInProgress)
             {
@@ -130,7 +130,7 @@ namespace IRIS.UI.Pages.Masters.BL.Faculties
             options.ModalOptions.Draggable = true;
         }
 
-        private void BeforeEdit(FacultiesVM faculty)
+        private void BeforeEdit(FacultyVM faculty)
         {
             Console.WriteLine(faculty.Id);
 

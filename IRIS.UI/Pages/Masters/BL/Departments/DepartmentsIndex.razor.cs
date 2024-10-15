@@ -18,9 +18,9 @@ namespace IRIS.UI.Pages.Masters.BL.Departments
         [Inject] IModalService ModalService { get; set; }
         [Inject] private IRepository Repository { get; set; } = null!;
         public List<DepartmentsVM>? departments { get; set; }
-        public List<FacultiesVM>? faculties { get; set; }
+        public List<FacultyVM>? faculties { get; set; }
 
-        FacultiesVM selectedFaculty;
+        FacultyVM selectedFaculty;
 
         private TableEditMode tableEditMode;
 
@@ -103,7 +103,7 @@ namespace IRIS.UI.Pages.Masters.BL.Departments
             //return Task.FromResult(new DepartmentsVM());
             return Task.FromResult(new DepartmentsVM
             {
-                Faculty = new FacultiesVM
+                Faculty = new FacultyVM
                 {
                     FacultyName = selectedFaculty != null ? selectedFaculty.FacultyName : "New",
                     Id = selectedFaculty != null ? selectedFaculty.Id : 0
@@ -139,7 +139,7 @@ namespace IRIS.UI.Pages.Masters.BL.Departments
         {
 
 
-            var responseHttp = await Repository.GetAsync<List<FacultiesVM>>("/api/Faculties");
+            var responseHttp = await Repository.GetAsync<List<FacultyVM>>("/api/Faculties");
             if (responseHttp.Error)
             {
                 var message = await responseHttp.GetErrorMessageAsync();
