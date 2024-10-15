@@ -1,4 +1,5 @@
 ﻿using IRIS.Conecta.Domain.Base;
+using IRIS.Conecta.Domain.Entities;
 using IRIS.Conecta.Domain.Entities.Masters;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,6 +11,7 @@ namespace IRIS.Conecta.Persistence.DatabaseContext
         public DbSet<Faculty> Faculties { get; set; }
         public DbSet<Department> Departments { get; set; }
         public DbSet<RequestType> RequestTypes { get; set; }
+        public DbSet<Ticket> Tickets { get; set; }
         public DbSet<TemplateResponses> TemplateResponses { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

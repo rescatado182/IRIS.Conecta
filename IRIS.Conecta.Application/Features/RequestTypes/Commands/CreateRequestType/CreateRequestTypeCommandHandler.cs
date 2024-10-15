@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using IRIS.Conecta.Application.Contracts.Persistence;
 using IRIS.Conecta.Application.Exceptions;
-using IRIS.Conecta.Domain.Entities.Masters;
+using IRIS.Conecta.Domain.Entities;
 using MediatR;
 
 namespace IRIS.Conecta.Application.Features.RequestTypes.Commands.CreateRequestType

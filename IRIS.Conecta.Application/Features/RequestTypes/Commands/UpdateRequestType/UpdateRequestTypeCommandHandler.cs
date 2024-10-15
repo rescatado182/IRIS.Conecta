@@ -40,7 +40,6 @@ namespace IRIS.Conecta.Application.Features.RequestTypes.Commands.UpdateRequestT
             this.mapper.Map(request, requestType);
 
             return Unit.Value;
-
         }
     }
 }
