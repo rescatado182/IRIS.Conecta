@@ -1,0 +1,43 @@
+﻿@page "/select-location"
+@inject CountryService CountryService
+@if (countries is null)
+{
+    <Progress Color="TablerColor.Blue" Indeterminate />
+}
+else{
+
+<h3>Selecciona Ubicación</h3>
+
+<select @onchange="LoadStates">
+    <option value="">-- Seleccione un país --</option>
+    @foreach (var country in countries)
+    {
+        <option value="@country.Id">@country.Name</option>
+    }
+</select>
+
+
+@code {
+    private List<CountryVM> countries;
+    private List<StateVM> states;
+    private List<CityVM> cities;
+
+    protected override async Task OnInitializedAsync()
+    {
+        countries = await CountryService.GetListAsyncCountries();
+    }
+
+    private void LoadStates(ChangeEventArgs e)
+    {
+        var selectedCountryId = int.Parse(e.Value.ToString());
+        states = countries.FirstOrDefault(c => c.Id == selectedCountryId)?.States;
+        cities = null; // Reset cities
+    }
+
+    private void LoadCities(ChangeEventArgs e)
+    {
+        var selectedStateId = int.Parse(e.Value.ToString());
+        cities = states.FirstOrDefault(s => s.Id == selectedStateId)?.Cities;
+    }
+}
+}

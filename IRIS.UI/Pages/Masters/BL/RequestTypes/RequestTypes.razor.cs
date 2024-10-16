@@ -14,7 +14,7 @@ namespace IRIS.UI.Pages.Masters.BL.RequestTypes
         [Inject] TablerService TablerService { get; set; }
         [Inject] IModalService ModalService { get; set; }
         [Inject] private IRepository Repository { get; set; } = null!;
-        public List<RequestTypesVM>? requestTypes { get; set; }
+        public List<RequestTypeVM>? requestTypes { get; set; }
 
         public List<DepartmentsVM>? departments { get; set; }
 
@@ -37,7 +37,7 @@ namespace IRIS.UI.Pages.Masters.BL.RequestTypes
         {
 
 
-            var responseHttp = await Repository.GetAsync<List<RequestTypesVM>>("/api/requesttypes");
+            var responseHttp = await Repository.GetAsync<List<RequestTypeVM>>("/api/requesttypes");
             if (responseHttp.Error)
             {
                 var message = await responseHttp.GetErrorMessageAsync();
@@ -49,7 +49,7 @@ namespace IRIS.UI.Pages.Masters.BL.RequestTypes
             return true;
         }
 
-        private async Task CreateAsync(RequestTypesVM requestType)
+        private async Task CreateAsync(RequestTypeVM requestType)
         {
 
             requestType.Department = (selectedDepartment = departments.FirstOrDefault(f => f.Id == requestType.DepartmentId)) != null ? selectedDepartment : requestType.Department;
@@ -67,10 +67,10 @@ namespace IRIS.UI.Pages.Masters.BL.RequestTypes
 
         }
 
-        private async Task DeleteAsync(RequestTypesVM requestType)
+        private async Task DeleteAsync(RequestTypeVM requestType)
         {
 
-            var responseHttp = await Repository.DeleteAsync<RequestTypesVM>($"api/requestTypes/{requestType.Id}");
+            var responseHttp = await Repository.DeleteAsync<RequestTypeVM>($"api/requestTypes/{requestType.Id}");
             if (responseHttp.Error)
             {
                 if (responseHttp.HttpResponseMessage.StatusCode == HttpStatusCode.NotFound)
@@ -82,7 +82,7 @@ namespace IRIS.UI.Pages.Masters.BL.RequestTypes
             }
         }
 
-        private async Task EditAsync(RequestTypesVM requestType)
+        private async Task EditAsync(RequestTypeVM requestType)
         {
 
 
@@ -97,11 +97,11 @@ namespace IRIS.UI.Pages.Masters.BL.RequestTypes
         }
 
 
-        private Task<RequestTypesVM> AddItem()
+        private Task<RequestTypeVM> AddItem()
         {
 
             
-            return Task.FromResult(new RequestTypesVM
+            return Task.FromResult(new RequestTypeVM
             {
                 Department = new DepartmentsVM
                 {
@@ -111,7 +111,7 @@ namespace IRIS.UI.Pages.Masters.BL.RequestTypes
             });
         }
 
-        private async Task OnItemEdit(RequestTypesVM requestType)
+        private async Task OnItemEdit(RequestTypeVM requestType)
         {
             requestType.DepartmentId = selectedDepartment.Id;
             await EditAsync(requestType);
@@ -119,14 +119,14 @@ namespace IRIS.UI.Pages.Masters.BL.RequestTypes
             await ListAsync();
         }
 
-        private async Task OnItemAdd(RequestTypesVM requestType)
+        private async Task OnItemAdd(RequestTypeVM requestType)
         {
             requestType.DepartmentId = selectedDepartment.Id;
             await CreateAsync(requestType);
             await ShowDialog($"Item Añadido: {requestType.RequestName}");
         }
 
-        private async Task OnItemDelete(RequestTypesVM requestType)
+        private async Task OnItemDelete(RequestTypeVM requestType)
         {
             await DeleteAsync(requestType);
             await ShowDialog($"Item Eliminado: {requestType.RequestName}");
@@ -150,7 +150,7 @@ namespace IRIS.UI.Pages.Masters.BL.RequestTypes
         }
 
 
-        private void EditPopupOptions(TableEditPopupOptions<RequestTypesVM> options)
+        private void EditPopupOptions(TableEditPopupOptions<RequestTypeVM> options)
         {
 
             if (options.IsAddInProgress)
@@ -165,7 +165,7 @@ namespace IRIS.UI.Pages.Masters.BL.RequestTypes
             options.ModalOptions.Draggable = true;
         }
 
-        private void BeforeEdit(RequestTypesVM requestType)
+        private void BeforeEdit(RequestTypeVM requestType)
         {
             selectedDepartment = departments.FirstOrDefault(f => f.Id == requestType.DepartmentId);
         }

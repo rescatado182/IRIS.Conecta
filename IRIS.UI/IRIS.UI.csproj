@@ -2,10 +2,29 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-    <Nullable>enable</Nullable>
+	  
+    <Nullable>disable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <ServiceWorkerAssetsManifest>service-worker-assets.js</ServiceWorkerAssetsManifest>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Components2\**" />
+    <Content Remove="Components2\**" />
+
+    <EmbeddedResource Remove="Components2\**" />
+
+    <None Remove="Components2\**" />
+
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Data\Country - Copy.cs" />
+    <Compile Remove="Data\IDataService.cs" />
+    <Compile Remove="Data\LocalDataService.cs" />
+    <Compile Remove="Data\SeedData.cs" />
+    <Compile Remove="Models\RequirementTypeVM.cs" />
+  </ItemGroup>
 
 	<ItemGroup>
 		<Content Remove="compilerconfig.json" />
@@ -37,11 +56,8 @@
   <ItemGroup>
     <Folder Include="Pages\Masters\Admin\ManageUsers\" />
     <Folder Include="Pages\Masters\Admin\ManageTickets\" />
-    <Folder Include="Pages\BL\Tickets\Movility\" />
-    <Folder Include="Pages\BL\Tickets\Commons\" />
     <Folder Include="Pages\BL\Tickets\Templates\" />
     <Folder Include="Pages\Identity\" />
-    <Folder Include="Pages\Shared\" />
   </ItemGroup>
 
   <ItemGroup>

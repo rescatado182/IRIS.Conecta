@@ -1,8 +1,4 @@
 ﻿@page "/departments"
-@using DocumentFormat.OpenXml.InkML
-@using IRIS.Frontend.Repositories
-@using IRIS.UI.Models
-
 
 
 @if (departments is null)
@@ -14,8 +10,9 @@ else
 
 
     <Table Item="DepartmentsVM" Items="departments" PageSize="10" AddItemFactory="AddItem" OnItemEdited="OnItemEdit"
-           OnBeforeEdit="BeforeEdit" OnItemAdded="OnItemAdd" OnItemDeleted="OnItemDelete"
-           ShowCheckboxes MultiSelect Hover Responsive EditMode=TableEditMode.Popup EditPopupMutator=EditPopupOptions>
+            OnBeforeEdit="BeforeEdit" OnItemAdded="OnItemAdd" OnItemDeleted="OnItemDelete"
+            ShowCheckboxes MultiSelect Hover Responsive EditMode=TableEditMode.Popup EditPopupMutator=EditPopupOptions>
+       
         <HeaderTemplate>
             <strong>Departamentos</strong>
         </HeaderTemplate>
@@ -34,12 +31,12 @@ else
                 </EditorTemplate>
             </Column>
 
-            <div class="mt-3 hidden">
-                @if (selectedFaculty != null)
-                {
-                    <div>@selectedFaculty.FacultyName [@selectedFaculty.Id]</div>
-                }
-            </div>
+
+            @if (selectedFaculty != null)
+            {
+                <div>@selectedFaculty.FacultyName [@selectedFaculty.Id]</div>
+            }
+
 
 
         </ChildContent>

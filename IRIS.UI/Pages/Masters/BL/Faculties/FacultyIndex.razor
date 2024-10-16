@@ -1,9 +1,4 @@
 ﻿@page "/faculties"
-@using DocumentFormat.OpenXml.InkML
-@using IRIS.Frontend.Repositories
-@using IRIS.UI.Models
-
-
 
 @if (faculties is null)
 {
@@ -12,7 +7,7 @@
 else{
 
 
-<Table Item="FacultiesVM" Items="faculties" PageSize="10" AddItemFactory="AddItem" OnItemEdited="OnItemEdit"
+<Table Item="FacultyVM" Items="faculties" PageSize="10" AddItemFactory="AddItem" OnItemEdited="OnItemEdit"
            OnBeforeEdit="BeforeEdit" OnItemAdded="OnItemAdd" OnItemDeleted="OnItemDelete"
            ShowCheckboxes MultiSelect Hover Responsive EditMode=TableEditMode.Popup EditPopupMutator=EditPopupOptions>
     <HeaderTemplate>
@@ -20,15 +15,17 @@ else{
     </HeaderTemplate>
 
     <ChildContent>
-        <!-- Columna para el nombre de la facultad -->
-        <Column Item="FacultiesVM" Property="e=>e.FacultyName" Title="Nombre" Sortable Searchable Groupable>
+            <Column Item="FacultyVM" Property="e=>e.FacultyName" Title="Nombre" Sortable Searchable Groupable >
             <EditorTemplate>
-                <input type="text" class="form-control" @bind-value="@context.FacultyName" />
+
+                <input type="text" class="form-control" @bind-value="@context.FacultyName" />   
+                    <ValidationMessage For="@(() => @context.FacultyName)" class="text-danger" />
             </EditorTemplate>
+           
         </Column>
 
-
     </ChildContent>
+    
 </Table>
 
 

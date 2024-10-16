@@ -8,5 +8,5 @@ public interface IDataService
 {
     Task<GridItemsProviderResult<Country>> GetCountriesAsync(int startIndex, int? count, string sortBy, bool sortAscending, CancellationToken cancellationToken);
 
-    IQueryable<Country> Countries { get; }
+    IQueryable<CountryVM> Countries { get; }
 }

@@ -1,49 +1,42 @@
-﻿
-.datepicker {
+﻿.datepicker {
     width: 384px;
-    color: rgb(93 96 100);
+    color: rgb(93, 96, 100);
 }
 
 .datepicker-dropdown {
-    width: 250px;
+    width: 100%; /* Ajusta al ancho del contenedor */
 }
 
 .datepicker-month {
     text-align: center;
     font-weight: 500;
     font-size: large;
-  
 }
 
 .datepicker-day {
-    display: -ms-flexbox;
-    display: -webkit-flex;
     display: flex;
-    -webkit-flex-align: center;
-    -ms-flex-align: center;
-    -webkit-align-items: center;
     align-items: center;
     justify-content: center;
-    height: 39px;
+    height: 50px; /* Aumentar la altura */
     border-radius: 4px;
     line-height: 1;
-    cursor: pointer
+    cursor: pointer;
 }
 
 .datepicker-day-dropdown {
     height: 30px;
- }
-
-    .datepicker-day:hover {
-        background: rgba(101,109,119,.06);
-        border-color: transparent;
-    }
-
-.datepicker-not-month {
-    opacity: 0.5;
 }
 
+.datepicker-day:hover {
+    background: rgba(101, 109, 119, 0.1);
+    border-color: transparent;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Añadir sombra */
+}
 
+.datepicker-not-month {
+    opacity: 0.7; /* Aumentar la opacidad */
+    color: #bbb; /* Cambiar color */
+}
 
 .datepicker-weekdays,
 .datepicker-days {
@@ -51,24 +44,19 @@
     grid-template-columns: repeat(7, 1fr);
 }
 
-
-/*// Styles for the weekday/weekend header*/
+/* Styles for the weekday/weekend header */
 .datepicker-weekdays {
-    margin-top: 1.25em;
-}
-
-.datepicker-weekdays {
+    margin-top: 1.5em; /* Aumentar el margen superior */
     text-align: center;
-    font-size: .625rem;
+    font-size: 0.625rem;
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: .04em;
+    letter-spacing: 0.04em;
     line-height: 1.6;
     color: #656d77;
-    
 }
 
 /* Dates */
 .datepicker-days {
-    margin-top: 0.5em;
+    margin-top: 1em; /* Aumentar el margen superior */
 }

@@ -1,0 +1,97 @@
+﻿<h3>Tipo de Movilidad</h3>
+
+
+<DataGrid>
+
+    <DataGridItem Title="Tipo de Movilidad">
+        <ItemSelect Items="enumMovilityType"
+                    @bind-SelectedValues="selectedMovilityType"
+                    SelectedTextExpression="e => GetMovilityTypeDisplayName(e)"
+                    MultiSelect>
+            <ListTemplate>
+                @GetMovilityTypeDisplayName(@context)
+            </ListTemplate>
+        </ItemSelect>
+
+    </DataGridItem>
+
+
+</DataGrid>
+
+
+<DataGrid>
+
+
+
+    <DataGridItem Title="Institución de destino">
+        <input type="text" class="form-control" />
+    </DataGridItem>
+
+    <DataGridItem Title="Datos de contacto">
+        <input type="text" class="form-control" />
+    </DataGridItem>
+
+    <DataGridItem Title="Teléfonos">
+        <input type="text" class="form-control" />
+    </DataGridItem>
+
+    <DataGridItem Title="País de destino">
+        <input type="text" class="form-control" />
+    </DataGridItem>
+
+    <DataGridItem Title="País de destino">
+        <Typeahead SearchMethod="SearchCountries" @bind-SelectedValue="selectedCountry"
+                   Debounce="1" MinimumLength=1 SearchPlaceholderText="Buscar País..."
+                   ListWidth="100%"
+                   SelectedTextExpression="e => e.Name" ShowOptionOnFocus="false">
+            <ListTemplate>
+                @context.Name
+            </ListTemplate>
+        </Typeahead>
+    </DataGridItem>
+    <DataGridItem Title="Estado de Destino">
+        <Typeahead SearchMethod="SearchSates" @bind-SelectedValue="selectedState"
+                   Debounce="1" MinimumLength=1 SearchPlaceholderText="Buscar Estado..."
+                   ListWidth="100%"
+                   SelectedTextExpression="e => e.Name" ShowOptionOnFocus="false">
+            <ListTemplate>
+                @context.Name
+            </ListTemplate>
+        </Typeahead>
+    </DataGridItem>
+
+
+    <DataGridItem Title="Ciudad de Destino">
+        <Typeahead SearchMethod="SearchCities" @bind-SelectedValue="selectedCity"
+                   Debounce="1" MinimumLength=1 SearchPlaceholderText="Buscar ciudad..."
+                   ListWidth="100%"
+                   SelectedTextExpression="e => e.Name" ShowOptionOnFocus="false">
+            <ListTemplate>
+                @context.Name
+            </ListTemplate>
+        </Typeahead>
+    </DataGridItem>
+
+
+    <DataGridItem Title="Nombre de la actividad que origina la movilidad">
+        <input type="text" class="form-control" />
+    </DataGridItem>
+
+    <DataGridItem Title="Título de la ponencia (S/A)">
+        <input type="text" class="form-control" />
+    </DataGridItem>
+
+    <DataGridItem Title="Fecha de inicio movilidad">
+        <Datepicker @bind-SelectedDate="selectedInitialDate" />
+    </DataGridItem>
+
+    <DataGridItem Title="Fecha final movilidad">
+        <Datepicker @bind-SelectedDate="selectedFinalDate" />
+    </DataGridItem>
+
+
+
+
+ </DataGrid>
+<br />
+<br />

@@ -2,15 +2,13 @@
 
 namespace IRIS.UI.Models
 {
-    public class FacultiesVM
+    public class FacultyVM
     { 
         public int Id { get; set; }
 
 
-        //datanotation
-
-        [Required]
-        [StringLength(100, ErrorMessage = "Faculty Name must be less than 50 characters")]
+        [Required(ErrorMessage = "El nombre de la facultad es requerido")]
+        [StringLength(100, ErrorMessage = "El nombre de la facultad no puede exceder los {0} caracteres")]
         public string FacultyName { get; set; } = null!;
 
 

@@ -2,13 +2,15 @@
 
 namespace TabBlazor
 {
-   public partial class Tab : TablerBaseComponent, ITab
+    public partial class Tab : TablerBaseComponent, ITab
     {
         [CascadingParameter] Tabs ContainerTabSet { get; set; }
         [Parameter] public string Title { get; set; }
         [Parameter] public RenderFragment Header { get; set; }
 
         string TitleCssClass => ContainerTabSet.ActiveTab == this ? "active" : null;
+
+        public bool IsEnabled { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         protected override void OnInitialized()
         {

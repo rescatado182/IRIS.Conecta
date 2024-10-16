@@ -4,6 +4,9 @@ using TabBlazor;
 using Microsoft.AspNetCore.Components.Web;
 using IRIS.Frontend.Repositories;
 using TabBlazor.Services;
+using IRIS.UI.Services.BL;
+using IRIS.UI.Services;
+using ColorCode.Compilation.Languages;
 
 namespace IRIS.UI
 {
@@ -23,12 +26,18 @@ namespace IRIS.UI
 
             builder.Services.AddScoped<IRepository, Repository>();
             builder.Services.AddScoped<IModalService, ModalService>();
+            //builder.Services.AddScoped<SearchFacultyServices>();
+            //builder.Services.AddScoped<CountryService>();
             builder.Services.AddDocs();
             builder.Services.AddTabler();
 
 
 
+
             await builder.Build().RunAsync();
+
+            var app = builder.Build();
+
         }
     }
 }

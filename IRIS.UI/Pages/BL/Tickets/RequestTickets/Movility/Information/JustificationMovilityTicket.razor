@@ -1,0 +1,36 @@
+﻿<h3>Justificacion</h3>
+
+<DataGrid>
+    <Checkbox Label="¿La movilidad está dada en el marco de un convenio? Si/No" @bind-Value="isChecked" Switch />
+</DataGrid>
+<br />
+
+<DataGrid>
+    <DataGridItem Title="Cite el convenio (S/A)">
+        <input type="text" class="form-control" />
+    </DataGridItem>
+</DataGrid>
+<br />
+
+<DataGrid>
+    <DataGridItem Title="Objetivo de la movilidad">
+        <textarea type="text" class="form-control"></textarea>
+    </DataGridItem>
+</DataGrid>
+<br />
+
+<DataGrid>
+    <DataGridItem Title="Productos a entregar en retribución">
+        <input type="text" class="form-control" />
+    </DataGridItem>
+
+    <DataGridItem Title="Fecha entrega compromisos">
+            <Datepicker @bind-SelectedDate="selectedDate"  />
+    </DataGridItem>
+
+
+</DataGrid>
+
+<br />
+<br />
+

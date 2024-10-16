@@ -1,0 +1,109 @@
+﻿@page "/createticket/movility"
+
+@using TabBlazor.Services
+
+
+<Card Size="CardSize.Default" StatusTop="TablerColor.Primary">
+    <CardHeader>
+        <h3>Estás a punto de crear una solicitud de Movilidad a la Facultad</h3>
+    </CardHeader>
+    <CardBody>
+        Para asegurarte de que tu solicitud sea procesada correctamente, te pedimos que completes todos los datos necesarios en el formulario. Esto nos ayudará a brindarte un mejor servicio y a facilitar tu proceso de movilidad.
+    </CardBody>
+</Card>
+
+<br />
+<Alert BackgroundColor="TablerColor.Danger" Title="Información Importante!" Dismissible>
+    <div class="text-secondary">
+        Consulta los requisitos y procedimientos <a href="https://www.itm.edu.co/internacionalizacion/movilidad/#tipos" target="_blank">aquí</a>.
+    </div>
+</Alert>
+
+<TabBlazor.TabsOrder @ref="tabsOrderRef"> 
+
+    @* Datos Personales *@
+    <TabBlazor.TabOrder>
+        <Header>
+            <StatusDot BackgroundColor="@((!isCompleted1 ? TablerColor.Blue : TablerColor.Green))" />
+            <Icon class="icon" IconType="@TablerIcons.User" Size="24" /> Datos Personales
+        </Header>
+        <ChildContent>
+            <IRIS.UI.Pages.BL.Tickets.Shared.PersonalDataTicket @ref="personalDataRef" />
+        </ChildContent>
+    </TabBlazor.TabOrder>
+
+    @* Datos Acádemicos *@
+    <TabBlazor.TabOrder>
+        <Header>
+            <StatusDot BackgroundColor="@((!isCompleted2 ? TablerColor.Blue : TablerColor.Green))" Animate />
+            <Icon class="icon" IconType="@TablerIcons.Address_book" Size="24" /> Datos Académicos
+        </Header>
+        <ChildContent>
+
+            <IRIS.UI.Pages.BL.Tickets.Shared.AcademyDataTicket />
+
+        </ChildContent>
+    </TabBlazor.TabOrder>
+
+    @* Tipos de Movilidad *@
+    <TabBlazor.TabOrder>
+        <Header>
+            <StatusDot BackgroundColor="@((!isCompleted1 ? TablerColor.Blue : TablerColor.Green))" />
+            <Icon class="icon" IconType="@TablerIcons.Map_pin" Size="24" /> Tipos de Movilidad
+        </Header>
+        <ChildContent>
+            <MovilityTypeTicket>
+             </MovilityTypeTicket>
+           
+        </ChildContent>
+    </TabBlazor.TabOrder>
+
+    @* Justificación *@
+    <TabBlazor.TabOrder>
+        <Header>
+            <StatusDot BackgroundColor="@((!isCompleted2 ? TablerColor.Blue : TablerColor.Green))" Animate />
+            <Icon class="icon" IconType="@TablerIcons.Ballpen" Size="24" /> Justificación
+        </Header>
+        <ChildContent>
+           <JustificationMovilityTicket>
+            </JustificationMovilityTicket>
+
+        </ChildContent>
+    </TabBlazor.TabOrder>
+
+    @* Requerimientos*@
+    <TabBlazor.TabOrder>
+        <Header>
+            <StatusDot BackgroundColor="@((!isCompleted3 ? TablerColor.Blue : TablerColor.Green))" Animate />
+            <Icon class="icon" IconType="@TablerIcons.Baseline_density_small" Size="24" /> Requerimientos
+        </Header>
+        <ChildContent>
+            <RequerimentsMovilityTicket></RequerimentsMovilityTicket>
+        </ChildContent>
+    </TabBlazor.TabOrder>
+
+    @* Adjuntar Documentos*@
+    <TabBlazor.TabOrder>
+        <Header>
+            <StatusDot BackgroundColor="@((!isCompleted3 ? TablerColor.Blue : TablerColor.Green))" Animate />
+            <Icon class="icon" IconType="@TablerIcons.File_upload" Size="24" /> Adjuntar Documentos
+        </Header>
+        <ChildContent>
+            <h3>Adjuntar Documentos</h3>
+            <AttachDocuments></AttachDocuments>
+
+        </ChildContent>
+    </TabBlazor.TabOrder>
+
+</TabBlazor.TabsOrder>
+
+<!-- Botón de navegación fuera de TabsOrder -->
+<div class="d-flex justify-content-end mt-3">
+    <button class="btn btn-primary" @onclick="NextStepAsync" disabled="@IsLastTab">
+        Siguiente
+    </button>
+</div>
+
+
+    
+
