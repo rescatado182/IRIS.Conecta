@@ -38,7 +38,8 @@ namespace IRIS.Conecta.Application.Features.Tickets.Commands.MovilityCommands.Up
             }
 
             // Mapping Data
-            mapper.Map(ticket, request);
+            mapper.Map(request, ticket);
+            await this.ticketsRepository.UpdateAsync(ticket);
 
             return Unit.Value;
         }

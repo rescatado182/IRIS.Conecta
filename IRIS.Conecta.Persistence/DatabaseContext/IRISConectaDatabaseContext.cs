@@ -7,11 +7,11 @@ namespace IRIS.Conecta.Persistence.DatabaseContext
 {
     public class IRISConectaDatabaseContext : DbContext
     {
-        public IRISConectaDatabaseContext(DbContextOptions<IRISConectaDatabaseContext> options)
+        public IRISConectaDatabaseContext(DbContextOptions<IRISConectaDatabaseContext> options) 
             : base(options)
         {
+            
         }
-
 
         public DbSet<Faculty> Faculties { get; set; }
         public DbSet<Department> Departments { get; set; }

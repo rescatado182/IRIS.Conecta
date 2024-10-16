@@ -26,8 +26,7 @@ namespace IRIS.Conecta.Persistence.Configurations
                 .IsRequired();
 
             builder.Property(e => e.TicketRequirements)
-                .HasColumnName("TicketRequirements")
-                .IsRequired();
+                .HasColumnName("TicketRequirements");                
 
             builder.Property(e => e.Title)
                 .IsRequired()
@@ -44,7 +43,9 @@ namespace IRIS.Conecta.Persistence.Configurations
             builder.Property(e => e.Phone).HasMaxLength(20);
             builder.Property(e => e.ContactData).HasMaxLength(200);
             builder.Property(e => e.ExternalInstitution).HasMaxLength(100);
-            builder.Property(e => e.IsAgreement).HasDefaultValue(false);
+
+            builder.Property(e => e.IsAgreement)
+                .HasDefaultValue(false);
 
             builder.Property(e => e.StartDate).HasPrecision(0);
             builder.Property(e => e.EndDate).HasPrecision(0);

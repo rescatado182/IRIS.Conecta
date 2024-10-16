@@ -12,13 +12,13 @@ namespace IRIS.Conecta.Application.MappingProfiles
     {
         public TicketsProfile()
         {
-            CreateMap<Ticket, CreateTicketDto>().ReverseMap();
-            CreateMap<Ticket, UpdateTicketDto>().ReverseMap();
-            CreateMap<Ticket, UpdateTicketByMovilityDto>().ReverseMap();
-            CreateMap<Ticket, UpdateTicketByRequirementsDto>().ReverseMap();
+            CreateMap<CreateTicketCommand, Ticket>().ReverseMap();
+            CreateMap<UpdateTicketCommand, Ticket>().ReverseMap();
+            CreateMap<UpdateTicketByMovilityCommand, Ticket>().ReverseMap();
+            CreateMap<UpdateTicketByRequirementsCommand, Ticket>().ReverseMap();
 
             CreateMap<Ticket, TicketByIdDto>().ReverseMap();
-            CreateMap<Ticket, TicketsListDto>();
+            CreateMap<Ticket, TicketsListDto>().ReverseMap();
         }
     }
 }

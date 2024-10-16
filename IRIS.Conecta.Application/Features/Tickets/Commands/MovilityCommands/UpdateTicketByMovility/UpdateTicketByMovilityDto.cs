@@ -5,7 +5,7 @@ namespace IRIS.Conecta.Application.Features.Tickets.Commands.MovilityCommands.Up
     public class UpdateTicketByMovilityDto
     {
         public int Id { get; set; }
-        public string Title { get; set; }
+        public string EventName { get; set; }
         public TicketsStatus Status { get; set; }
         public int RequestTypeId { get; set; }
 
