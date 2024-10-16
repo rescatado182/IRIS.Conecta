@@ -5,9 +5,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace IRIS.Conecta.Persistence.DatabaseContext
 {
-    public class IRISConectaDatabaseContext(DbContextOptions<IRISConectaDatabaseContext> options) 
-        : DbContext(options)
+    public class IRISConectaDatabaseContext : DbContext
     {
+        public IRISConectaDatabaseContext(DbContextOptions<IRISConectaDatabaseContext> options) 
+            : base(options)
+        {
+            
+        }
+
         public DbSet<Faculty> Faculties { get; set; }
         public DbSet<Department> Departments { get; set; }
         public DbSet<RequestType> RequestTypes { get; set; }

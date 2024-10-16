@@ -16,9 +16,9 @@ namespace IRIS.Conecta.Application.Features.Tickets.Commands.MovilityCommands.Cr
             IRequestTypeRepository requestTypeRepository,
             ITicketsRepository ticketsRepository)
         {
-            _mapper = mapper;
-            _requestTypeRepository = requestTypeRepository;
-            _ticketsRepository = ticketsRepository;
+            _mapper                 = mapper;
+            _requestTypeRepository  = requestTypeRepository;
+            _ticketsRepository      = ticketsRepository;
         }
         public async Task<int> Handle(CreateTicketCommand request, CancellationToken cancellationToken)
         {
@@ -26,7 +26,7 @@ namespace IRIS.Conecta.Application.Features.Tickets.Commands.MovilityCommands.Cr
             var validator = new CreateTicketCommandValidator(_requestTypeRepository);
             var validationResult = await validator.ValidateAsync(request, cancellationToken);
 
-            if (!validationResult.IsValid)
+            if ( !validationResult.IsValid )
                 throw new BadRequestException("Invalid Ticket", validationResult);
 
             // Mapping data

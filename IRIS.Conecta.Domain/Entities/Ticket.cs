@@ -22,7 +22,7 @@ namespace IRIS.Conecta.Domain.Entities
 
         // Objetivo de la solicitud
         public string? Description { get; set; }
-        public bool IsAgreement { get; set; }
+        public bool? IsAgreement { get; set; } = false;
         public string? Results { get; set; }
         public DateOnly? DeliveryDate { get; set; }
 
@@ -45,12 +45,12 @@ namespace IRIS.Conecta.Domain.Entities
 
         // TODO: Fecha de movilidad y fecha de requerimientos son diferentes?
         public DateOnly StartDate { get; set; }
-        public DateOnly EndDate { get; set; }                
+        public DateOnly EndDate { get; set; }
 
         #endregion
 
         #region Requirements
-        public TicketRequirements? TicketRequirements { get; set; }
+        public TicketRequirements? TicketRequirements { get; set; } = null;
 
         public double? Total { get; set; }
 

@@ -3,11 +3,11 @@
     
     public enum TicketsStatus
     {
-        Open,
-        Closed,
-        InProcess,
-        Resolved,
-        Responded
+        Open        = 1,
+        Closed      = 2,
+        InProcess   = 3,
+        Resolved    = 4,
+        Responded   = 5
     }
 
 

@@ -5,7 +5,7 @@ namespace IRIS.Conecta.Application.Features.Tickets.Commands.MovilityCommands.Cr
 {
     public class CreateTicketCommandValidator : AbstractValidator<CreateTicketCommand>
     {
-        private IRequestTypeRepository requestTypeRepository;
+        private readonly IRequestTypeRepository requestTypeRepository;
 
         public CreateTicketCommandValidator(IRequestTypeRepository requestTypeRepository)
         {

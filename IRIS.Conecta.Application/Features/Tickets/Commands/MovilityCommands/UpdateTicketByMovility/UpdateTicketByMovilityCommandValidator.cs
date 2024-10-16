@@ -26,17 +26,15 @@ namespace IRIS.Conecta.Application.Features.Tickets.Commands.MovilityCommands.Up
 
             RuleFor(p => p.ExternalInstitution)
                 .NotEmpty().WithMessage("{PropertyName} es requerida.");
-            
+
 
             RuleFor(p => p.StartDate)
                 .Must(BeAValidDate).WithMessage("{PropertyName} debe ser una fecha válida.")
-                .NotEmpty().WithMessage("{PropertyName} es requerido.")
-                .LessThan(p => DateOnly.FromDateTime(DateTime.Now)).WithMessage("{PropertyName} debe ser una fecha valida y no en el pasado");
+                .NotEmpty().WithMessage("{PropertyName} es requerido.");
 
             RuleFor(p => p.EndDate)
                 .Must(BeAValidDate).WithMessage("{PropertyName} debe ser una fecha válida.")
-                .NotEmpty().WithMessage("{PropertyName} es requerido.")
-                .LessThan(p => DateOnly.FromDateTime(DateTime.Now)).WithMessage("{PropertyName} debe ser una fecha valida y no en el pasado");           
+                .NotEmpty().WithMessage("{PropertyName} es requerido.");
 
         }
 

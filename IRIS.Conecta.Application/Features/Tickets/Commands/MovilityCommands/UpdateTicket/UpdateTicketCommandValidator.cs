@@ -12,7 +12,7 @@ namespace IRIS.Conecta.Application.Features.Tickets.Commands.MovilityCommands.Up
             this.requestTypeRepository = requestTypeRepository;
 
             RuleFor(p => p.AgreementName)
-               .NotEmpty().WithMessage("{PropertyName} es requerida.")
+                .NotEmpty().WithMessage("{PropertyName} es requerida.")
                .NotNull()
                .MaximumLength(100).WithMessage("{PropertyName} no debe exceder {ComparisonValue} carácteres.");
 
@@ -22,8 +22,7 @@ namespace IRIS.Conecta.Application.Features.Tickets.Commands.MovilityCommands.Up
 
             RuleFor(p => p.DeliveryDate)
                 .Must(BeAValidDate).WithMessage("{PropertyName} debe ser una fecha valida.")
-                .NotEmpty().WithMessage("{PropertyName} es requerido.")
-                .LessThan(p => DateOnly.FromDateTime(DateTime.Now)).WithMessage("{PropertyName} debe ser una fecha valida y no en el pasado");
+                .NotEmpty().WithMessage("{PropertyName} es requerido.");
 
             RuleFor(p => p.RequestTypeId)
                 .GreaterThan(0)
