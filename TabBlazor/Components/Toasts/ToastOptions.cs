@@ -8,6 +8,8 @@ namespace TabBlazor
 {
    public class ToastOptions
     {
+        public object Position;
+
         /// <summary>
         /// Delay in Seconds
         /// Set 0 to show it until manually removed

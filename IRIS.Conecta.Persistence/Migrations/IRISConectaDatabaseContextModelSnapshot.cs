@@ -64,7 +64,7 @@ namespace IRIS.Conecta.Persistence.Migrations
                     b.HasIndex(new[] { "Id" }, "IX_Departments_Id")
                         .IsUnique();
 
-                    b.ToTable("Departments");
+                    b.ToTable("Departments", (string)null);
                 });
 
             modelBuilder.Entity("IRIS.Conecta.Domain.Entities.Masters.Faculty", b =>
@@ -99,7 +99,7 @@ namespace IRIS.Conecta.Persistence.Migrations
                     b.HasIndex(new[] { "FacultyName" }, "IX_Faculties_Name")
                         .IsUnique();
 
-                    b.ToTable("Faculties");
+                    b.ToTable("Faculties", (string)null);
                 });
 
             modelBuilder.Entity("IRIS.Conecta.Domain.Entities.Masters.TemplateResponses", b =>
@@ -140,7 +140,7 @@ namespace IRIS.Conecta.Persistence.Migrations
 
                     b.HasIndex(new[] { "RequestTypeId" }, "IX_TemplateResponses_RequestTypeId");
 
-                    b.ToTable("TemplateResponses");
+                    b.ToTable("TemplateResponses", (string)null);
                 });
 
             modelBuilder.Entity("IRIS.Conecta.Domain.Entities.RequestType", b =>
@@ -234,7 +234,7 @@ namespace IRIS.Conecta.Persistence.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<bool?>("IsAgreement")
+                    b.Property<bool>("IsAgreement")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
                         .HasDefaultValue(false);
@@ -263,7 +263,7 @@ namespace IRIS.Conecta.Persistence.Migrations
                         .HasColumnType("int")
                         .HasColumnName("Status");
 
-                    b.Property<int?>("TicketRequirements")
+                    b.Property<int>("TicketRequirements")
                         .HasColumnType("int")
                         .HasColumnName("TicketRequirements");
 

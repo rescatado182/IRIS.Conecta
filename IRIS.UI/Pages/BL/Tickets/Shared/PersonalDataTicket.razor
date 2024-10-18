@@ -1,13 +1,8 @@
 ﻿
-@if (countries is null)
-{
-    <Progress Color="TablerColor.Blue" Indeterminate />
-}
-else
-{
+<TablerForm Model="@personalData" >
     <DataGrid>
 
-        <TablerForm  Model="@personalData">
+
             <DataGridItem Title="Nombre completo">
                 <input type="text" class="form-control" @bind="personalData.FullName"/>
                 <ValidationMessage For="@(() => personalData.FullName)" class="text-danger" />           
@@ -31,63 +26,68 @@ else
 
 
              <DataGridItem Title="País de nacimiento">
-                <Typeahead SearchMethod="SearchCountries" 
-               @bind-SelectedValue="personalData.BornCountry" 
+                <Typeahead TItem="CountryVM" TValue="CountryVM" SearchMethod="SearchCountries"
+                           SelectedValue="personalData.BornCountry"
+                           SelectedValueChanged="OnItemSelectedBorn"
                Debounce="1" MinimumLength="1" SearchPlaceholderText="Buscar País..."
                ListWidth="100%" SelectedTextExpression="e => e.Name" ShowOptionOnFocus="false" >
-                    <ListTemplate>
-                        @context.Name
+                    <ListTemplate Context="itemContext">
+                        @itemContext.Name
                     </ListTemplate>
                 </Typeahead>
                 <ValidationMessage For="@(() => personalData.BornCountryId)" class="text-danger" />
             </DataGridItem> 
 
         <DataGridItem Title="Departamento de nacimiento">
-                <Typeahead SearchMethod="SearchSates" @bind-SelectedValue="personalData.BornState"
+                <Typeahead TItem="StateVM" TValue="StateVM" SearchMethod="SearchSates" SelectedValue="personalData.BornState" SelectedValueChanged="OnItemSelectedBorn"
                        Debounce="1" MinimumLength=1 SearchPlaceholderText="Buscar Departamento..."
                        ListWidth="100%" SelectedTextExpression="e => e.Name" ShowOptionOnFocus="false">
-                <ListTemplate>
-                    @context.Name
+                    <ListTemplate Context="itemContext">
+                        @itemContext.Name
                 </ListTemplate>
             </Typeahead>
              <ValidationMessage For="@(() => personalData.BornStateId)" class="text-danger" />
         </DataGridItem>
 
-    
-             <DataGridItem Title="Ciudad de nacimiento">
-            <Typeahead SearchMethod="SearchCities" @bind-SelectedValue="personalData.BornCity"
-                       Debounce="1" MinimumLength=1 SearchPlaceholderText="Buscar ciudad..."
-                       ListWidth="100%"
-                       SelectedTextExpression="e => e.Name" ShowOptionOnFocus="false">
-                <ListTemplate>
-                    @context.Name
+
+
+        <DataGridItem Title="Ciudad de nacimiento">
+                <Typeahead TItem="CityVM" TValue="CityVM" SearchMethod="SearchCities"
+                       SelectedValue="personalData.BornCity"
+                           SelectedValueChanged="OnItemSelectedBorn"
+                       Debounce="1" 
+                       MinimumLength="1" 
+                       SearchPlaceholderText="Buscar ciudad..." 
+                       ListWidth="100%" 
+                       SelectedTextExpression="e => e.Name" 
+                       ShowOptionOnFocus="false">
+                    <ListTemplate Context="itemContext">
+                        @itemContext.Name
                 </ListTemplate>
             </Typeahead>
              <ValidationMessage For="@(() => personalData.BornCityId)" class="text-danger" />
-            </DataGridItem>
-        
-
+        </DataGridItem>
 
 
      <DataGridItem Title="Departamento de Residencia">
-            <Typeahead SearchMethod="SearchSatesResidence" @bind-SelectedValue="personalData.StateResidence"
+                <Typeahead TItem="StateVM" TValue="StateVM" SearchMethod="SearchSatesResidence" SelectedValue="personalData.StateResidence" SelectedValueChanged="OnItemSelectedResidence"
                        Debounce="1" MinimumLength=1 SearchPlaceholderText="Buscar Departamento..."
                        ListWidth="100%"
                        SelectedTextExpression="e => e.Name" ShowOptionOnFocus="false">
-                <ListTemplate>
-                    @context.Name
+                    <ListTemplate Context="itemContext">
+                        @itemContext.Name
                 </ListTemplate>
             </Typeahead>
              <ValidationMessage For="@(() => personalData.ResidenceStateId)" class="text-danger" />
         </DataGridItem>
 
         <DataGridItem Title="Ciudad de Residencia">
-            <Typeahead SearchMethod="SearchCitiesResidence" @bind-SelectedValue="personalData.CityResidence"
+                <Typeahead TItem="CityVM" TValue="CityVM" SearchMethod="SearchCitiesResidence" SelectedValue="personalData.CityResidence" SelectedValueChanged="OnItemSelectedResidence"
                        Debounce="1" MinimumLength=1 SearchPlaceholderText="Buscar ciudad..."
                        ListWidth="100%"
                        SelectedTextExpression="e => e.Name" ShowOptionOnFocus="false">
-                <ListTemplate>
-                    @context.Name
+                    <ListTemplate Context="itemContext">
+                        @itemContext.Name
                 </ListTemplate>
             </Typeahead>
              <ValidationMessage For="@(() => personalData.ResidenceCityId)" class="text-danger" />
@@ -112,9 +112,9 @@ else
      <DataGridItem Title="Teléfono celular">
         <input type="text" class="form-control" />
      </DataGridItem>
-                 </TablerForm>
+                
 </DataGrid>
+</TablerForm>
 
 <br />
 <br />
-}

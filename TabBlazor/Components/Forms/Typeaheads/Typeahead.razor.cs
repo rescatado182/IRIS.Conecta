@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.AspNetCore.Components.Web;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +27,11 @@ public partial class Typeahead<TItem, TValue> : TablerBaseComponent
     [Parameter] public string ListWidth { get; set; }
     [Parameter] public Func<TValue, string> SelectedTextExpression { get; set; }
     [Parameter] public bool ShowOptionOnFocus { get; set; }
+
+    [Parameter] public EventCallback Onblur { get; set; }
+
+    [Parameter] public EditContext EditContext { get; set; }
+
 
     private IEnumerable<TItem> listItems;
     private string searchText;
@@ -67,7 +74,7 @@ public partial class Typeahead<TItem, TValue> : TablerBaseComponent
 
     }
 
-    private async Task SetInput(bool value)
+   private async Task SetInput(bool value)
     {
         isInput = value;
         setFocus = value;
@@ -81,6 +88,11 @@ public partial class Typeahead<TItem, TValue> : TablerBaseComponent
         {
             SearchText ??= "";
             await ExecuteSearchASync();
+        }
+
+        if (!value)
+        {
+            await Onblur.InvokeAsync(); // Disparar el evento Onblur
         }
     }
 
@@ -146,6 +158,12 @@ public partial class Typeahead<TItem, TValue> : TablerBaseComponent
         searchText = "";
         dropdown.Close();
         await SelectedValueChanged.InvokeAsync(SelectedValue);
+
+        if (EditContext != null)
+        {
+            var fieldIdentifier = FieldIdentifier.Create(() => SelectedValue);
+            EditContext.NotifyFieldChanged(fieldIdentifier);
+        }
     }
 
     private async Task Search()

@@ -9,34 +9,38 @@ namespace IRIS.UI.Models
         public int Id { get; set; }
 
         [Display(Name = "Nombre Completo")]
-        [Required(ErrorMessage = "*Campo obligatorio")]
+        [Required(ErrorMessage = "*{0} es obligatorio")]
         [MaxLength(100, ErrorMessage = "*{0} no puede tener más de {1} carácteres")]
         public string FullName { get; set; }
 
         [Display(Name = "Numero Documento")]
-        [Required(ErrorMessage = "*Campo obligatorio")]
+        [Required(ErrorMessage = "*{0} es obligatorio")]
         [MaxLength(20, ErrorMessage = "*{0} no puede tener más de {1} carácteres")]
         public string DocumentNumber { get; set; }
 
         [Display(Name = "Tipo de Documento")]
-        [Required(ErrorMessage = "*Campo obligatorio")]
+        [Required(ErrorMessage = "*{0} es obligatorio")]
         [EnumDataType(typeof(EnumDocumentType), ErrorMessage = "*Seleccione un {0} válido")]
         public EnumDocumentType DocumentType { get; set; }
 
         [Display(Name = "País de Nacimiento")]
+        [Required(ErrorMessage = "*Selecciona un {0} válido")]
         [Range(1, int.MaxValue, ErrorMessage = "*Selecciona un {0} válido")]
         public int BornCountryId { get; set; }
 
         [Display(Name = "Departamento de Nacimiento")]
+        [Required(ErrorMessage = "*Selecciona un {0} válido")]
         [Range(1, int.MaxValue, ErrorMessage = "*Selecciona un {0} válido")]
         public int BornStateId { get; set; }
 
         [Display(Name = "Ciudad de Nacimiento")]
+        [Required(ErrorMessage = "*Selecciona un {0} válido")]
         [Range(1, int.MaxValue, ErrorMessage = "*Selecciona un {0} válido")]
         public int BornCityId { get; set; }
 
 
         [Display(Name = "Departamento de Residencia")]
+        [Required(ErrorMessage = "*Selecciona un {0} válido")]
         [Range(1, int.MaxValue, ErrorMessage = "*Selecciona un {0} válido")]
         public int ResidenceStateId { get; set; }
 
@@ -45,7 +49,8 @@ namespace IRIS.UI.Models
         public int ResidenceCityId { get; set; }
 
         [Display(Name = "Dirección de Residencia")]
-        [Range(1, int.MaxValue, ErrorMessage = "*Selecciona un {0} válido")]
+        [Required(ErrorMessage = "*{0} es obligatorio")]
+        [MaxLength(100, ErrorMessage = "*{0} no puede tener más de {1} carácteres")]
         public string AddressResidence { get; set; }
 
         [Display(Name = "Correo electronico")]
@@ -53,7 +58,7 @@ namespace IRIS.UI.Models
         public string Email { get; set; }
 
         [Display(Name = "Correo electronico ITM")]
-        [Required(ErrorMessage = "*Campo obligatorio")]
+        [Required(ErrorMessage = "*{0} es obligatorio")]
         [MaxLength(100, ErrorMessage = "*{0} debe tener máximo {1} caracteres")]
 
         public string EmailInstitutional { get; set; }
