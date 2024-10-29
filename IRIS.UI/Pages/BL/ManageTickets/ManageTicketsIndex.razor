@@ -1,0 +1,60 @@
+﻿<h3>Tickets</h3>
+
+@page "/managesTickets"
+@if (tickets is null)
+{
+    <Progress Color="TablerColor.Blue" Indeterminate />
+}
+else{
+
+
+@using IRIS.UI.Models.List
+@using TabBlazor.Components.Tables
+
+
+    <Table Item="TicketListVM" Items="tickets" PageSize="10"
+           @bind-SelectedItems="selectedOrders" Selectable
+           MultiSelect Hover Responsive>
+        <HeaderTemplate>
+            <strong>tickets</strong>
+        </HeaderTemplate>
+
+        <ChildContent>
+            <Column Item="TicketListVM" Property="e=>e.Id" Title="Id" Sortable Searchable Groupable>
+                <EditorTemplate>
+                    <input type="text" class="form-control" @bind-value="@context.Id" />
+                </EditorTemplate>
+            </Column>
+            <Column Item="TicketListVM" Property="e=>e.RequestTypeId" Title="Tipo de Solicitud" Sortable Searchable Groupable>
+                <EditorTemplate>
+                    <input type="text" class="form-control" @bind-value="@context.RequestTypeId" />
+                </EditorTemplate>
+            </Column>
+            <Column Item="TicketListVM" Property="e=>e.Status" Title="Estado" Sortable Searchable Groupable>
+                <EditorTemplate>
+                    <Select Items="EnumHelper.GetList<TicketsStatus>()" @bind-SelectedValue="@context.Status" TextExpression="e=> e.ToString()" ValueExpression="e=> e" Clearable />
+                </EditorTemplate>
+            </Column>
+            <Column Item="TicketListVM" Title="Detalle">
+                <Template Context="ticket">
+
+                    <a href="/ticketDetails/@ticket.Id" target="_blank" class="btn btn-link">
+
+                        <Icon class="icon" IconType="@TablerIcons.Eye" />
+                    </a>
+
+                </Template>
+            </Column>
+        </ChildContent>
+
+    </Table>
+
+
+    <ul>
+        @foreach (var order in selectedOrders)
+        {
+            <li>@order.Id, @order.EventName</li>
+        }
+    </ul>
+
+}
