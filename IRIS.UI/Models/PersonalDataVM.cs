@@ -74,7 +74,7 @@ namespace IRIS.UI.Models
         [DataType(DataType.PhoneNumber)]
         [MaxLength(15, ErrorMessage = "*{0} debe tener máximo {1} caracteres")]
         [RegularExpression(@"\+?(\d{1,3})?[-.\s]?(\(\d{1,4}\)|\d{1,4})[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}")]
-        public string PhoneNumber { get; set; }
+        public string Cellphone { get; set; }
 
         [JsonIgnore]
         public virtual CountryVM BornCountry { get; set; }

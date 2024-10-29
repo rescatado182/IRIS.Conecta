@@ -12,13 +12,19 @@ using Microsoft.AspNetCore.Components.Web;
 using System.ComponentModel.DataAnnotations;
 using TabBlazor.Services;
 using TabBlazor;
+using IRIS.UI.Pages.BL.Tickets.RequestTickets.Movility;
+using System.Diagnostics.Metrics;
+using IRIS.UI.Models;
+using IRIS.UI.Interfaces;
 
 namespace IRIS.UI.Pages.BL.Tickets.Shared
 {
-    public partial class PersonalDataTicket : ComponentBase
+    public partial class PersonalDataTicket : ComponentBase, IValidateData
     {
+        [Inject] TicketMovilityRequest MovilityRequestState { get; set; }
 
-        private PersonalDataVM personalData = new PersonalDataVM();
+        //private PersonalDataVM personalData = new PersonalDataVM();
+
 
         private EnumDocumentType selectedDocumentType;
         private List<EnumDocumentType> enumDocumentType = new List<EnumDocumentType>();
@@ -29,29 +35,21 @@ namespace IRIS.UI.Pages.BL.Tickets.Shared
 
         private CountryVM selectedCountryResidence;
 
-
-
-
         protected override async Task OnInitializedAsync()
         {
-
             await ListAsyncCountries();
             enumDocumentType = Enum.GetValues(typeof(EnumDocumentType)).Cast<EnumDocumentType>().ToList();
-
         }
 
 
-        public IEnumerable<ValidationResult> ValidatePersonalDataAsync()
+
+        public Task<IEnumerable<ValidationResult>> ValidateDataAsync()
         {
-
-            
             var results = new List<ValidationResult>();
+            var validationContext = new ValidationContext(MovilityRequestState.personalData, null, null);
+            Validator.TryValidateObject(MovilityRequestState.personalData, validationContext, results, true);
 
-            var validationContext = new ValidationContext(personalData, null, null);
-
-            Validator.TryValidateObject(personalData, validationContext, results, true);
-
-            if (personalData is IValidatableObject validatableModel)
+            if (MovilityRequestState.personalData is IValidatableObject validatableModel)
                 results.AddRange(validatableModel.Validate(validationContext));
 
             foreach (var validationResult in results)
@@ -59,9 +57,9 @@ namespace IRIS.UI.Pages.BL.Tickets.Shared
                 Console.WriteLine(validationResult.ErrorMessage);
             }
 
-            return results;
-
+            return Task.FromResult<IEnumerable<ValidationResult>>(results);
         }
+
         private void SaveDataToDatabase()
         {
             // Aquí es donde iría la lógica para guardar los datos en la base de datos
@@ -77,73 +75,97 @@ namespace IRIS.UI.Pages.BL.Tickets.Shared
 
         private async Task<IEnumerable<CountryVM>> SearchCountries(string searchText)
         {
-             return countries.Where(c => c.Name.Contains(searchText, StringComparison.CurrentCultureIgnoreCase));
-        }
+            return countries.Where(c => c.Name.Contains(searchText, StringComparison.CurrentCultureIgnoreCase));
+        }    
 
         private async Task<IEnumerable<StateVM>> SearchSates(string searchText)
         {
-            return states.Where(s => s.CountryId == personalData.BornCountryId && s.Name.Contains(searchText, StringComparison.CurrentCultureIgnoreCase));
+            return states.Where(s => s.CountryId == MovilityRequestState.personalData.BornCountryId && s.Name.Contains(searchText, StringComparison.CurrentCultureIgnoreCase));
         }
 
         private async Task<IEnumerable<CityVM>> SearchCities(string searchText)
         {
-            return cities.Where(ci => ci.StateId == personalData.BornStateId && ci.Name.Contains(searchText, StringComparison.CurrentCultureIgnoreCase));
+            return cities.Where(ci => ci.StateId == MovilityRequestState.personalData.BornStateId && ci.Name.Contains(searchText, StringComparison.CurrentCultureIgnoreCase));
         }
 
         private async Task<IEnumerable<StateVM>> SearchSatesResidence(string searchText)
         {
             selectedCountryResidence = countries.FirstOrDefault(c => c.Id == 48);
-
             return states.Where(s => s.CountryId == selectedCountryResidence?.Id && s.Name.Contains(searchText, StringComparison.CurrentCultureIgnoreCase));
         }
 
         private async Task<IEnumerable<CityVM>> SearchCitiesResidence(string searchText)
         {
-
-            return cities.Where(ci => ci.StateId == personalData.ResidenceStateId && ci.Name.Contains(searchText, StringComparison.CurrentCultureIgnoreCase));
+            return cities.Where(ci => ci.StateId == MovilityRequestState.personalData.ResidenceStateId && ci.Name.Contains(searchText, StringComparison.CurrentCultureIgnoreCase));
         }
 
-        private async Task OnItemSelectedBorn<T>(T selectedItem)
+        private async Task OnItemSelectedBornCountry(CountryVM country) {
+
+            MovilityRequestState.personalData.BornCountry = country;
+            MovilityRequestState.personalData.BornCountryId = country?.Id ?? 0;
+
+
+            MovilityRequestState.personalData.BornState = null;
+            MovilityRequestState.personalData.BornStateId = 0;
+            MovilityRequestState.personalData.BornCity = null;
+            MovilityRequestState.personalData.BornCityId = 0;
+            
+            await Task.CompletedTask;
+        }
+
+
+        private async Task OnItemSelectedBornState(StateVM state)
         {
-            if (selectedItem is CityVM city)
-            {
-                personalData.BornCity = city;
-                personalData.BornCityId = city.Id;
-            }
-            else if (selectedItem is CountryVM country)
-            {
-                personalData.BornCountry = country;
-                personalData.BornCountryId = country.Id;
-            }
-            else if (selectedItem is StateVM state)
-            {
-                personalData.BornState = state;
-                personalData.BornStateId = state.Id;
-            }
+
+            MovilityRequestState.personalData.BornState = state;
+            MovilityRequestState.personalData.BornStateId = state?.Id ?? 0;
+
+            MovilityRequestState.personalData.BornCity = null;
+            MovilityRequestState.personalData.BornCityId = 0;
+
+            await Task.CompletedTask;
         }
 
-        private async Task OnItemSelectedResidence<T>(T selectedItem)
+        private async Task OnItemSelectedBornCity(CityVM city)
         {
-            if (selectedItem is CityVM city)
-            {
-                personalData.CityResidence = city;
-                personalData.ResidenceCityId = city.Id;
-            }
-            else if (selectedItem is StateVM state)
-            {
-                personalData.StateResidence = state;
-                personalData.ResidenceStateId = state.Id;
-            }
+
+            MovilityRequestState.personalData.BornCity = city;
+            MovilityRequestState.personalData.BornCityId = city?.Id ?? 0;
+
+            await Task.CompletedTask;
         }
+
+        private async Task OnItemSelectedResidenceState(StateVM state)
+        {
+
+            MovilityRequestState.personalData.StateResidence = state;
+            MovilityRequestState.personalData.ResidenceStateId = state?.Id ?? 0;
+
+            MovilityRequestState.personalData.CityResidence = null;
+            MovilityRequestState.personalData.ResidenceCityId = 0;
+
+            await Task.CompletedTask;
+        }
+
+        private async Task OnItemSelectedResidenceCity(CityVM city)
+        {
+
+            MovilityRequestState.personalData.CityResidence = city;
+            MovilityRequestState.personalData.ResidenceCityId = city?.Id ?? 0;
+
+            await Task.CompletedTask;
+        }
+
+
+
         private async Task<bool> ListAsyncCountries()
         {
-            
             countries = Countries.GetCountries();
             states = countries.SelectMany(c => c.States).ToList();
             cities = states.SelectMany(s => s.Cities).ToList();
-
             return true;
         }
+
 
     }
 }

@@ -1,8 +1,11 @@
 using ColorCode.Compilation.Languages;
 using IRIS.Frontend.Repositories;
+using IRIS.UI.Interfaces;
 using IRIS.UI.Models;
+using IRIS.UI.Pages.BL.Tickets.RequestTickets.Movility.Information;
 using IRIS.UI.Pages.BL.Tickets.Shared;
 using Microsoft.AspNetCore.Components;
+using System.ComponentModel.DataAnnotations;
 using System.Linq.Expressions;
 using System.Net;
 using System.Text.Json;
@@ -16,32 +19,62 @@ namespace IRIS.UI.Pages.BL.Tickets.RequestTickets.Movility
     public partial class TicketMovilityRequest
     {
 
+        [Inject] private IRepository Repository { get; set; } = null!;
         [Inject] public IModalService Modal { get; set; }
         [Inject] public ToastService ToastService { get; set; }
 
-        private ToastOptions toastOptions = new ToastOptions();
 
-        [Inject] private IRepository Repository { get; set; } = null!;
-
-        private bool isCompleted1 = false;
-        private bool isCompleted2 = false;
-        private bool isCompleted3 = false;
+        public PersonalDataVM personalData = new PersonalDataVM();
 
         private PersonalDataTicket personalDataRef;
+
+        public bool isCompletedPersonalData = false;
+
+
+        public AcademyDataVM academyData = new AcademyDataVM();
+
+        private AcademyDataTicket academyDataRef;
+
+        public bool isCompletedAcademyData = false;
+
+
+        public MovilityTypeVM movilityType = new MovilityTypeVM();
+
+        private MovilityTypeTicket movilityTypeRef;
+
+        public bool isCompletedMovilityType = false;
+
+        //public RequirementsMovilityVM requirementsMovility = new RequirementsMovilityVM();
+
+        //private RequirementsMovilityVM requirementsMovilityRef;
+
+        public bool isCompletedRequirementsMovility = false;
+
+
 
         public List<TicketVM>? ticket { get; set; }
 
         private TabsOrder tabsOrderRef;
 
-        private int CurrentTabIndex { get; set; } = 5;
+       // private int CurrentTabIndex { get; set; } = 2;
 
         private bool IsLastTab => tabsOrderRef?.IsLastTab ?? false;
 
+        private bool IsFirstTab => tabsOrderRef?.IsFirstTab ?? true;
+
         private int? idTicket = null;
+
+        
+        private bool isCompleted2 = false;
+        private bool isCompleted3 = false;
+
+        private async Task PreviousStepAsync()
+        {
+            tabsOrderRef.PreviousTab();
+        }
 
         private async Task NextStepAsync()
         {
-            bool isValidPersonalData = false;
 
             //crear ticket
             if (idTicket == null)
@@ -54,17 +87,41 @@ namespace IRIS.UI.Pages.BL.Tickets.RequestTickets.Movility
                 }
             }
 
-            //validarCampos PersonalData
-            if (isValidPersonalData == false)
+            if (tabsOrderRef != null)
             {
-                isValidPersonalData = await ValidatePersonalDataAsync();
-            }
-            
-            
+                switch (tabsOrderRef?.CurrentTabIndex)
+                {
+                    case 0:
+                        // Tab 1: Datos personales
+                        isCompletedPersonalData = await ValidateDataAsync(personalDataRef);
+                        if (!isCompletedPersonalData) return;
+                        break;
 
-            if (tabsOrderRef != null && isValidPersonalData)
-            {
-                tabsOrderRef.NextTab(); 
+                    case 1:
+                        // Tab 2: Datos académicos
+                        isCompletedAcademyData = await ValidateDataAsync(academyDataRef);
+                        if (!isCompletedAcademyData) return;
+                        break;
+                    case 2:
+
+                        // Tab 3: Tipo de movilidad
+                        isCompletedMovilityType = await movilityTypeRef.ValidateDatesAsync(movilityType);
+                        if (!isCompletedMovilityType) return;
+
+                        isCompletedMovilityType = await ValidateDataAsync(movilityTypeRef);
+                        if (!isCompletedMovilityType) return;
+
+                        await movilityTypeRef.UpdateTicketMovilityTypeAsync(idTicket, movilityType);
+                        break;
+                    case 3:
+                        // Tab 4: Requerimientos de la Movilidad
+                        //isCompletedRequirementsMovility = await ValidateDataAsync(requirementsMovilityRef);
+                        ////if (!isCompletedMovilityType) return;
+                        //await UpdateTicketMovilityTypeAsync(idTicket, movilityType);
+                        break;
+                }
+               
+            tabsOrderRef.NextTab(); 
             }
             else
             {
@@ -72,14 +129,18 @@ namespace IRIS.UI.Pages.BL.Tickets.RequestTickets.Movility
             }
         }
 
+
+
+
+
         private async Task<int?> CreateTicketAsync()
         {
             object jsonResult;
 
             var ticket = new TicketVM
             {
-                Title = "Movility",
-                Description = "Movility",
+                Title = "Movilidad",
+                Description = "Movilidad",
                 RequestTypeId = 1,
                 Status = TicketsStatus.Open
             };
@@ -102,25 +163,26 @@ namespace IRIS.UI.Pages.BL.Tickets.RequestTickets.Movility
             }
         }
 
-        private async Task<bool> ValidatePersonalDataAsync()
+        private async Task<bool> ValidateDataAsync(IValidateData validateData)
         {
-            ;
 
-            if (personalDataRef != null)
+
+            var validationResults = await validateData.ValidateDataAsync();
+
+            if (validationResults.Count() > 0)
             {
-                var resultValid = personalDataRef.ValidatePersonalDataAsync();
-
-                if (resultValid.Count() >= 0)
-                {
-                    foreach (var validationResult in resultValid)
-                    {
-                        await ToastService.AddToastAsync(new ToastModel { Title = "Formulario Incompleto", SubTitle = "", Message = validationResult.ErrorMessage});
-                    }
-
-                    return false;
-                }
+                var toastTasks = validationResults.Select(validationResult =>
+                       ToastService.AddToastAsync(new ToastModel
+                       {
+                           Title = "Formulario Incompleto",
+                           Message = validationResult.ErrorMessage
+                       })
+                   ).ToList();
+                await Task.WhenAll(toastTasks);
+                return false;
             }
             return true;
+
         }
     }
 }

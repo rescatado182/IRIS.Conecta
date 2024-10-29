@@ -1,60 +1,60 @@
 ﻿
-<TablerForm Model="@personalData" >
+<TablerForm Model="@MovilityRequestState.personalData">
     <DataGrid>
 
 
             <DataGridItem Title="Nombre completo">
-                <input type="text" class="form-control" @bind="personalData.FullName"/>
-                <ValidationMessage For="@(() => personalData.FullName)" class="text-danger" />           
-            </DataGridItem>
+            <input type="text" class="form-control" @bind="MovilityRequestState.personalData.FullName" />
+            <ValidationMessage For="@(() => MovilityRequestState.personalData.FullName)" class="text-danger" />
+        </DataGridItem>
         
 
             <DataGridItem Title="Documento Identidad">
-                <input type="text" class="form-control" @bind="personalData.DocumentNumber"/>
-                <ValidationMessage For="@(() => personalData.DocumentNumber)" class="text-danger" />   
+                <input type="text" class="form-control" @bind="MovilityRequestState.personalData.DocumentNumber"/>
+                <ValidationMessage For="@(() => MovilityRequestState.personalData.DocumentNumber)" class="text-danger" />   
             </DataGridItem>
 
 
 
             <DataGridItem Title="Tipo Documento">
                 <Select Items="enumDocumentType"
-                    @bind-SelectedValue="personalData.DocumentType"
+                    @bind-SelectedValue="MovilityRequestState.personalData.DocumentType"
                     TextExpression="e => Enum.GetName(typeof(EnumDocumentType), e)"
                     NoSelectedText="Seleccione un tipo de documento" />
-                <ValidationMessage For="@(() => personalData.DocumentType)" class="text-danger" /> 
+                <ValidationMessage For="@(() => MovilityRequestState.personalData.DocumentType)" class="text-danger" /> 
             </DataGridItem>
 
 
              <DataGridItem Title="País de nacimiento">
                 <Typeahead TItem="CountryVM" TValue="CountryVM" SearchMethod="SearchCountries"
-                           SelectedValue="personalData.BornCountry"
-                           SelectedValueChanged="OnItemSelectedBorn"
+                           SelectedValue="MovilityRequestState.personalData.BornCountry"
+                       SelectedValueChanged="OnItemSelectedBornCountry"
                Debounce="1" MinimumLength="1" SearchPlaceholderText="Buscar País..."
-               ListWidth="100%" SelectedTextExpression="e => e.Name" ShowOptionOnFocus="false" >
+                       ListWidth="100%" SelectedTextExpression="e => e.Name" ShowOptionOnFocus="false">
                     <ListTemplate Context="itemContext">
                         @itemContext.Name
                     </ListTemplate>
                 </Typeahead>
-                <ValidationMessage For="@(() => personalData.BornCountryId)" class="text-danger" />
+                <ValidationMessage For="@(() => MovilityRequestState.personalData.BornCountryId)" class="text-danger" />
             </DataGridItem> 
 
         <DataGridItem Title="Departamento de nacimiento">
-                <Typeahead TItem="StateVM" TValue="StateVM" SearchMethod="SearchSates" SelectedValue="personalData.BornState" SelectedValueChanged="OnItemSelectedBorn"
+            <Typeahead TItem="StateVM" TValue="StateVM" SearchMethod="SearchSates" SelectedValue="MovilityRequestState.personalData.BornState" SelectedValueChanged="OnItemSelectedBornState"
                        Debounce="1" MinimumLength=1 SearchPlaceholderText="Buscar Departamento..."
                        ListWidth="100%" SelectedTextExpression="e => e.Name" ShowOptionOnFocus="false">
                     <ListTemplate Context="itemContext">
                         @itemContext.Name
                 </ListTemplate>
             </Typeahead>
-             <ValidationMessage For="@(() => personalData.BornStateId)" class="text-danger" />
+             <ValidationMessage For="@(() => MovilityRequestState.personalData.BornStateId)" class="text-danger" />
         </DataGridItem>
 
 
 
         <DataGridItem Title="Ciudad de nacimiento">
                 <Typeahead TItem="CityVM" TValue="CityVM" SearchMethod="SearchCities"
-                       SelectedValue="personalData.BornCity"
-                           SelectedValueChanged="OnItemSelectedBorn"
+                       SelectedValue="MovilityRequestState.personalData.BornCity"
+                       SelectedValueChanged="OnItemSelectedBornCity"
                        Debounce="1" 
                        MinimumLength="1" 
                        SearchPlaceholderText="Buscar ciudad..." 
@@ -65,12 +65,12 @@
                         @itemContext.Name
                 </ListTemplate>
             </Typeahead>
-             <ValidationMessage For="@(() => personalData.BornCityId)" class="text-danger" />
+             <ValidationMessage For="@(() => MovilityRequestState.personalData.BornCityId)" class="text-danger" />
         </DataGridItem>
 
 
      <DataGridItem Title="Departamento de Residencia">
-                <Typeahead TItem="StateVM" TValue="StateVM" SearchMethod="SearchSatesResidence" SelectedValue="personalData.StateResidence" SelectedValueChanged="OnItemSelectedResidence"
+            <Typeahead TItem="StateVM" TValue="StateVM" SearchMethod="SearchSatesResidence" SelectedValue="MovilityRequestState.personalData.StateResidence" SelectedValueChanged="OnItemSelectedResidenceState"
                        Debounce="1" MinimumLength=1 SearchPlaceholderText="Buscar Departamento..."
                        ListWidth="100%"
                        SelectedTextExpression="e => e.Name" ShowOptionOnFocus="false">
@@ -78,11 +78,11 @@
                         @itemContext.Name
                 </ListTemplate>
             </Typeahead>
-             <ValidationMessage For="@(() => personalData.ResidenceStateId)" class="text-danger" />
+             <ValidationMessage For="@(() => MovilityRequestState.personalData.ResidenceStateId)" class="text-danger" />
         </DataGridItem>
 
         <DataGridItem Title="Ciudad de Residencia">
-                <Typeahead TItem="CityVM" TValue="CityVM" SearchMethod="SearchCitiesResidence" SelectedValue="personalData.CityResidence" SelectedValueChanged="OnItemSelectedResidence"
+            <Typeahead TItem="CityVM" TValue="CityVM" SearchMethod="SearchCitiesResidence" SelectedValue="MovilityRequestState.personalData.CityResidence" SelectedValueChanged="OnItemSelectedResidenceCity"
                        Debounce="1" MinimumLength=1 SearchPlaceholderText="Buscar ciudad..."
                        ListWidth="100%"
                        SelectedTextExpression="e => e.Name" ShowOptionOnFocus="false">
@@ -90,27 +90,32 @@
                         @itemContext.Name
                 </ListTemplate>
             </Typeahead>
-             <ValidationMessage For="@(() => personalData.ResidenceCityId)" class="text-danger" />
+             <ValidationMessage For="@(() => MovilityRequestState.personalData.ResidenceCityId)" class="text-danger" />
         </DataGridItem>
 
-        <DataGridItem Title="Dirección residencia">
-            <input type="text" class="form-control" />
+        <DataGridItem Title="Dirección residencia" >
+            <input type="text" class="form-control" @bind="MovilityRequestState.personalData.AddressResidence" />
+            <ValidationMessage For="@(() => MovilityRequestState.personalData.AddressResidence)" class="text-danger" />
         </DataGridItem>
 
      <DataGridItem Title="Correo personal">
-        <input type="text" class="form-control" />
+            <input type="text" class="form-control" @bind="MovilityRequestState.personalData.Email" />
+            <ValidationMessage For="@(() => MovilityRequestState.personalData.Email)" class="text-danger" />
       </DataGridItem>
 
       <DataGridItem Title="Correo del ITM">
-        <input type="text" class="form-control" />
+            <input type="text" class="form-control" @bind="MovilityRequestState.personalData.EmailInstitutional" />
+            <ValidationMessage For="@(() => MovilityRequestState.personalData.EmailInstitutional)" class="text-danger" />
       </DataGridItem>
 
       <DataGridItem Title="Teléfono fijo">
-       <input type="text" class="form-control" />
+            <input type="text" class="form-control" @bind="MovilityRequestState.personalData.Phone" />
+            <ValidationMessage For="@(() => MovilityRequestState.personalData.Phone)" class="text-danger" />
       </DataGridItem>
  
      <DataGridItem Title="Teléfono celular">
-        <input type="text" class="form-control" />
+            <input type="text" class="form-control" @bind="MovilityRequestState.personalData.Cellphone" />
+            <ValidationMessage For="@(() => MovilityRequestState.personalData.Cellphone)" class="text-danger" />
      </DataGridItem>
                 
 </DataGrid>

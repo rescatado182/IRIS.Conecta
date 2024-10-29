@@ -1,75 +1,71 @@
-﻿<h3>Tipo de Movilidad</h3>
+﻿@using IRIS.UI.Models
 
-
-<DataGrid>
-
-    <DataGridItem Title="Tipo de Movilidad">
-        <ItemSelect Items="enumMovilityType"
-                    @bind-SelectedValues="selectedMovilityType"
-                    SelectedTextExpression="e => GetMovilityTypeDisplayName(e)"
-                    MultiSelect>
-            <ListTemplate>
-                @GetMovilityTypeDisplayName(@context)
-            </ListTemplate>
-        </ItemSelect>
-
-    </DataGridItem>
-
-
-</DataGrid>
-
+<TablerForm Model="@MovilityRequestState.movilityType">
 
 <DataGrid>
 
+
+        <DataGridItem Title="Tipo de Movilidad">
+            <Select Items="enumMovilityType"
+                    @bind-SelectedValue="MovilityRequestState.movilityType.EnumMovilityType"
+            TextExpression="e => e.Text"
+                    ConvertExpression="item => ConvertToEnum(item)"
+                    NoSelectedText="Seleccione un tipo de Movilidad" />
+            <ValidationMessage For="@(() => MovilityRequestState.movilityType.EnumMovilityType)" class="text-danger" />
+</DataGridItem>
 
 
     <DataGridItem Title="Institución de destino">
-        <input type="text" class="form-control" />
+        <input type="text" class="form-control" @bind="MovilityRequestState.movilityType.externalInstitution" />
+            <ValidationMessage For="@(() => MovilityRequestState.movilityType.externalInstitution)" class="text-danger" />
     </DataGridItem>
 
+
     <DataGridItem Title="Datos de contacto">
-        <input type="text" class="form-control" />
+        <input type="text" class="form-control" @bind="MovilityRequestState.movilityType.ContactData" />
+            <ValidationMessage For="@(() => MovilityRequestState.movilityType.ContactData)" class="text-danger" />
     </DataGridItem>
 
     <DataGridItem Title="Teléfonos">
-        <input type="text" class="form-control" />
+        <input type="text" class="form-control" @bind="MovilityRequestState.movilityType.Phone" />
+        <ValidationMessage For="@(() => MovilityRequestState.movilityType.Phone)" class="text-danger" />
     </DataGridItem>
 
     <DataGridItem Title="País de destino">
-        <input type="text" class="form-control" />
-    </DataGridItem>
-
-    <DataGridItem Title="País de destino">
-        <Typeahead SearchMethod="SearchCountries" @bind-SelectedValue="selectedCountry"
-                   Debounce="1" MinimumLength=1 SearchPlaceholderText="Buscar País..."
-                   ListWidth="100%"
-                   SelectedTextExpression="e => e.Name" ShowOptionOnFocus="false">
-            <ListTemplate>
-                @context.Name
+        <Typeahead TItem="CountryVM" TValue="CountryVM" SearchMethod="SearchCountries"
+                   SelectedValue="MovilityRequestState.movilityType.DestinationCountry"
+                   SelectedValueChanged="OnItemSelectedDestinationCountry"
+                   Debounce="1" MinimumLength="1" SearchPlaceholderText="Buscar País..."
+                   ListWidth="100%" SelectedTextExpression="e => e.Name" ShowOptionOnFocus="false">
+            <ListTemplate Context="itemContext">
+                @itemContext.Name
             </ListTemplate>
         </Typeahead>
+        <ValidationMessage For="@(() => MovilityRequestState.movilityType.DestinationCountryId)" class="text-danger" />
     </DataGridItem>
+
     <DataGridItem Title="Estado de Destino">
-        <Typeahead SearchMethod="SearchSates" @bind-SelectedValue="selectedState"
-                   Debounce="1" MinimumLength=1 SearchPlaceholderText="Buscar Estado..."
-                   ListWidth="100%"
-                   SelectedTextExpression="e => e.Name" ShowOptionOnFocus="false">
-            <ListTemplate>
-                @context.Name
+        <Typeahead TItem="StateVM" TValue="StateVM" SearchMethod="SearchSates" SelectedValue="MovilityRequestState.movilityType.DestinationState" 
+                   SelectedValueChanged="OnItemSelectedDestinationState" Debounce="1" MinimumLength=1 SearchPlaceholderText="Buscar Estado..."
+                   ListWidth="100%" SelectedTextExpression="e => e.Name" ShowOptionOnFocus="false">
+            <ListTemplate Context="itemContext">
+                @itemContext.Name
             </ListTemplate>
         </Typeahead>
+        <ValidationMessage For="@(() => MovilityRequestState.movilityType.DestinationStateId)" class="text-danger" />
     </DataGridItem>
+
 
 
     <DataGridItem Title="Ciudad de Destino">
-        <Typeahead SearchMethod="SearchCities" @bind-SelectedValue="selectedCity"
-                   Debounce="1" MinimumLength=1 SearchPlaceholderText="Buscar ciudad..."
-                   ListWidth="100%"
-                   SelectedTextExpression="e => e.Name" ShowOptionOnFocus="false">
-            <ListTemplate>
-                @context.Name
+        <Typeahead TItem="CityVM" TValue="CityVM" SearchMethod="SearchCities" SelectedValue="MovilityRequestState.movilityType.DestinationCity"
+                   SelectedValueChanged="OnItemSelectedDestinationCity" Debounce="1" MinimumLength="1" SearchPlaceholderText="Buscar ciudad..."
+                   ListWidth="100%" SelectedTextExpression="e => e.Name" ShowOptionOnFocus="false">
+            <ListTemplate Context="itemContext">
+                @itemContext.Name
             </ListTemplate>
         </Typeahead>
+        <ValidationMessage For="@(() => MovilityRequestState.movilityType.DestinationCityId)" class="text-danger" />
     </DataGridItem>
 
 
@@ -82,16 +78,18 @@
     </DataGridItem>
 
     <DataGridItem Title="Fecha de inicio movilidad">
-        <Datepicker @bind-SelectedDate="selectedInitialDate" />
+            <Datepicker @bind-SelectedDate="selectedInitialDate" />
     </DataGridItem>
 
     <DataGridItem Title="Fecha final movilidad">
-        <Datepicker @bind-SelectedDate="selectedFinalDate" />
+            <Datepicker @bind-SelectedDate="selectedFinalDate" />
     </DataGridItem>
 
 
 
 
- </DataGrid>
+</DataGrid>
+
+</TablerForm>
 <br />
 <br />

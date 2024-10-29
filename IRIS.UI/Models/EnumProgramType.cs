@@ -1,6 +1,6 @@
 ﻿namespace IRIS.UI.Models
 {
-    enum EnumProgramType
+    public enum EnumProgramType
     {
         Pregrado = 1,
         Posgrado = 2

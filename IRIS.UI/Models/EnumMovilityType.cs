@@ -2,7 +2,7 @@
 
 namespace IRIS.UI.Models
 {
-    enum EnumMovilityType
+    public enum EnumMovilityType
     {
 
         [Display(Name = "Práctica Internacional")]

@@ -25,44 +25,46 @@ namespace IRIS.UI.Data
             return orders;
         }
 
-        public static List<DocumentTypeVM> GetDocumentTypes()
+        //public static List<DocumentTypeVM> GetDocumentTypes()
+        //{
+        //    return new List<DocumentTypeVM>
+        //{
+        //    new DocumentTypeVM { Id = 1, DocumentTypeName = "CC" },  // Cédula de Ciudadanía
+        //    new DocumentTypeVM { Id = 2, DocumentTypeName = "CE" },  // Cédula de Extranjería
+        //    new DocumentTypeVM { Id = 3, DocumentTypeName = "PA" },  // Pasaporte
+        //    new DocumentTypeVM { Id = 4, DocumentTypeName = "TI" }   // Tarjeta de Identidad
+        //};
+        //}
+
+        ////create getMobilityTypes()
+        //public static List<MovilityTypeVM> GetMovilityTypes()
+        //{
+        //    return new List<MovilityTypeVM>
+        //{
+        //    new MovilityTypeVM { Id = 1, MovilityTypeName = "Práctica Internacional" },
+        //    new MovilityTypeVM { Id = 2, MovilityTypeName = "Doble Titulación" },
+        //    new MovilityTypeVM { Id = 3, MovilityTypeName = "Intercambio Nacional e Internacional" },
+        //    new MovilityTypeVM { Id = 4, MovilityTypeName = "Práctica Internacional" },
+        //    new MovilityTypeVM { Id = 5, MovilityTypeName = "Intercambio Nacional e Internacional" },
+        //    new MovilityTypeVM { Id = 6, MovilityTypeName = "Práctica de Investigación" },
+        //    new MovilityTypeVM { Id = 7, MovilityTypeName = "Ponencia" },
+        //    new MovilityTypeVM { Id = 8, MovilityTypeName = "Representación Institucional" }
+        //};
+        //}
+
+        public static List<ProgramVM> GetPrograms()
         {
-            return new List<DocumentTypeVM>
+            return new List<ProgramVM>
         {
-            new DocumentTypeVM { Id = 1, DocumentTypeName = "CC" },  // Cédula de Ciudadanía
-            new DocumentTypeVM { Id = 2, DocumentTypeName = "CE" },  // Cédula de Extranjería
-            new DocumentTypeVM { Id = 3, DocumentTypeName = "PA" },  // Pasaporte
-            new DocumentTypeVM { Id = 4, DocumentTypeName = "TI" }   // Tarjeta de Identidad
+            new ProgramVM { Id = 1, ProgramName = "Tecnologia en Sistemas de información", FacultyId = 1 },
+            new ProgramVM { Id = 2, ProgramName = "Ingenieria de Sistemas", FacultyId = 1 },
+            new ProgramVM { Id = 3, ProgramName = "Especialización en Ingenieria de Software", FacultyId = 1 },
+
         };
         }
 
-        //create getMobilityTypes()
-        public static List<MovilityTypeVM> GetMovilityTypes()
-        {
-            return new List<MovilityTypeVM>
-        {
-            new MovilityTypeVM { Id = 1, MovilityTypeName = "Práctica Internacional" },
-            new MovilityTypeVM { Id = 2, MovilityTypeName = "Doble Titulación" },
-            new MovilityTypeVM { Id = 3, MovilityTypeName = "Intercambio Nacional e Internacional" },
-            new MovilityTypeVM { Id = 4, MovilityTypeName = "Práctica Internacional" },
-            new MovilityTypeVM { Id = 5, MovilityTypeName = "Intercambio Nacional e Internacional" },
-            new MovilityTypeVM { Id = 6, MovilityTypeName = "Práctica de Investigación" },
-            new MovilityTypeVM { Id = 7, MovilityTypeName = "Ponencia" },
-            new MovilityTypeVM { Id = 8, MovilityTypeName = "Representación Institucional" }
-        };
-        }
 
 
-
-        //create GetProgramTypes()
-        public static List<ProgramTypeVM> GetProgramTypes()
-        {
-            return new List<ProgramTypeVM>
-        {
-            new ProgramTypeVM { Id = 1, ProgramTypeName = "Pregrado" },
-            new ProgramTypeVM { Id = 2, ProgramTypeName = "Posgrado" }
-        };
-        }
 
 
         //public static List<Order> GetRandomOrders()
