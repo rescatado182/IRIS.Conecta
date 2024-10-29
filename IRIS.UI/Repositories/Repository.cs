@@ -23,6 +23,9 @@ namespace IRIS.Frontend.Repositories
             var responseHttp = await _httpClient.GetAsync(url);
             if (responseHttp.IsSuccessStatusCode)
             {
+                var content = await responseHttp.Content.ReadAsStringAsync();
+                Console.WriteLine(content);
+
                 var response = await UnserializeAnswerAsync<T>(responseHttp);
                 return new HttpResponseWrapper<T>(response, false, responseHttp);
             }

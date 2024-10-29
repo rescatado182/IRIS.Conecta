@@ -5,11 +5,14 @@ namespace TabBlazor
     public partial class TabsOrder : TablerBaseComponent
     {
         private List<ITab> Tabs { get; set; } = new List<ITab>();
-        private int CurrentTabIndex { get; set; } = 0;
+        public int CurrentTabIndex { get; set; } = 2;
 
         public ITab ActiveTab { get; private set; }
 
         public bool IsLastTab => CurrentTabIndex >= Tabs.Count - 1;
+        
+        public bool IsFirstTab => CurrentTabIndex == 2; 
+
 
         protected override void OnInitialized()
         {
@@ -30,7 +33,7 @@ namespace TabBlazor
         {
             if (!Tabs.Contains(tab))
             {
-                tab.IsEnabled = Tabs.Count == 0; // Solo habilita la primera pestaña al agregarla
+                tab.IsEnabled = Tabs.Count == 2; // Solo habilita la primera pestaña al agregarla
                 Tabs.Add(tab);
             }
 
@@ -72,12 +75,33 @@ namespace TabBlazor
         {
             if (CurrentTabIndex < Tabs.Count - 1)
             {
+                // Desactivar la pestaña actual
+                Tabs[CurrentTabIndex].IsEnabled = false;
+                SetActivateTab(Tabs[CurrentTabIndex]);
+
                 // Habilitar la siguiente pestaña
                 Tabs[CurrentTabIndex + 1].IsEnabled = true;
                 CurrentTabIndex++;
                 SetActivateTab(Tabs[CurrentTabIndex]);
 
             }
+        }
+
+        public void PreviousTab()
+        {
+            if (CurrentTabIndex > 0)
+            {
+                // Desactivar la pestaña actual
+                Tabs[CurrentTabIndex].IsEnabled = false;
+                SetActivateTab(Tabs[CurrentTabIndex]);
+
+                // Habilitar la pestaña anterior
+                Tabs[CurrentTabIndex - 1].IsEnabled = true;
+                CurrentTabIndex--;
+                SetActivateTab(Tabs[CurrentTabIndex]);
+
+            }
+
         }
 
 

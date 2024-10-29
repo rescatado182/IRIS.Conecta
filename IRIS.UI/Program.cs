@@ -7,6 +7,7 @@ using TabBlazor.Services;
 using IRIS.UI.Services.BL;
 using IRIS.UI.Services;
 using ColorCode.Compilation.Languages;
+using IRIS.UI.Pages.BL.Tickets.RequestTickets.Movility;
 
 namespace IRIS.UI
 {
@@ -26,8 +27,8 @@ namespace IRIS.UI
 
             builder.Services.AddScoped<IRepository, Repository>();
             builder.Services.AddScoped<IModalService, ModalService>();
-            //builder.Services.AddScoped<SearchFacultyServices>();
-            //builder.Services.AddScoped<CountryService>();
+            builder.Services.AddSingleton<TicketMovilityRequest>();
+
             builder.Services.AddDocs();
             builder.Services.AddTabler();
 

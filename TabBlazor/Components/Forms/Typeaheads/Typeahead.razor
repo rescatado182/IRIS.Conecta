@@ -16,7 +16,7 @@
             }
             else
             {
-                <input class="form-control" @ref="input" @bind="SearchText" type="text" @bind:event="oninput" placeholder="@SearchPlaceholderText" @onfocus="() => SetInput(true)"  @onblur="@(() => SetInput(false))">
+                <input class="form-control" @ref="input" @bind="SearchText" type="text" @bind:event="oninput" placeholder="@SearchPlaceholderText" @onfocus="() => SetInput(true)"  @onblur="(() => SetInput(false)) ">
                 <span class="input-group-text">
 
                     @if (!string.IsNullOrWhiteSpace(searchText))

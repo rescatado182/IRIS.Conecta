@@ -1,12 +1,12 @@
 ﻿@using IRIS.UI.Models
 <h3>Datos Académicos</h3>
 
-
+<TablerForm Model="@MovilityRequestState.academyData" >
 
 <DataGrid>
 
     <DataGridItem Title="Facultad">
-        <Typeahead SearchMethod="SearchFaculties" @bind-SelectedValue="selectedFaculty"
+            <Typeahead TItem="FacultyVM" TValue="FacultyVM" SearchMethod="SearchFaculties" SelectedValue="MovilityRequestState.academyData.Faculties" SelectedValueChanged="OnItemSelected"
             Debounce="1" MinimumLength=1 SearchPlaceholderText="Buscar Facultad..."
             ListWidth="100%"
             SelectedTextExpression="e => e.FacultyName" ShowOptionOnFocus="true">
@@ -14,39 +14,60 @@
             @context.FacultyName
         </ListTemplate>
         </Typeahead>
+        <ValidationMessage For="@(() => MovilityRequestState.academyData.FacultyId)" class="text-danger" />
     </DataGridItem>
 
-    <DataGridItem Title="Programa">
-        <input type="text" class="form-control" />
+     <DataGridItem Title="Programa">
+            <Typeahead TItem="ProgramVM" TValue="ProgramVM" SearchMethod="SearchPrograms" SelectedValue="MovilityRequestState.academyData.Program" SelectedValueChanged="OnItemSelected"
+                       Debounce="1" MinimumLength=1 SearchPlaceholderText="Buscar Programa..."
+                       ListWidth="100%"
+                       SelectedTextExpression="e => e.ProgramName" ShowOptionOnFocus="false">
+                <ListTemplate>
+                    @context.ProgramName
+                </ListTemplate>
+            </Typeahead>
+            <ValidationMessage For="@(() => MovilityRequestState.academyData.ProgramId)" class="text-danger" />
     </DataGridItem>
 
     <DataGridItem Title="Proyecto de investigación (S/A)">
-        <input type="text" class="form-control" />
+            <input type="text" class="form-control" @bind="MovilityRequestState.academyData.ResearchProject" />
+            <ValidationMessage For="@(() => MovilityRequestState.academyData.ResearchProject)" class="text-danger" />
     </DataGridItem>
+ </DataGrid>
 
+
+ <DataGrid>
     <DataGridItem Title="Promedio crédito">
-        <input type="text" class="form-control" />
+            <input type="text" class="form-control" @bind="MovilityRequestState.academyData.AverageCredit" />
+            <ValidationMessage For="@(() => MovilityRequestState.academyData.AverageCredit)" class="text-danger" />
     </DataGridItem>
 
     <DataGridItem Title="Tipo de formación">
         <Select Items="enumProgramType"
-            @bind-SelectedValue="selectedProgramType"
+                    @bind-SelectedValue="MovilityRequestState.academyData.ProgramType"
             TextExpression="e => Enum.GetName(typeof(EnumProgramType), e)"
-             NoSelectedText="" 
-             />
-    </DataGridItem>
+             NoSelectedText=""  />
+            <ValidationMessage For="@(() => MovilityRequestState.academyData.ProgramType)" class="text-danger" />
+        </DataGridItem>
 
     <DataGridItem Title="Semestre Matriculado">
-        <input type="text" class="form-control" />
+            <input type="text" class="form-control" @bind="MovilityRequestState.academyData.enrolledSemester" />
+            <ValidationMessage For="@(() => MovilityRequestState.academyData.enrolledSemester)" class="text-danger" />
     </DataGridItem>
+</DataGrid>
 
+<DataGrid>
     <DataGridItem Title="G. de investigación/Semillero (S/A)">
-        <input type="text" class="form-control" />
+            <input type="text" class="form-control" @bind="MovilityRequestState.academyData.ResearchGroup" />
+            <ValidationMessage For="@(() => MovilityRequestState.academyData.ResearchGroup)" class="text-danger" />
     </DataGridItem>
 
-    <Checkbox Label="¿Pertenece a algún grupo cultural o deportivo institucional?" @bind-Value="isChecked" Switch />
+        <DataGridItem Title="¿Pertenece a algún grupo cultural o deportivo institucional?">
 
+        <Checkbox Label="No/Si" @bind-Value="MovilityRequestState.academyData.IsInstitutionalGroup" Switch />
+        <ValidationMessage For="@(() => MovilityRequestState.academyData.IsInstitutionalGroup)" class="text-danger" />
+     </DataGridItem>
     </DataGrid>
-
+</TablerForm>
 <br />
 <br />

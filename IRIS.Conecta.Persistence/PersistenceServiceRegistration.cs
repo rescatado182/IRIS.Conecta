@@ -12,9 +12,9 @@ namespace IRIS.Conecta.Persistence
         public static IServiceCollection AddPersistenceServices(this IServiceCollection services,
             IConfiguration configuration)
         {
-            services.AddDbContext<IRISConectaDatabaseContext>(options => {
-                options.UseSqlServer(configuration.GetConnectionString("IRISDatabaseConnectionString"));
-            });
+
+
+            services.AddDbContext<IRISConectaDatabaseContext>(options => options.UseSqlServer(configuration.GetConnectionString("IRISDatabaseConnectionString")));
 
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<IFacultyRepository, FacultiesRepository>();

@@ -19,28 +19,28 @@
     </div>
 </Alert>
 
-<TabBlazor.TabsOrder @ref="tabsOrderRef"> 
+<TabBlazor.TabsOrder @ref="tabsOrderRef" KeepAlive="true">
 
     @* Datos Personales *@
     <TabBlazor.TabOrder>
         <Header>
-            <StatusDot BackgroundColor="@((!isCompleted1 ? TablerColor.Blue : TablerColor.Green))" />
+            <StatusDot BackgroundColor="@((!isCompletedPersonalData ? TablerColor.Blue : TablerColor.Green))" />
             <Icon class="icon" IconType="@TablerIcons.User" Size="24" /> Datos Personales
         </Header>
         <ChildContent>
-            <IRIS.UI.Pages.BL.Tickets.Shared.PersonalDataTicket @ref="personalDataRef" />
+            <IRIS.UI.Pages.BL.Tickets.Shared.PersonalDataTicket @ref="personalDataRef"/>
         </ChildContent>
     </TabBlazor.TabOrder>
 
     @* Datos Acádemicos *@
     <TabBlazor.TabOrder>
         <Header>
-            <StatusDot BackgroundColor="@((!isCompleted2 ? TablerColor.Blue : TablerColor.Green))" Animate />
+            <StatusDot BackgroundColor="@((!isCompletedAcademyData ? TablerColor.Blue : TablerColor.Green))" Animate />
             <Icon class="icon" IconType="@TablerIcons.Address_book" Size="24" /> Datos Académicos
         </Header>
         <ChildContent>
 
-            <IRIS.UI.Pages.BL.Tickets.Shared.AcademyDataTicket />
+            <IRIS.UI.Pages.BL.Tickets.Shared.AcademyDataTicket @ref="academyDataRef" />
 
         </ChildContent>
     </TabBlazor.TabOrder>
@@ -48,11 +48,11 @@
     @* Tipos de Movilidad *@
     <TabBlazor.TabOrder>
         <Header>
-            <StatusDot BackgroundColor="@((!isCompleted1 ? TablerColor.Blue : TablerColor.Green))" />
+            <StatusDot BackgroundColor="@((!isCompleted2 ? TablerColor.Blue : TablerColor.Green))" />
             <Icon class="icon" IconType="@TablerIcons.Map_pin" Size="24" /> Tipos de Movilidad
         </Header>
         <ChildContent>
-            <MovilityTypeTicket>
+            <MovilityTypeTicket @ref="movilityTypeRef">
              </MovilityTypeTicket>
            
         </ChildContent>
@@ -99,6 +99,9 @@
 
 <!-- Botón de navegación fuera de TabsOrder -->
 <div class="d-flex justify-content-end mt-3">
+    <button class="btn btn-primary me-2" @onclick="PreviousStepAsync" disabled="@IsFirstTab">
+        Anterior
+    </button>
     <button class="btn btn-primary" @onclick="NextStepAsync" disabled="@IsLastTab">
         Siguiente
     </button>

@@ -5,7 +5,7 @@
 namespace IRIS.Conecta.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMasters : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

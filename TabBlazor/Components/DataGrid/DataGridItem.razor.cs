@@ -9,6 +9,7 @@ namespace TabBlazor
         [Parameter] public RenderFragment TitleTemplate { get; set; }
 
 
+
         protected override string ClassNames => ClassBuilder
             .Add("datagrid-item")
             .Add(BackgroundColor.GetColorClass("bg"))

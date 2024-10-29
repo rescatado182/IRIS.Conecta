@@ -42,6 +42,7 @@ namespace TabBlazor
             return propertyInfo.Name;
         }
 
+
         public RenderFragment Contents
         {
             get

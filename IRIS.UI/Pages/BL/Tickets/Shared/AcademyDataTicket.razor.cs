@@ -1,37 +1,118 @@
+using ApexCharts;
 using IRIS.Frontend.Repositories;
 using IRIS.UI.Data;
+using IRIS.UI.Interfaces;
 using IRIS.UI.Models;
+using IRIS.UI.Pages.BL.Tickets.RequestTickets.Movility;
 using IRIS.UI.Pages.Masters.BL.RequestTypes;
 using IRIS.UI.Services.BL;
 using Microsoft.AspNetCore.Components;
+using System.ComponentModel.DataAnnotations;
 
 namespace IRIS.UI.Pages.BL.Tickets.Shared
 {
-    public partial class AcademyDataTicket : ComponentBase
+    public partial class AcademyDataTicket : ComponentBase, IValidateData
     {
-
-        [Inject] private SearchFacultyServices SearchFaculty { get; set; } = null!;
+        [Inject] private IRepository Repository { get; set; } = null!;
+        [Inject] TicketMovilityRequest MovilityRequestState { get; set; }
 
         private bool isChecked;
 
         private FacultyVM selectedFaculty;
+        private ProgramVM selectedProgram;
 
         private EnumProgramType selectedProgramType;
         private List<EnumProgramType> enumProgramType = new List<EnumProgramType>();
 
         private List<FacultyVM> faculties = new List<FacultyVM>();
 
+        private AcademyDataVM academyData = new AcademyDataVM();
+
+        private List<ProgramVM> programs = new List<ProgramVM>();
+
         
+
+
+
 
         protected override async Task OnInitializedAsync()
         {
             enumProgramType = Enum.GetValues(typeof(EnumProgramType)).Cast<EnumProgramType>().ToList();
-            faculties = await SearchFaculty.GetListAsyncFaculties();
+            await ListAsyncFaculties();
+            programs = SampleData.GetPrograms();
         }
 
         private async Task<IEnumerable<FacultyVM>> SearchFaculties(string searchText)
         {
             return faculties.Where(f => f.FacultyName.Contains(searchText, StringComparison.CurrentCultureIgnoreCase));
+        }
+        private async Task<IEnumerable<ProgramVM>> SearchPrograms(string searchText)
+        {
+            return programs.Where(s => s.FacultyId == MovilityRequestState.academyData.FacultyId && s.ProgramName.Contains(searchText, StringComparison.CurrentCultureIgnoreCase));
+        }
+        private async Task OnItemSelected<T>(T selectedItem)
+        {
+            if (selectedItem is FacultyVM faculty)
+            {
+                MovilityRequestState.academyData.Faculties = faculty;
+                MovilityRequestState.academyData.FacultyId = faculty.Id;
+            }
+            if (selectedItem is ProgramVM program)
+            {
+                MovilityRequestState.academyData.Program = program;
+                MovilityRequestState.academyData.ProgramId = program.Id;
+            }
+
+
+        }
+
+        //public IEnumerable<ValidationResult> ValidateAcademyDataAsync()
+        //{
+        //    var results = new List<ValidationResult>();
+        //    var validationContext = new ValidationContext(MovilityRequestState.personalData, null, null);
+        //    Validator.TryValidateObject(MovilityRequestState.personalData, validationContext, results, true);
+
+        //    if (MovilityRequestState.personalData is IValidatableObject validatableModel)
+        //        results.AddRange(validatableModel.Validate(validationContext));
+
+        //    foreach (var validationResult in results)
+        //    {
+        //        Console.WriteLine(validationResult.ErrorMessage);
+        //    }
+
+        //    return results;
+        //}
+
+        public Task<IEnumerable<ValidationResult>> ValidateDataAsync()
+        {
+            var results = new List<ValidationResult>();
+            var validationContext = new ValidationContext(MovilityRequestState.academyData, null, null);
+            Validator.TryValidateObject(MovilityRequestState.academyData, validationContext, results, true);
+
+            if (MovilityRequestState.academyData is IValidatableObject validatableModel)
+                results.AddRange(validatableModel.Validate(validationContext));
+
+            foreach (var validationResult in results)
+            {
+                Console.WriteLine(validationResult.ErrorMessage);
+            }
+
+            return Task.FromResult<IEnumerable<ValidationResult>>(results);
+        }
+        private async Task<bool> ListAsyncFaculties()
+        {
+
+
+            var responseHttp = await Repository.GetAsync<List<FacultyVM>>("/api/Faculties");
+            if (responseHttp.Error)
+            {
+                var message = await responseHttp.GetErrorMessageAsync();
+
+
+                return false;
+            }
+            faculties = responseHttp.Response;
+            return true;
         }
     }
 }

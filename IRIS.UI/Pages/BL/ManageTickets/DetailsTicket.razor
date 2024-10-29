@@ -1,0 +1,131 @@
+﻿<h3>Detalle del ticket</h3>
+
+@page "/ticketDetails/{ticketId:int}"
+@if (ticket is null)
+{
+    <Progress Color="TablerColor.Blue" Indeterminate />
+}
+else{
+
+    <Card Size="CardSize.Default">
+        <CardHeader>
+            <h3>Información del Ticket</h3>
+        </CardHeader>
+        <CardBody>
+            <DataGrid>
+
+                <DataGridItem Title="ID">
+                    <Badge BackgroundColor="TablerColor.Green">@ticket.Id</Badge>
+                </DataGridItem>
+
+                <DataGridItem Title="Title">
+                    @ticket.Title
+                </DataGridItem>
+
+                <DataGridItem Title="Event Name">
+                    @ticket.EventName
+                </DataGridItem>
+
+            </DataGrid>
+        </CardBody>
+    </Card>
+
+
+    <br />
+    <Card Size="CardSize.Default">
+        <CardHeader>
+            <h3>Información Detallada Ticket</h3>
+        </CardHeader>
+        <CardBody>
+            <DataGrid>
+                <DataGridItem Title="Request Type">
+                    <Badge BackgroundColor="TablerColor.Indigo">@ticket.RequestTypeId</Badge>
+                </DataGridItem>
+
+                <DataGridItem Title="Description">
+                    <span style="color: darkgray;">@ticket.Description</span>
+                </DataGridItem>
+
+                <DataGridItem Title="Country">
+                    <span>@ticket.Country</span>
+                </DataGridItem>
+
+                <DataGridItem Title="City">
+                    <span>@ticket.City</span>
+                </DataGridItem>
+
+                <DataGridItem Title="Phone">
+                    <span>@ticket.Phone</span>
+                </DataGridItem>
+
+                <DataGridItem Title="Contact Data">
+                    @ticket.ContactData
+                </DataGridItem>
+
+                <DataGridItem Title="External Institution">
+                    @ticket.ExternalInstitution
+                </DataGridItem>
+
+                <DataGridItem Title="Start Date">
+                    <Badge BackgroundColor="TablerColor.Blue">@ticket.StartDate.ToString("yyyy-MM-dd")</Badge>
+                </DataGridItem>
+
+                <DataGridItem Title="End Date">
+                    <Badge BackgroundColor="TablerColor.Blue">@ticket.EndDate.ToString("yyyy-MM-dd")</Badge>
+                </DataGridItem>
+
+                <DataGridItem Title="Movility Type">
+                    <Status BackgroundColor="TablerColor.Yellow">
+                        @ticket.MovilityType
+                    </Status>
+                </DataGridItem>
+
+                <DataGridItem Title="Requirements">
+                    <Badge BackgroundColor="TablerColor.Purple">@ticket.TicketRequirements</Badge>
+                </DataGridItem>
+
+                <DataGridItem Title="Total">
+                    <span style="font-weight: bold;">@ticket.Total</span>
+                </DataGridItem>
+
+            </DataGrid>
+        </CardBody>
+    </Card>
+    <br />
+    <Card Size="CardSize.Default">
+        <CardHeader>
+            <h3>Información Personal</h3>
+        </CardHeader>
+        <CardBody>
+            <DataGrid>
+                <DataGridItem Title="Nombre">
+                    Nombre Solicitante
+                </DataGridItem>
+            </DataGrid>
+        </CardBody>
+    </Card>
+    <br />
+
+    <div class="text-start mt-4">
+        <Button BackgroundColor="TablerColor.Green" OnClick="OpenStatusOffcanvas">Cambiar Estado</Button>
+        <Button BackgroundColor="TablerColor.Orange" OnClick="OpenCommentOffcanvas">Comentar</Button>
+        <Button BackgroundColor="TablerColor.Purple">Escalar</Button>
+
+    </div>
+
+
+
+
+@*     <Card Size="CardSize.Default">
+        <CardHeader>
+            <h3>Información del Ticket</h3>
+        </CardHeader>
+        <CardBody>
+            <DataGrid>
+            </DataGrid>
+        </CardBody>
+    </Card>
+ *@
+
+
+}

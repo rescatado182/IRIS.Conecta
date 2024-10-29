@@ -5,7 +5,7 @@
 namespace IRIS.Conecta.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class cambiosDiego : Migration
+    public partial class createbd : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

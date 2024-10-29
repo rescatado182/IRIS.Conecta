@@ -4,6 +4,7 @@ using IRIS.Conecta.Persistence.DatabaseContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IRIS.Conecta.Persistence.Migrations
 {
     [DbContext(typeof(IRISConectaDatabaseContext))]
-    partial class IRISConectaDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20241016163125_createbd2")]
+    partial class createbd2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -64,7 +67,7 @@ namespace IRIS.Conecta.Persistence.Migrations
                     b.HasIndex(new[] { "Id" }, "IX_Departments_Id")
                         .IsUnique();
 
-                    b.ToTable("Departments", (string)null);
+                    b.ToTable("Departments");
                 });
 
             modelBuilder.Entity("IRIS.Conecta.Domain.Entities.Masters.Faculty", b =>
@@ -99,7 +102,7 @@ namespace IRIS.Conecta.Persistence.Migrations
                     b.HasIndex(new[] { "FacultyName" }, "IX_Faculties_Name")
                         .IsUnique();
 
-                    b.ToTable("Faculties", (string)null);
+                    b.ToTable("Faculties");
                 });
 
             modelBuilder.Entity("IRIS.Conecta.Domain.Entities.Masters.TemplateResponses", b =>
@@ -140,7 +143,7 @@ namespace IRIS.Conecta.Persistence.Migrations
 
                     b.HasIndex(new[] { "RequestTypeId" }, "IX_TemplateResponses_RequestTypeId");
 
-                    b.ToTable("TemplateResponses", (string)null);
+                    b.ToTable("TemplateResponses");
                 });
 
             modelBuilder.Entity("IRIS.Conecta.Domain.Entities.RequestType", b =>
