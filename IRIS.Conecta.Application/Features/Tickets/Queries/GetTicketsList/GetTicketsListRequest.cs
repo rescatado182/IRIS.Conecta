@@ -3,7 +3,7 @@ using MediatR;
 
 namespace IRIS.Conecta.Application.Features.Tickets.Queries.GetTicketsList
 {
-    public class GetTicketsListRequest : IRequest<List<TicketsListDto>>
+    public record GetTicketsListRequest : IRequest<List<TicketsListDto>>
     {
     }
 }

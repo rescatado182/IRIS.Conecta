@@ -20,6 +20,7 @@ namespace IRIS.Conecta.Persistence.Configurations
 
             builder.Property(e => e.Id);
             builder.Property(e => e.DepartmentId);
+            builder.Property(e => e.Path);
             builder.Property(e => e.RequestName)
                 .IsRequired()
                 .HasMaxLength(100);

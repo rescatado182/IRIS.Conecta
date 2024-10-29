@@ -19,7 +19,7 @@ namespace IRIS.Conecta.Application.Features.Tickets.Queries.GetTicketsList
         {
             var tickets = await this.ticketsRepository.GetAsync();
 
-            var data = this.mapper.Map<List<TicketsListDto>>(request);
+            var data = this.mapper.Map<List<TicketsListDto>>(tickets);
 
             return data;
         }

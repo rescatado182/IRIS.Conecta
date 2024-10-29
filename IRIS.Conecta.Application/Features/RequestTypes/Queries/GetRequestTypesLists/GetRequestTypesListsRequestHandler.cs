@@ -11,7 +11,9 @@ namespace IRIS.Conecta.Application.Features.RequestTypes.Queries.GetRequestTypes
         private readonly IRequestTypeRepository _requestTypeRepository;
         private readonly IMapper _mapper;
 
-        public GetRequestTypesListsRequestHandler(IRequestTypeRepository requestTypeRepository, IMapper mapper)
+        public GetRequestTypesListsRequestHandler(
+            IRequestTypeRepository requestTypeRepository, 
+            IMapper mapper)
         {
             _requestTypeRepository  = requestTypeRepository;
             _mapper                 = mapper;
