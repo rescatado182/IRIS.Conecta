@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IRIS.Conecta.Persistence.Migrations
 {
     [DbContext(typeof(IRISConectaDatabaseContext))]
-    [Migration("20241104162242_PersonalData")]
+    [Migration("20241104184913_PersonalData")]
     partial class PersonalData
     {
         /// <inheritdoc />
@@ -533,6 +533,10 @@ namespace IRIS.Conecta.Persistence.Migrations
                     b.Property<int>("ResidenceStateId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("TicketId")
+                        .IsRequired()
+                        .HasColumnType("int");
+
                     b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
@@ -550,6 +554,9 @@ namespace IRIS.Conecta.Persistence.Migrations
                     b.HasIndex("CityResidenceId");
 
                     b.HasIndex("ResidenceStateId");
+
+                    b.HasIndex("TicketId")
+                        .IsUnique();
 
                     b.HasIndex(new[] { "DocumentNumber" }, "IX_PersonalData_DocumentNumber");
 
@@ -589,7 +596,6 @@ namespace IRIS.Conecta.Persistence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Path")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RequestName")
@@ -670,6 +676,9 @@ namespace IRIS.Conecta.Persistence.Migrations
 
                     b.Property<string>("MovilityType")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PersonalDataId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Phone")
                         .HasMaxLength(20)
@@ -798,6 +807,12 @@ namespace IRIS.Conecta.Persistence.Migrations
                         .IsRequired()
                         .HasConstraintName("FK_PersonalDatas_States_ResidenceStateId");
 
+                    b.HasOne("IRIS.Conecta.Domain.Entities.Ticket", "Ticket")
+                        .WithOne("PersonalData")
+                        .HasForeignKey("IRIS.Conecta.Domain.Entities.PersonalData", "TicketId")
+                        .IsRequired()
+                        .HasConstraintName("FK_Tickets_RequestTypes_RequestTypeId");
+
                     b.Navigation("BornCity");
 
                     b.Navigation("BornCountry");
@@ -807,6 +822,8 @@ namespace IRIS.Conecta.Persistence.Migrations
                     b.Navigation("CityResidence");
 
                     b.Navigation("StateResidence");
+
+                    b.Navigation("Ticket");
                 });
 
             modelBuilder.Entity("IRIS.Conecta.Domain.Entities.RequestType", b =>
@@ -867,6 +884,12 @@ namespace IRIS.Conecta.Persistence.Migrations
                     b.Navigation("TemplateResponses");
 
                     b.Navigation("Tickets");
+                });
+
+            modelBuilder.Entity("IRIS.Conecta.Domain.Entities.Ticket", b =>
+                {
+                    b.Navigation("PersonalData")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

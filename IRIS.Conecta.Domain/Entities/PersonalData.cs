@@ -24,6 +24,7 @@ public class PersonalData : BaseEntity
     public string? Phone { get; set; }
     public required string Cellphone { get; set; }
     public required int UserId { get; set; }
+    public int? TicketId { get; set; }
 
     #region Relationships
 
@@ -40,7 +41,9 @@ public class PersonalData : BaseEntity
     public State? StateResidence { get; set; }
 
     [JsonIgnore]
-    public City? CityResidence { get; set; }        
+    public City? CityResidence { get; set; }
+
+    public virtual Ticket? Ticket { get; set; }
 
     #endregion
 }

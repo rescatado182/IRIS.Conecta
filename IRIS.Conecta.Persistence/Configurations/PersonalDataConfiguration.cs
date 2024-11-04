@@ -78,6 +78,13 @@ namespace IRIS.Conecta.Persistence.Configurations
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_PersonalDatas_States_ResidenceStateId");
 
+            builder.HasOne(e => e.Ticket).WithOne(p => p.PersonalData)
+                .HasForeignKey<PersonalData>(e => e.TicketId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_PersonalData_Tickets_TicketId");
+
+
 
         }
     }

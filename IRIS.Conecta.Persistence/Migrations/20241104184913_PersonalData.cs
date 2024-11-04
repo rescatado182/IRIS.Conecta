@@ -10,7 +10,39 @@ namespace IRIS.Conecta.Persistence.Migrations
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
-        { 
+        {
+
+            migrationBuilder.CreateTable(
+                name: "Tickets",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    EventName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    RequestTypeId = table.Column<int>(type: "int", nullable: false),
+                    AgreementName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
+                    IsAgreement = table.Column<bool>(type: "bit", nullable: true, defaultValue: false),
+                    Results = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DeliveryDate = table.Column<DateOnly>(type: "date", precision: 0, nullable: true),
+                    MovilityType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Country = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    City = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Phone = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
+                    ContactData = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    ExternalInstitution = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    PersonalDataId = table.Column<int>(type: "int", nullable: false),
+                    StartDate = table.Column<DateOnly>(type: "date", precision: 0, nullable: false),
+                    EndDate = table.Column<DateOnly>(type: "date", precision: 0, nullable: false),
+                    TicketRequirements = table.Column<int>(type: "int", nullable: true),
+                    Total = table.Column<double>(type: "float", nullable: true),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateModified = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LastModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                });
 
             migrationBuilder.CreateTable(
                 name: "PersonalData",
@@ -32,6 +64,7 @@ namespace IRIS.Conecta.Persistence.Migrations
                     Phone = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: true),
                     Cellphone = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    TicketId = table.Column<int>(type: "int", nullable: false),
                     CityResidenceId = table.Column<int>(type: "int", nullable: true),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -67,8 +100,10 @@ namespace IRIS.Conecta.Persistence.Migrations
                         column: x => x.ResidenceStateId,
                         principalTable: "states",
                         principalColumn: "id");
+                   
                 });
-            
+
+           
 
             migrationBuilder.CreateIndex(
                 name: "IX_PersonalData_BornCityId",
@@ -117,10 +152,37 @@ namespace IRIS.Conecta.Persistence.Migrations
                 column: "ResidenceStateId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_PersonalData_TicketId",
+                table: "PersonalData",
+                column: "TicketId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_PersonalData_UserId",
                 table: "PersonalData",
                 column: "UserId");
-            
+           
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Ticket_Id",
+                table: "Tickets",
+                column: "Id",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Ticket_Status",
+                table: "Tickets",
+                column: "Status");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Ticket_Title",
+                table: "Tickets",
+                column: "Title");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tickets_RequestTypeId",
+                table: "Tickets",
+                column: "RequestTypeId");
         }
 
         /// <inheritdoc />
@@ -128,7 +190,10 @@ namespace IRIS.Conecta.Persistence.Migrations
         {
             migrationBuilder.DropTable(
                 name: "PersonalData");
-            
+
+            migrationBuilder.DropTable(
+                name: "Tickets");
+       
         }
     }
 }

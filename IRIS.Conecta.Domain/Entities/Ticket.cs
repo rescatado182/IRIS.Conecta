@@ -42,6 +42,7 @@ namespace IRIS.Conecta.Domain.Entities
 
         public string? ExternalInstitution { get; set; }
 
+        public int PersonalDataId { get; set; }
 
         // TODO: Fecha de movilidad y fecha de requerimientos son diferentes?
         public DateOnly StartDate { get; set; }
@@ -58,6 +59,8 @@ namespace IRIS.Conecta.Domain.Entities
 
         #region Relationships
         public required RequestType RequestType { get; set; }
+
+        public required PersonalData PersonalData { get; set; }
 
         #endregion
     }
