@@ -7,7 +7,7 @@ namespace IRIS.Conecta.Domain.Entities
     {
         public int Id { get; set; }
         public string RequestName { get; set; } = null!;
-        public string Path { get; set; } = null!;
+        public string? Path { get; set; }
         public int DepartmentId { get; set; }
         public virtual Department Department { get; set; } = null!;
 

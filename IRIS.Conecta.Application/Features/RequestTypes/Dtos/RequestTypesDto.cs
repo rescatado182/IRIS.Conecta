@@ -4,6 +4,7 @@
     {
         public int Id { get; set; }
         public string RequestName { get; set; } = null!;
+        public string Path { get; set; }
         public int DepartmentId { get; set; }
     }
 }

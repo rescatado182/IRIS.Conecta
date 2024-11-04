@@ -7,17 +7,23 @@ namespace IRIS.Conecta.Persistence.DatabaseContext
 {
     public class IRISConectaDatabaseContext : DbContext
     {
-        public IRISConectaDatabaseContext(DbContextOptions<IRISConectaDatabaseContext> options) 
-            : base(options)
-        {
-            
+        public IRISConectaDatabaseContext(DbContextOptions<IRISConectaDatabaseContext> options) : base(options)
+        {            
         }
+        
+        public virtual DbSet<City> Cities { get; set; }
+
+        public virtual DbSet<Country> Countries { get; set; }
+
+        public virtual DbSet<State> States { get; set; }
 
         public DbSet<Faculty> Faculties { get; set; }
         public DbSet<Department> Departments { get; set; }
         public DbSet<RequestType> RequestTypes { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<TemplateResponses> TemplateResponses { get; set; }
+        public DbSet<PersonalData> PersonalDatas { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(IRISConectaDatabaseContext).Assembly);

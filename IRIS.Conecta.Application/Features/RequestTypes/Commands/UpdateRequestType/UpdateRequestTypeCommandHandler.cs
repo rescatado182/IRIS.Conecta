@@ -38,6 +38,8 @@ namespace IRIS.Conecta.Application.Features.RequestTypes.Commands.UpdateRequestT
 
             // Mapping the data
             this.mapper.Map(request, requestType);
+            await this.requestTypeRepository.UpdateAsync(requestType);
+
 
             return Unit.Value;
         }

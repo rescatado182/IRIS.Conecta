@@ -1,6 +1,5 @@
 ﻿namespace IRIS.Conecta.Domain.Enums
-{
-    
+{    
     public enum TicketsStatus
     {
         Open        = 1,
@@ -9,6 +8,4 @@
         Resolved    = 4,
         Responded   = 5
     }
-
-
 }

@@ -32,8 +32,7 @@ namespace IRIS.Conecta.Application.Features.Tickets.Commands.MovilityCommands.Up
             var validator = new UpdateTicketCommandValidator(requestTypeRepository);
             var validationResult = await validator.ValidateAsync(request, cancellationToken);
 
-            if (!validationResult.IsValid)
-            {
+            if (!validationResult.IsValid) {
                 throw new ValidationException((IEnumerable<FluentValidation.Results.ValidationFailure>)validationResult);
             }
 
