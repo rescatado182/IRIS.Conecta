@@ -111,7 +111,7 @@ namespace IRIS.Conecta.Identity.Services
                     str.AppendFormat("-{0}\n", err.Description);
                 }
 
-                throw new BadRequestException($"{result.Errors}");
+                throw new BadRequestException($"{str.ToString()}");
             }
 
         }
