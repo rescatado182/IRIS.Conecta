@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using FluentValidation;
 using IRIS.Conecta.Application.Contracts.Persistence;
 using IRIS.Conecta.Application.Exceptions;
 using MediatR;
@@ -10,11 +9,15 @@ namespace IRIS.Conecta.Application.Features.PersonalData.Commands.UpdatePersonal
     {
         private readonly IMapper _mapper;
         private readonly IPersonalDataRepository _personalDataRepository;
+        private readonly ITicketsRepository _ticketsRepository;
 
-        public UpdatePersonalDataCommandHandler(IMapper mapper, IPersonalDataRepository personalDataRepository)
+        public UpdatePersonalDataCommandHandler(IMapper mapper, 
+            IPersonalDataRepository personalDataRepository,
+            ITicketsRepository ticketsRepository)
         {
-            _mapper = mapper;
+            _mapper                 = mapper;
             _personalDataRepository = personalDataRepository;
+            _ticketsRepository      = ticketsRepository;
         }
         public async Task<Unit> Handle(UpdatePersonalDataCommand request, CancellationToken cancellationToken)
         {
@@ -25,11 +28,11 @@ namespace IRIS.Conecta.Application.Features.PersonalData.Commands.UpdatePersonal
                 throw new NotFoundException(nameof(personalData), request.Id);
 
             // Validate incomming data
-            var validator = new UpdatePersonalDataValidator();
+            var validator = new UpdatePersonalDataValidator(_ticketsRepository);
             var validationResult = await validator.ValidateAsync(request, cancellationToken);
 
-            if (!validationResult.IsValid) {
-                throw new ValidationException((IEnumerable<FluentValidation.Results.ValidationFailure>)validationResult);
+            if ( !validationResult.IsValid ) {
+                throw new ValidationException(validationResult);
             }
 
             // Mapping Data

@@ -30,7 +30,7 @@ namespace IRIS.Conecta.Application.Features.Departments.Commands.UpdateDepartmen
 
         //private async Task<bool> DepartmentMustExists(int id, CancellationToken cancellationToken)
         //{ 
-        //    var deparmtent = await _departmentRepository.GetByIdAsync(id);
+        //    var deparmtent = await _DepartmentRepository.GetByIdAsync(id);
         //    return deparmtent != null;
         //}
     }

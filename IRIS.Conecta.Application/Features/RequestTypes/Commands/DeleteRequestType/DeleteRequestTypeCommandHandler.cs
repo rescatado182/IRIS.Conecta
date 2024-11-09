@@ -21,7 +21,7 @@ namespace IRIS.Conecta.Application.Features.RequestTypes.Commands.DeleteRequestT
             var requestType = await this.requestTypeRepository.GetByIdAsync(request.Id);
 
             if (requestType == null) {
-                throw new NotFoundException(nameof(Department), request.Id);
+                throw new NotFoundException(nameof(Program), request.Id);
             }
 
             await this.requestTypeRepository.DeleteAsync(requestType);

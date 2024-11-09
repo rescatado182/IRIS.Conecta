@@ -1,11 +1,16 @@
 ﻿using FluentValidation;
+using IRIS.Conecta.Application.Contracts.Persistence;
 
 namespace IRIS.Conecta.Application.Features.PersonalData.Commands.UpdatePersonalData
 {
     public class UpdatePersonalDataValidator : AbstractValidator<UpdatePersonalDataCommand>
     {
-        public UpdatePersonalDataValidator()
+        private readonly ITicketsRepository ticketsRepository;
+
+        public UpdatePersonalDataValidator(ITicketsRepository ticketsRepository)
         {
+            this.ticketsRepository = ticketsRepository;
+
             RuleFor(p => p.PersonalDataDto.FullName)
                 .NotEmpty().WithMessage("{PropertyName} es requerido.")
                 .NotNull()
@@ -39,6 +44,15 @@ namespace IRIS.Conecta.Application.Features.PersonalData.Commands.UpdatePersonal
                 .EmailAddress()
                 .MaximumLength(20).WithMessage("{PropertyName} no debe exceder {ComparisonValue} carácteres.");
 
+            RuleFor(p => p.PersonalDataDto.TicketId)
+                .GreaterThan(0)
+                .NotEmpty()
+                .MustAsync(async (id, token) => {
+                    var ticketExists = await this.ticketsRepository.GetByIdAsync(id);
+                    return ticketExists != null;
+                })
+                .WithMessage("{PropertyName} no existe.");
+            
         }
     }
 }

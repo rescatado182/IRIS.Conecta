@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using FluentValidation;
 using IRIS.Conecta.Application.Contracts.Persistence;
 using IRIS.Conecta.Application.Exceptions;
 using MediatR;
@@ -10,15 +9,15 @@ namespace IRIS.Conecta.Application.Features.RequestTypes.Commands.UpdateRequestT
     {
         private readonly IMapper mapper;
         private readonly IRequestTypeRepository requestTypeRepository;
-        private readonly IDepartmentRepository departmentRepository;
+        private readonly IProgramRepository ProgramRepository;
 
         public UpdateRequestTypeCommandHandler(IMapper mapper, 
             IRequestTypeRepository requestTypeRepository,
-            IDepartmentRepository departmentRepository)
+            IProgramRepository ProgramRepository)
         {
             this.mapper = mapper;
             this.requestTypeRepository  = requestTypeRepository;
-            this.departmentRepository   = departmentRepository;
+            this.ProgramRepository   = ProgramRepository;
         }
         public async Task<Unit> Handle(UpdateRequestTypeCommand request, CancellationToken cancellationToken)
         {
@@ -29,11 +28,11 @@ namespace IRIS.Conecta.Application.Features.RequestTypes.Commands.UpdateRequestT
                 throw new NotFoundException(nameof(requestType), request.Id);
             }
 
-            var validator = new UpdateRequestTypeValidator(this.departmentRepository);
+            var validator = new UpdateRequestTypeValidator(this.ProgramRepository);
             var validationResult = await validator.ValidateAsync(request, cancellationToken);
 
             if ( !validationResult.IsValid ) {
-                throw new ValidationException((IEnumerable<FluentValidation.Results.ValidationFailure>)validationResult);
+                throw new ValidationException(validationResult);
             }
 
             // Mapping the data

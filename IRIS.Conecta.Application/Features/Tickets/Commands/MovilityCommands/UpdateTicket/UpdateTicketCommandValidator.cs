@@ -12,7 +12,7 @@ namespace IRIS.Conecta.Application.Features.Tickets.Commands.MovilityCommands.Up
             this.requestTypeRepository = requestTypeRepository;
 
             RuleFor(p => p.AgreementName)
-                .NotEmpty().WithMessage("{PropertyName} es requerida.")
+               .NotEmpty().WithMessage("{PropertyName} es requerida.")
                .NotNull()
                .MaximumLength(100).WithMessage("{PropertyName} no debe exceder {ComparisonValue} carácteres.");
 
@@ -25,7 +25,7 @@ namespace IRIS.Conecta.Application.Features.Tickets.Commands.MovilityCommands.Up
                 .NotEmpty().WithMessage("{PropertyName} es requerido.");
 
             RuleFor(p => p.RequestTypeId)
-                .GreaterThan(0)
+                .GreaterThan(0).WithMessage("{PropertyName} debe mayor a cero (0).")
                 .NotNull()
                 .MustAsync(async (id, token) =>
                 {

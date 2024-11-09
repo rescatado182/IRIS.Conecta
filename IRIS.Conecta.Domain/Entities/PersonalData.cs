@@ -23,7 +23,7 @@ public class PersonalData : BaseEntity
     public string? PersonalEmail { get; set; }
     public string? Phone { get; set; }
     public required string Cellphone { get; set; }
-    public required int UserId { get; set; }
+    public required string UserId { get; set; }
     public int? TicketId { get; set; }
 
     #region Relationships

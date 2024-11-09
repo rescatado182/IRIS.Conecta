@@ -1,6 +1,5 @@
 ﻿using IRIS.Conecta.Application.Contracts.Identity;
 using IRIS.Conecta.Application.Models.Identity;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IRIS.Conecta.API.Controllers.Identity

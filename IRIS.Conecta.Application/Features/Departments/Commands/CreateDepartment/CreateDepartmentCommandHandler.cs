@@ -8,17 +8,17 @@ namespace IRIS.Conecta.Application.Features.Departments.Commands.CreateDepartmen
 {
     public class CreateDepartmentCommandHandler : IRequestHandler<CreateDepartmentCommand, int>
     {
-        private readonly IDepartmentRepository _departmentRepository;
+        private readonly IDepartmentRepository _DepartmentRepository;
         
         private readonly IMapper _mapper;
         private readonly IFacultyRepository _facultyRepository;
 
         public CreateDepartmentCommandHandler(IMapper mapper,
             IFacultyRepository facultyRepository,
-            IDepartmentRepository departmentRepository)
+            IDepartmentRepository DepartmentRepository)
         {
             _facultyRepository      = facultyRepository;
-            _departmentRepository   = departmentRepository;
+            _DepartmentRepository   = DepartmentRepository;
             _mapper                 = mapper;
             
         }
@@ -32,12 +32,12 @@ namespace IRIS.Conecta.Application.Features.Departments.Commands.CreateDepartmen
                 throw new BadRequestException("Invalid Department", validationResult);
 
             // Mapping data
-            var department = _mapper.Map<Department>(request);
+            var Department = _mapper.Map<Department>(request);
 
             // Create record
-            await _departmentRepository.CreateAsync(department);
+            await _DepartmentRepository.CreateAsync(Department);
             
-            return department.Id;
+            return Department.Id;
         }
 
     }

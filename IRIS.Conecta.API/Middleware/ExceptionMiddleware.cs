@@ -56,6 +56,17 @@ namespace IRIS.Conecta.API.Middleware
                     };
                     break;
 
+                case ValidationException validationException:
+                    statusCode = HttpStatusCode.BadRequest;
+                    problem = new CustomValidationProblemDetails
+                    {
+                        Title = validationException.Message,
+                        Status = (int)statusCode,
+                        Type = nameof(ValidationException),
+                        Detail = validationException.errorMessages.ToString()
+                    };
+                    break;
+
                 default:
                     problem = new CustomValidationProblemDetails
                     {

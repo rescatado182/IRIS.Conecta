@@ -18,7 +18,7 @@ namespace IRIS.Conecta.Application.Features.PersonalData.Commands.CreatePersonal
         public async Task<int> Handle(CreatePersonalDataCommand request, CancellationToken cancellationToken)
         {
             // Validate incomming data
-            var validator = new CreatePersonalDataCommandValidator();
+            var validator = new CreatePersonalDataValidator();
             var validationResult = await validator.ValidateAsync(request, cancellationToken);
 
             if (!validationResult.IsValid)

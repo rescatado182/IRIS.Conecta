@@ -63,7 +63,7 @@ namespace IRIS.Conecta.Persistence.Configurations
                 .HasForeignKey<PersonalData>(d => d.TicketId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Tickets_RequestTypes_RequestTypeId");
+                .HasConstraintName("FK_PersonalData_Tickets_TicketId");
         }
     }
 }

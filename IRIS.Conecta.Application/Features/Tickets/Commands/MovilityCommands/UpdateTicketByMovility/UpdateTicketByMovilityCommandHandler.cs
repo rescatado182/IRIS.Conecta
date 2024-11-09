@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using FluentValidation;
 using IRIS.Conecta.Application.Contracts.Persistence;
 using IRIS.Conecta.Application.Exceptions;
 using MediatR;
@@ -29,11 +28,13 @@ namespace IRIS.Conecta.Application.Features.Tickets.Commands.MovilityCommands.Up
             var validationResult = await validator.ValidateAsync(request, cancellationToken);
 
             if (!validationResult.IsValid) {
-                throw new ValidationException((IEnumerable<FluentValidation.Results.ValidationFailure>)validationResult);
+                throw new ValidationException(validationResult);
             }
 
             // Mapping Data
             mapper.Map(request, ticket);
+
+            // Update data
             await this.ticketsRepository.UpdateAsync(ticket);
 
             return Unit.Value;

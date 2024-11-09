@@ -1,5 +1,4 @@
 ﻿using IRIS.Conecta.Domain.Entities.Masters;
-using System.Text.Json.Serialization;
 
 namespace IRIS.Conecta.Application.Features.RequestTypes.Dtos
 {

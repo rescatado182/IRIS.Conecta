@@ -17,11 +17,13 @@ namespace IRIS.Conecta.Persistence
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<IFacultyRepository, FacultiesRepository>();
             services.AddScoped<IDepartmentRepository, DepartmentsRepository>();
+            services.AddScoped<IProgramRepository, ProgramsRepository>();
 
             services.AddScoped<IRequestTypeRepository, RequestTypesRepository>();
             services.AddScoped<ITicketsRepository, TicketsRepository>();
 
-            services.AddScoped<IPersonalDataRepository, PersonalDataRepository>();
+            services.AddScoped<IAcademicDataRepository, AcademicDataRepository>();
+            services.AddScoped<IPersonalDataRepository, PersonalDataRepository>();            
 
             services.AddScoped<ITemplateResponsesRepository, TemplateResponsesRepository>();            
 

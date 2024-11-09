@@ -2,9 +2,9 @@
 
 namespace IRIS.Conecta.Application.Features.PersonalData.Commands.CreatePersonalData
 {
-    public class CreatePersonalDataCommandValidator : AbstractValidator<CreatePersonalDataCommand>
+    public class CreatePersonalDataValidator : AbstractValidator<CreatePersonalDataCommand>
     {
-        public CreatePersonalDataCommandValidator()
+        public CreatePersonalDataValidator()
         {
             RuleFor(p => p.PersonalDataDto.FullName)
                 .NotEmpty().WithMessage("{PropertyName} es requerido.")

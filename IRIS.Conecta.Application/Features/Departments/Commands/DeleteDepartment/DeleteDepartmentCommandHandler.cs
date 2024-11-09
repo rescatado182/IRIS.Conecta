@@ -5,20 +5,20 @@ using MediatR;
 
 namespace IRIS.Conecta.Application.Features.Departments.Commands.DeleteDepartment
 {
-    internal class DeleteDepartmentCommandHandler(IDepartmentRepository departmentRepository) : 
+    internal class DeleteDepartmentCommandHandler(IDepartmentRepository DepartmentRepository) : 
         IRequestHandler<DeleteDepartmentCommand, Unit>
     {
-        private readonly IDepartmentRepository _departmentRepository = departmentRepository;
+        private readonly IDepartmentRepository _DepartmentRepository = DepartmentRepository;
 
         public async Task<Unit> Handle(DeleteDepartmentCommand request, CancellationToken cancellationToken)
         {
-            var department = await _departmentRepository.GetByIdAsync(request.Id);
+            var Department = await _DepartmentRepository.GetByIdAsync(request.Id);
 
-            if (department == null) {
+            if (Department == null) {
                 throw new NotFoundException(nameof(Department), request.Id);
             }
 
-            await _departmentRepository.DeleteAsync(department);
+            await _DepartmentRepository.DeleteAsync(Department);
 
             return Unit.Value;
         }

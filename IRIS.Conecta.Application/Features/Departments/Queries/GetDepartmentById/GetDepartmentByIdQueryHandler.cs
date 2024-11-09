@@ -8,18 +8,18 @@ namespace IRIS.Conecta.Application.Features.Departments.Queries.GetDepartmentByI
     public class GetDepartmentByIdQueryHandler : IRequestHandler<GetDepartmentByIdQuery, DepartmentDto>
     {
         private readonly IMapper mapper;
-        private readonly IDepartmentRepository departmentRepository;
+        private readonly IDepartmentRepository DepartmentRepository;
 
-        public GetDepartmentByIdQueryHandler(IMapper mapper, IDepartmentRepository departmentRepository)
+        public GetDepartmentByIdQueryHandler(IMapper mapper, IDepartmentRepository DepartmentRepository)
         {
             this.mapper                 = mapper;
-            this.departmentRepository   = departmentRepository;
+            this.DepartmentRepository   = DepartmentRepository;
         }
         public async Task<DepartmentDto> Handle(GetDepartmentByIdQuery request, CancellationToken cancellationToken)
         {
-            var department = await this.departmentRepository.GetByIdAsync(request.Id);
+            var Department = await this.DepartmentRepository.GetByIdAsync(request.Id);
 
-            return this.mapper.Map<DepartmentDto>(department);
+            return this.mapper.Map<DepartmentDto>(Department);
         }
     }
 }

@@ -10,21 +10,21 @@ namespace IRIS.Conecta.Application.Features.RequestTypes.Commands.CreateRequestT
     {
         private readonly IMapper _mapper;
         private readonly IRequestTypeRepository _requestTypeRepository;
-        private readonly IDepartmentRepository _departmentRepository;
+        private readonly IProgramRepository _ProgramRepository;
 
         public CreateRequestTypeCommandHandler(IMapper mapper, 
             IRequestTypeRepository requestTypeRepository,
-            IDepartmentRepository departmentRepository)
+            IProgramRepository ProgramRepository)
         {
             _mapper                 = mapper;
-            _departmentRepository   = departmentRepository;
+            _ProgramRepository   = ProgramRepository;
             _requestTypeRepository  = requestTypeRepository;
             
         }
         public async Task<int> Handle(CreateRequestTypeCommand request, CancellationToken cancellationToken)
         {
             // Validate incomming data
-            var validator = new CreateRequestTypeCommandValidator(_departmentRepository);
+            var validator = new CreateRequestTypeCommandValidator(_ProgramRepository);
             var validationResult = await validator.ValidateAsync(request, cancellationToken);
 
             if (!validationResult.IsValid)

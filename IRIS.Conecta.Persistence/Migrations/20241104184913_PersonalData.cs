@@ -63,7 +63,7 @@ namespace IRIS.Conecta.Persistence.Migrations
                     PersonalEmail = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Phone = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: true),
                     Cellphone = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false, defaultValue: 0),
                     TicketId = table.Column<int>(type: "int", nullable: false),
                     CityResidenceId = table.Column<int>(type: "int", nullable: true),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: true),

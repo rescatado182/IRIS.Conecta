@@ -1,6 +1,5 @@
 ﻿using FluentValidation;
 using IRIS.Conecta.Application.Contracts.Persistence;
-using IRIS.Conecta.Application.Features.Departments.DTOs;
 
 namespace IRIS.Conecta.Application.Features.Departments.Commands.CreateDepartment
 {
@@ -27,15 +26,6 @@ namespace IRIS.Conecta.Application.Features.Departments.Commands.CreateDepartmen
                 })
                 .WithMessage("{PropertyName} no existe.");
         }
-
-
-
-
-
-
     }
-
-
-
 
 }

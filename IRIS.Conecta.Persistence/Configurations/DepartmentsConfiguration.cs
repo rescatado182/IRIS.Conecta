@@ -35,7 +35,6 @@ namespace IRIS.Conecta.Persistence.Configurations
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Departments_RequestTypes_Id")
                 .IsRequired();
-                
             
         }
     }

@@ -7,8 +7,13 @@ namespace IRIS.Conecta.Domain.Entities.Masters
         public int Id { get; set; }
         public string DepartmentName { get; set; } = null!;
         public int FacultyId { get; set; }
+
+        #region Relationships
         public required Faculty Faculty { get; set; }
+        public virtual ICollection<Program> Programs { get; set; } = [];
         public virtual ICollection<RequestType> RequestTypes { get; set; } = [];
+
+        #endregion
 
     }
 }

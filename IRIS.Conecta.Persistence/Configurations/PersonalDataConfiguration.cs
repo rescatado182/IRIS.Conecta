@@ -84,8 +84,6 @@ namespace IRIS.Conecta.Persistence.Configurations
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_PersonalData_Tickets_TicketId");
 
-
-
         }
     }
 }

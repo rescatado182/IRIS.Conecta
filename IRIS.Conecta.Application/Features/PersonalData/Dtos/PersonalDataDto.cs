@@ -17,7 +17,7 @@ namespace IRIS.Conecta.Application.Features.PersonalData.Dtos
         public string PersonalEmail { get; set; }
         public string Phone { get; set; }
         public string Cellphone { get; set; }
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public int TicketId { get; set; }
     }
 }

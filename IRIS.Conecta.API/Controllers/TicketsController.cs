@@ -46,7 +46,7 @@ namespace IRIS.Conecta.API.Controllers
         }
 
         [HttpPut("updateTicket")]
-        [ProducesResponseType(201)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]        
         [ProducesResponseType(400)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]

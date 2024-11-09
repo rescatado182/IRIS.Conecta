@@ -7,6 +7,15 @@ namespace IRIS.Conecta.Application.Features.Tickets.Commands.MovilityCommands.Up
 
         public UpdateTicketByMovilityCommandValidator()
         {
+
+            RuleFor(p => p.Title)
+               .NotEmpty().WithMessage("El campo es {PropertyName} es requerido.")
+               .NotNull();
+
+            RuleFor(p => p.EventName)
+               .NotEmpty().WithMessage("El campo es {PropertyName} es requerido.")
+               .NotNull();
+
             RuleFor(p => p.MovilityType)
                .NotEmpty().WithMessage("{PropertyName} es requerida.")
                .NotNull();

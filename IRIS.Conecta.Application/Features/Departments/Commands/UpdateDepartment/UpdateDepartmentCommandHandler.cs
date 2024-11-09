@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using FluentValidation;
 using IRIS.Conecta.Application.Contracts.Persistence;
 using IRIS.Conecta.Application.Exceptions;
 using MediatR;
@@ -9,21 +8,21 @@ namespace IRIS.Conecta.Application.Features.Departments.Commands.UpdateDepartmen
     public class UpdateDepartmentCommandHandler :IRequestHandler<UpdateDepartmentCommand, Unit>
     {
         private readonly IMapper _mapper;
-        private readonly IDepartmentRepository _departmentRepository;
+        private readonly IDepartmentRepository _DepartmentRepository;
         private readonly IFacultyRepository _facultyRepository;
 
         public UpdateDepartmentCommandHandler(IMapper mapper, 
-            IDepartmentRepository departmentRepository,
+            IDepartmentRepository DepartmentRepository,
             IFacultyRepository facultyRepository)
         {
             _mapper                 = mapper;
-            _departmentRepository   = departmentRepository;
+            _DepartmentRepository   = DepartmentRepository;
             _facultyRepository      = facultyRepository;
         }
 
         public async Task<Unit> Handle(UpdateDepartmentCommand request, CancellationToken cancellationToken)
         {
-            var deparment = await _departmentRepository.GetByIdAsync(request.Id);
+            var deparment = await _DepartmentRepository.GetByIdAsync(request.Id);
 
             if (deparment == null) {
                 throw new NotFoundException(nameof(deparment), request.Id);
@@ -33,11 +32,11 @@ namespace IRIS.Conecta.Application.Features.Departments.Commands.UpdateDepartmen
             var validationResult = await validator.ValidateAsync(request, cancellationToken);
 
             if (validationResult.IsValid == false) {
-                throw new ValidationException(validationResult.Errors);
+                throw new ValidationException(validationResult);
             }
 
             _mapper.Map(request, deparment);
-            await _departmentRepository.UpdateAsync(deparment);
+            await _DepartmentRepository.UpdateAsync(deparment);
 
             return Unit.Value;
         }

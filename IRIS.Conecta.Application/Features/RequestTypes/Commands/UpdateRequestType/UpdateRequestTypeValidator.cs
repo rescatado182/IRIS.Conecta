@@ -5,24 +5,24 @@ namespace IRIS.Conecta.Application.Features.RequestTypes.Commands.UpdateRequestT
 {
     public class UpdateRequestTypeValidator : AbstractValidator<UpdateRequestTypeCommand>
     {
-        private readonly IDepartmentRepository departmentRepository;
+        private readonly IProgramRepository ProgramRepository;
         
-        public UpdateRequestTypeValidator(IDepartmentRepository departmentRepository)
+        public UpdateRequestTypeValidator(IProgramRepository ProgramRepository)
         {
-            this.departmentRepository   = departmentRepository;
+            this.ProgramRepository   = ProgramRepository;
 
             RuleFor(p => p.RequestName)
                 .NotEmpty().WithMessage("{PropertyName} es requerida.")
                 .NotEmpty()
                 .MaximumLength(100).WithMessage("{PropertyName} no debe exceder {ComparisonValue} carácteres.");
 
-            RuleFor(p => p.DepartmentId)
+            RuleFor(p => p.ProgramId)
                 .GreaterThan(0)
                 .NotEmpty()
                 .MustAsync(async (id, token) =>
                 {
-                    var departmentExists = await this.departmentRepository.GetByIdAsync(id);
-                    return departmentExists != null;
+                    var ProgramExists = await this.ProgramRepository.GetByIdAsync(id);
+                    return ProgramExists != null;
                 })
                 .WithMessage("{PropertyName} no existe.");
         }
