@@ -20,6 +20,9 @@ namespace IRIS.Conecta.Application.Features.Tickets.Commands.MovilityCommands.Cr
                 .IsInEnum()
                 .NotEmpty().WithMessage("{PropertyName} es requerido.");
 
+            RuleFor(p => p.UserId)
+                .NotEmpty().WithMessage("{PropertyName} debe existir.");
+
             RuleFor(p => p.RequestTypeId)
                 .GreaterThan(0)
                 .NotNull()

@@ -12,5 +12,6 @@ namespace IRIS.Conecta.Application.Features.Tickets.Commands.MovilityCommands.Up
         public DateOnly DeliveryDate { get; set; }
         public TicketsStatus State { get; set; }
         public int RequestTypeId { get; set; }
+        public string UserId { get; set; }
     }
 }

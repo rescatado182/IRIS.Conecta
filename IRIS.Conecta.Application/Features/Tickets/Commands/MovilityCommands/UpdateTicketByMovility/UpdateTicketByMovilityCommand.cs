@@ -21,5 +21,7 @@ namespace IRIS.Conecta.Application.Features.Tickets.Commands.MovilityCommands.Up
         public string ExternalInstitution { get; set; }
         public DateOnly StartDate { get; set; }
         public DateOnly EndDate { get; set; }
+
+        public string UserId { get; set; }
     }
 }

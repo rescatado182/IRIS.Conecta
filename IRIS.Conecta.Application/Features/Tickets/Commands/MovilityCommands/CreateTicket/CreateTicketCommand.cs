@@ -9,5 +9,6 @@ namespace IRIS.Conecta.Application.Features.Tickets.Commands.MovilityCommands.Cr
         public string Description { get; set; }
         public TicketsStatus Status { get; set; }
         public int RequestTypeId { get; set; }
+        public string UserId { get; set; }
     }
 }
