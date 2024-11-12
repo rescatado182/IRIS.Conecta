@@ -16,6 +16,8 @@ using IRIS.UI.Pages.BL.Tickets.RequestTickets.Movility;
 using System.Diagnostics.Metrics;
 using IRIS.UI.Models;
 using IRIS.UI.Interfaces;
+using System.Text.Json;
+using IRIS.UI.Models.Save;
 
 namespace IRIS.UI.Pages.BL.Tickets.Shared
 {
@@ -23,7 +25,9 @@ namespace IRIS.UI.Pages.BL.Tickets.Shared
     {
         [Inject] TicketMovilityRequest MovilityRequestState { get; set; }
 
-        //private PersonalDataVM personalData = new PersonalDataVM();
+        [Inject] private IRepository Repository { get; set; } = null!;
+
+        private PersonalDataVM personalData = new PersonalDataVM();
 
 
         private EnumDocumentType selectedDocumentType;
@@ -58,6 +62,52 @@ namespace IRIS.UI.Pages.BL.Tickets.Shared
             }
 
             return Task.FromResult<IEnumerable<ValidationResult>>(results);
+        }
+
+        public async Task UpdateTicketPersonalDataAsync(int? idTicket, PersonalDataVM personalData)
+        {
+            var updatedPersonalData = new PersonalDataSaveVM
+            { 
+                personalDataDto = new PersonalDataSaveVM.PersonalDataDto
+                {
+                    TicketId = idTicket.Value,
+                    FullName = MovilityRequestState.personalData.FullName,
+                    DocumentNumber = MovilityRequestState.personalData.DocumentNumber,
+                    DocumentType = (EnumDocumentType)MovilityRequestState.personalData.DocumentType, // Cast to DocumentTypeVM
+                    BornCountryId = MovilityRequestState.personalData.BornCountryId > 0
+                        ? MovilityRequestState.personalData.BornCountryId
+                        : 0,
+                    BornStateId = MovilityRequestState.personalData.BornStateId > 0
+                        ? MovilityRequestState.personalData.BornStateId
+                        : 0,
+                    BornCityId = MovilityRequestState.personalData.BornCityId > 0
+                        ? MovilityRequestState.personalData.BornCityId
+                        : 0,
+                    ResidenceStateId = MovilityRequestState.personalData.ResidenceStateId > 0
+                        ? MovilityRequestState.personalData.ResidenceStateId
+                        : 0,
+                    ResidenceCityId = MovilityRequestState.personalData.ResidenceCityId > 0
+                        ? MovilityRequestState.personalData.ResidenceCityId
+                        : 0,
+                    AddressResidence = MovilityRequestState.personalData.AddressResidence,
+                    PersonalEmail = MovilityRequestState.personalData.Email,
+                    Phone = MovilityRequestState.personalData.Phone,
+                    Cellphone = MovilityRequestState.personalData.Cellphone,
+                    UserId = "01c6e8f5-dc49-4a6b-abdd-4ba2b5955bf9"
+                }
+            };
+
+            string jsonString = JsonSerializer.Serialize(updatedPersonalData, new JsonSerializerOptions { WriteIndented = true });
+            Console.WriteLine(jsonString);
+
+
+
+             var responseHttp = await Repository.PostAsync("/api/personalData", updatedPersonalData);
+            if (responseHttp.Error)
+            {
+                var message = await responseHttp.GetErrorMessageAsync();
+                Console.WriteLine(message);
+            }
         }
 
         private void SaveDataToDatabase()

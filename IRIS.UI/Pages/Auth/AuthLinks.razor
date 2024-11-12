@@ -1,0 +1,19 @@
+﻿@using Microsoft.AspNetCore.Components.Authorization
+@inject NavigationManager Navigation
+
+<AuthorizeView>
+    <Authorized>
+        Autorizado
+        
+    </Authorized>
+    <NotAuthorized>
+        No autorizado
+
+    </NotAuthorized>
+</AuthorizeView>
+@code {
+    protected override void OnInitialized()
+    {
+        Navigation.NavigateTo("/login");
+    }
+}

@@ -1,0 +1,30 @@
+﻿
+
+<Navbar Background="NavbarBackground.Light" Direction="NavbarDirection.Horizontal" NavLinkMatch="Microsoft.AspNetCore.Components.Routing.NavLinkMatch.All" >
+    <NavbarMenu class="d-flex justify-content-end">
+        <!-- Usamos ms-auto para alinear los items a la derecha -->
+        <NavbarMenuItem Text=@userName>
+            <MenuItemIcon>
+                <Icon class="icon" IconType="@TablerIcons.User" />
+            </MenuItemIcon>
+            <SubMenu>
+
+                <div class="dropdown-menu-columns">
+                    <div class="dropdown-menu-column">
+                        <NavbarMenuItem Text="Mi Perfil" Href="/" />
+                        <NavbarMenuItem Text="Cambiar Contraseña" Href="/departments" />
+                    </div>
+
+                </div>
+            </SubMenu>
+        </NavbarMenuItem>
+
+
+
+        <NavbarMenuItem Text="Cerrar Sesión" OnClick="LogoutAsync">
+            <MenuItemIcon>
+                <Icon class="icon" IconType="@TablerIcons.Logout" />
+            </MenuItemIcon>
+        </NavbarMenuItem>
+    </NavbarMenu>
+</Navbar>

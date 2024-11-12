@@ -4,7 +4,6 @@ using IRIS.Conecta.Persistence.DatabaseContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -12,11 +11,9 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IRIS.Conecta.Persistence.Migrations
 {
     [DbContext(typeof(IRISConectaDatabaseContext))]
-    [Migration("20241104184913_PersonalData")]
-    partial class PersonalData
+    partial class IRISConectaDatabaseContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,6 +21,81 @@ namespace IRIS.Conecta.Persistence.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("IRIS.Conecta.Domain.Entities.AcademicData", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<double>("AverageCredit")
+                        .HasColumnType("float");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DateModified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("EnrolledSemester")
+                        .HasColumnType("int")
+                        .HasColumnName("EnrolledSemester");
+
+                    b.Property<bool>("IsInstitutionalGroup")
+                        .HasColumnType("bit")
+                        .HasColumnName("InstitutionalGroup");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProgramId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProgramType")
+                        .HasColumnType("int")
+                        .HasColumnName("ProgramType");
+
+                    b.Property<string>("ResearchGroup")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("ResearchGroup");
+
+                    b.Property<string>("ResearchProject")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("ResearchProject");
+
+                    b.Property<int?>("TicketId")
+                        .IsRequired()
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)")
+                        .HasDefaultValue("False");
+
+                    b.HasKey("Id")
+                        .HasName("PK_AcademicData");
+
+                    b.HasIndex("TicketId")
+                        .IsUnique();
+
+                    b.HasIndex(new[] { "Id" }, "IX_AcademicData_Id")
+                        .IsUnique();
+
+                    b.HasIndex(new[] { "ProgramId" }, "IX_AcademicData_ProgramId");
+
+                    b.HasIndex(new[] { "TicketId" }, "IX_AcademicData_TicketIdId");
+
+                    b.HasIndex(new[] { "UserId" }, "IX_AcademicData_UserId");
+
+                    b.ToTable("AcademicData", (string)null);
+                });
 
             modelBuilder.Entity("IRIS.Conecta.Domain.Entities.Masters.City", b =>
                 {
@@ -338,6 +410,55 @@ namespace IRIS.Conecta.Persistence.Migrations
                     b.ToTable("Faculties");
                 });
 
+            modelBuilder.Entity("IRIS.Conecta.Domain.Entities.Masters.Program", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("Id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DateModified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DepartmentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProgramName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("ProgramType")
+                        .HasColumnType("int")
+                        .HasColumnName("ProgramType");
+
+                    b.HasKey("Id")
+                        .HasName("PK_Programs");
+
+                    b.HasIndex(new[] { "DepartmentId" }, "IX_Programs_DepartmentId");
+
+                    b.HasIndex(new[] { "Id" }, "IX_Programs_Id")
+                        .IsUnique();
+
+                    b.HasIndex(new[] { "ProgramName" }, "IX_Programs_ProgramName")
+                        .IsUnique();
+
+                    b.HasIndex(new[] { "ProgramType" }, "IX_Programs_ProgramType");
+
+                    b.ToTable("Programs");
+                });
+
             modelBuilder.Entity("IRIS.Conecta.Domain.Entities.Masters.State", b =>
                 {
                     b.Property<int>("Id")
@@ -537,10 +658,11 @@ namespace IRIS.Conecta.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
+                    b.Property<string>("UserId")
+                        .IsRequired()
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(0);
+                        .HasColumnType("nvarchar(450)")
+                        .HasDefaultValue("False");
 
                     b.HasKey("Id")
                         .HasName("PK_PersonalData");
@@ -623,6 +745,9 @@ namespace IRIS.Conecta.Persistence.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AcademicDataId")
+                        .HasColumnType("int");
 
                     b.Property<string>("AgreementName")
                         .HasColumnType("nvarchar(max)");
@@ -710,6 +835,10 @@ namespace IRIS.Conecta.Persistence.Migrations
                     b.Property<double?>("Total")
                         .HasColumnType("float");
 
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id")
                         .HasName("PK_Tickets");
 
@@ -723,6 +852,25 @@ namespace IRIS.Conecta.Persistence.Migrations
                     b.HasIndex(new[] { "Title" }, "IX_Ticket_Title");
 
                     b.ToTable("Tickets", (string)null);
+                });
+
+            modelBuilder.Entity("IRIS.Conecta.Domain.Entities.AcademicData", b =>
+                {
+                    b.HasOne("IRIS.Conecta.Domain.Entities.Masters.Program", "Program")
+                        .WithMany()
+                        .HasForeignKey("ProgramId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("IRIS.Conecta.Domain.Entities.Ticket", "Ticket")
+                        .WithOne("AcademicData")
+                        .HasForeignKey("IRIS.Conecta.Domain.Entities.AcademicData", "TicketId")
+                        .IsRequired()
+                        .HasConstraintName("FK_AcademicData_Tickets_TicketId");
+
+                    b.Navigation("Program");
+
+                    b.Navigation("Ticket");
                 });
 
             modelBuilder.Entity("IRIS.Conecta.Domain.Entities.Masters.City", b =>
@@ -753,6 +901,17 @@ namespace IRIS.Conecta.Persistence.Migrations
                         .HasConstraintName("FK_Departments_Faculties_FacultyId");
 
                     b.Navigation("Faculty");
+                });
+
+            modelBuilder.Entity("IRIS.Conecta.Domain.Entities.Masters.Program", b =>
+                {
+                    b.HasOne("IRIS.Conecta.Domain.Entities.Masters.Department", "Department")
+                        .WithMany("Programs")
+                        .HasForeignKey("DepartmentId")
+                        .IsRequired()
+                        .HasConstraintName("FK_Programs_Deparments_DepartmentId");
+
+                    b.Navigation("Department");
                 });
 
             modelBuilder.Entity("IRIS.Conecta.Domain.Entities.Masters.State", b =>
@@ -811,7 +970,7 @@ namespace IRIS.Conecta.Persistence.Migrations
                         .WithOne("PersonalData")
                         .HasForeignKey("IRIS.Conecta.Domain.Entities.PersonalData", "TicketId")
                         .IsRequired()
-                        .HasConstraintName("FK_Tickets_RequestTypes_RequestTypeId");
+                        .HasConstraintName("FK_PersonalData_Tickets_TicketId");
 
                     b.Navigation("BornCity");
 
@@ -864,6 +1023,8 @@ namespace IRIS.Conecta.Persistence.Migrations
 
             modelBuilder.Entity("IRIS.Conecta.Domain.Entities.Masters.Department", b =>
                 {
+                    b.Navigation("Programs");
+
                     b.Navigation("RequestTypes");
                 });
 
@@ -888,6 +1049,9 @@ namespace IRIS.Conecta.Persistence.Migrations
 
             modelBuilder.Entity("IRIS.Conecta.Domain.Entities.Ticket", b =>
                 {
+                    b.Navigation("AcademicData")
+                        .IsRequired();
+
                     b.Navigation("PersonalData")
                         .IsRequired();
                 });

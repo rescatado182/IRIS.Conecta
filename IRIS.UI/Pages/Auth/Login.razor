@@ -1,0 +1,52 @@
+﻿@page "/login"
+
+@layout LoginLayout
+
+@using TabBlazor.Components.Modals
+@using Microsoft.AspNetCore.Components
+@using System.ComponentModel.DataAnnotations
+
+@* <div style="background-image: url('img/fondo_login.jpg'); background-size: cover; background-position: center; min-height: 100vh; display: flex; align-items: center; justify-content: center;"> *@
+<Card Size="CardSize.Large" BackgroundColor="TablerColor.Light">
+    <CardBody >
+        <!-- Componente de ResizeObserver -->
+        <ResizeObserver class="p-1 border mb-3" OnResized=ElementResized OnWidthResized=WidthResized OnHeightResized=HeightResized>
+            <h1>Bienvenido a nuestra aplicación</h1>
+            <p>Por favor inicia sesión para usar nuestra plataforma</p>
+            <br /><br /><br />
+            <Row>
+                <RowCol Xs=12 Md=6>
+
+
+                    <TablerForm Model="@loginModel" OnValidSubmit="HandleLogin">
+                        <div class="mb-3">
+                            <label class="form-label">Correo Electrónico</label>
+                            <InputText class="form-control" @bind-Value="loginModel.email"></InputText>
+                            <TabValidationMessage For="(() => loginModel.email)"></TabValidationMessage>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Contraseña</label>
+                            <InputText type="password" class="form-control" @bind-Value="loginModel.password"></InputText>
+                            <TabValidationMessage For="(() => loginModel.password)"></TabValidationMessage>
+                        </div>
+
+                        <div class="text-end mt-4">
+                            <TabBlazor.Button BackgroundColor="TablerColor.Primary" Type="ButtonType.Button" Text="Iniciar Sesión" OnClick="HandleCreateRequest" />
+
+                        </div>
+                    </TablerForm>
+                </RowCol>
+
+                <RowCol Xs=12 Md=6>
+                    <img src="img/imagen-login.jpg" alt="Logo IRIS" style="width: auto; height:300px;" />
+                </RowCol>
+            </Row>
+        </ResizeObserver>
+
+
+
+    </CardBody>
+</Card>
+@* </div> *@
+

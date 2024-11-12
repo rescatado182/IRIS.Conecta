@@ -1,30 +1,17 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
-namespace IRIS.UI.Models
+namespace IRIS.UI.Models.Save
 {
     public class MovilityTypeSaveVM
     {
-        // create id y name
-
-        //                {
-        //                "id": 1,
-        //  "eventName": "Nombre Evento",
-        //  "status": "Open",
-        //  "movilityType": "0",
-        //  "country": "0",
-        //  "city": "0",
-        //  "phone": "3137984612",
-        //  "contactData": "SDASDA",
-        //  "externalInstitution": "itm",
-        //  "startDate": "2024-10-22",
-        //  "endDate": "2024-10-22"
-        //}
 
         public int id { get; set; }
 
 
         public string eventName { get; set; }
+
+        public string title { get; set; }
 
         public TicketsStatus status { get; set; }
 

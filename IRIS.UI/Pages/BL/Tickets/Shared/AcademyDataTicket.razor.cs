@@ -3,11 +3,14 @@ using IRIS.Frontend.Repositories;
 using IRIS.UI.Data;
 using IRIS.UI.Interfaces;
 using IRIS.UI.Models;
+using IRIS.UI.Models.List;
+using IRIS.UI.Models.Save;
 using IRIS.UI.Pages.BL.Tickets.RequestTickets.Movility;
 using IRIS.UI.Pages.Masters.BL.RequestTypes;
 using IRIS.UI.Services.BL;
 using Microsoft.AspNetCore.Components;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json;
 
 namespace IRIS.UI.Pages.BL.Tickets.Shared
 {
@@ -40,6 +43,39 @@ namespace IRIS.UI.Pages.BL.Tickets.Shared
             enumProgramType = Enum.GetValues(typeof(EnumProgramType)).Cast<EnumProgramType>().ToList();
             await ListAsyncFaculties();
             programs = SampleData.GetPrograms();
+        }
+
+        public async Task UpdateTicketAcademyDataAsync(int? idTicket, AcademyDataVM academyData)
+        {
+            var updatedAcademicData = new AcademyDataSaveVM
+            {
+                academicDataDto = new AcademyDataSaveVM.AcademicDataDto
+                {
+                    ProgramId = MovilityRequestState.academyData.ProgramId,
+                    ResearchProject = MovilityRequestState.academyData.ResearchProject,
+                    ResearchGroup = MovilityRequestState.academyData.ResearchGroup,
+                    ProgramType = (EnumProgramType)MovilityRequestState.academyData.ProgramType,
+                    AverageCredit = MovilityRequestState.academyData.AverageCredit,
+                    EnrolledSemester = MovilityRequestState.academyData.EnrolledSemester,
+                    IsInstitutionalGroup = MovilityRequestState.academyData.IsInstitutionalGroup,
+                    UserId = "01c6e8f5-dc49-4a6b-abdd-4ba2b5955bf9",
+                    TicketId = idTicket.Value
+
+                }
+            };
+
+
+            string jsonString = JsonSerializer.Serialize(updatedAcademicData, new JsonSerializerOptions { WriteIndented = true });
+            Console.WriteLine(jsonString);
+
+
+
+            var responseHttp = await Repository.PostAsync("/api/academicData", updatedAcademicData);
+            if (responseHttp.Error)
+            {
+                var message = await responseHttp.GetErrorMessageAsync();
+                Console.WriteLine(message);
+            }
         }
 
         private async Task<IEnumerable<FacultyVM>> SearchFaculties(string searchText)

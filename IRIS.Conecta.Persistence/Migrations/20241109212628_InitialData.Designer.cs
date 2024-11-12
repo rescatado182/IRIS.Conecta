@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IRIS.Conecta.Persistence.Migrations
 {
     [DbContext(typeof(IRISConectaDatabaseContext))]
-    [Migration("20241109030708_PersonalDataByTickets")]
-    partial class PersonalDataByTickets
+    [Migration("20241109212628_InitialData")]
+    partial class InitialData
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -75,10 +75,12 @@ namespace IRIS.Conecta.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
+                    b.Property<string>("UserId")
+                        .IsRequired()
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(0);
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)")
+                        .HasDefaultValue("False");
 
                     b.HasKey("Id")
                         .HasName("PK_AcademicData");
@@ -437,8 +439,8 @@ namespace IRIS.Conecta.Persistence.Migrations
 
                     b.Property<string>("ProgramName")
                         .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("ProgramType")
                         .HasColumnType("int")
@@ -836,8 +838,9 @@ namespace IRIS.Conecta.Persistence.Migrations
                     b.Property<double?>("Total")
                         .HasColumnType("float");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id")
                         .HasName("PK_Tickets");

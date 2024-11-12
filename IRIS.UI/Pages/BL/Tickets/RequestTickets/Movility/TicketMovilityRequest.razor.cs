@@ -2,6 +2,8 @@ using ColorCode.Compilation.Languages;
 using IRIS.Frontend.Repositories;
 using IRIS.UI.Interfaces;
 using IRIS.UI.Models;
+using IRIS.UI.Models.List;
+using IRIS.UI.Models.Save;
 using IRIS.UI.Pages.BL.Tickets.RequestTickets.Movility.Information;
 using IRIS.UI.Pages.BL.Tickets.Shared;
 using Microsoft.AspNetCore.Components;
@@ -52,7 +54,7 @@ namespace IRIS.UI.Pages.BL.Tickets.RequestTickets.Movility
 
 
 
-        public List<TicketVM>? ticket { get; set; }
+        public List<TicketSaveVM>? ticket { get; set; }
 
         private TabsOrder tabsOrderRef;
 
@@ -95,18 +97,23 @@ namespace IRIS.UI.Pages.BL.Tickets.RequestTickets.Movility
                         // Tab 1: Datos personales
                         isCompletedPersonalData = await ValidateDataAsync(personalDataRef);
                         if (!isCompletedPersonalData) return;
+
+                        await personalDataRef.UpdateTicketPersonalDataAsync(idTicket, personalData);
                         break;
 
                     case 1:
                         // Tab 2: Datos académicos
                         isCompletedAcademyData = await ValidateDataAsync(academyDataRef);
                         if (!isCompletedAcademyData) return;
+
+                        await academyDataRef.UpdateTicketAcademyDataAsync(idTicket, academyData);
                         break;
+
                     case 2:
 
-                        // Tab 3: Tipo de movilidad
-                        isCompletedMovilityType = await movilityTypeRef.ValidateDatesAsync(movilityType);
-                        if (!isCompletedMovilityType) return;
+                        //// Tab 3: Tipo de movilidad
+                        //isCompletedMovilityType = await movilityTypeRef.ValidateDatesAsync(movilityType);
+                        //if (!isCompletedMovilityType) return;
 
                         isCompletedMovilityType = await ValidateDataAsync(movilityTypeRef);
                         if (!isCompletedMovilityType) return;
@@ -137,12 +144,13 @@ namespace IRIS.UI.Pages.BL.Tickets.RequestTickets.Movility
         {
             object jsonResult;
 
-            var ticket = new TicketVM
+            var ticket = new TicketSaveVM
             {
                 Title = "Movilidad",
                 Description = "Movilidad",
-                RequestTypeId = 1,
-                Status = TicketsStatus.Open
+                RequestTypeId = 2,
+                Status = TicketsStatus.Open,
+                UserId = "01c6e8f5-dc49-4a6b-abdd-4ba2b5955bf9"
             };
 
 

@@ -1,22 +1,10 @@
-﻿@* @page "/"
+﻿@page "/redirectLogin"
+@layout LoginLayout
 
-<PageTitle>Home</PageTitle>
-
-
-
-<h1>Bienvenido a IRIS Conecta!</h1>
-
-
- *@
-
-@page "/"
 @using Microsoft.AspNetCore.Components.Authorization
-@layout MainLayout
 @inject NavigationManager Navigation
 @inject AuthenticationStateProvider AuthenticationStateProvider
 
-<h3>Bienvenido al Home</h3>
-<!-- Aquí va el contenido principal y el menú que se muestra cuando el usuario está autenticado -->
 @code {
     protected override async Task OnInitializedAsync()
     {
@@ -28,7 +16,10 @@
         {
             Navigation.NavigateTo("/login", true);
         }
+        else
+        {
+
+            Navigation.NavigateTo("/", true);
+        }
     }
 }
-
-

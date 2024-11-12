@@ -96,5 +96,62 @@ pre.highlight,
 .example-column-2 {
   max-width: 40rem;
 }
+.login-container {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+}
 
+.login-form-container {
+    width: 50%;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #ffffff;
+}
 
+    .login-form-container .logo {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .login-form-container h3 {
+        margin-bottom: 1rem;
+    }
+
+    .login-form-container .forgot-password {
+        margin-top: 0.5rem;
+        color: #6c757d;
+        text-decoration: none;
+    }
+
+        .login-form-container .forgot-password:hover {
+            text-decoration: underline;
+        }
+
+.login-image-container {
+    width: 50%;
+    background: linear-gradient(to right, #90e0ef, #48cae4);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #ffffff;
+}
+
+    .login-image-container h1 {
+        font-size: 2.5rem;
+        margin-top: 0.5rem;
+    }
+
+.illustration {
+    max-width: 80%;
+    height: auto;
+    margin-top: 2rem;
+}
+
+v

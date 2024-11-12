@@ -70,11 +70,15 @@
 
 
     <DataGridItem Title="Nombre de la actividad que origina la movilidad">
-        <input type="text" class="form-control" />
+            <input type="text" class="form-control" @bind="MovilityRequestState.movilityType.EventName" />
+            <ValidationMessage For="@(() => MovilityRequestState.movilityType.EventName)" class="text-danger" />
     </DataGridItem>
 
+
+
     <DataGridItem Title="Título de la ponencia (S/A)">
-        <input type="text" class="form-control" />
+            <input type="text" class="form-control" @bind="MovilityRequestState.movilityType.Title" />
+            <ValidationMessage For="@(() => MovilityRequestState.movilityType.Title)" class="text-danger" />
     </DataGridItem>
 
     <DataGridItem Title="Fecha de inicio movilidad">

@@ -25,7 +25,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IRIS.UI", "IRIS.UI\IRIS.UI.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TabBlazor", "TabBlazor\TabBlazor.csproj", "{4A6A2D3A-26B1-4D4A-8074-3D27001699BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IRIS.Conecta.Identity", "IRIS.Conecta.Identity\IRIS.Conecta.Identity.csproj", "{F24948AD-2A38-49BB-BE23-EC900CD58468}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IRIS.Conecta.Identity", "IRIS.Conecta.Identity\IRIS.Conecta.Identity.csproj", "{F24948AD-2A38-49BB-BE23-EC900CD58468}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
