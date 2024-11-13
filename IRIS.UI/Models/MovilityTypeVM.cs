@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using DocumentFormat.OpenXml.Drawing;
+using DocumentFormat.OpenXml.Presentation;
+using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
 namespace IRIS.UI.Models
@@ -23,8 +25,16 @@ namespace IRIS.UI.Models
 
         public int Id { get; set; }
 
-
+        [Display(Name = "Nombre de la actividad que origina la movilidad")]
+        [Required(ErrorMessage = "*{0} es obligatorio")]
+        [MaxLength(100, ErrorMessage = "*{0} debe tener máximo {1} caracteres")]
         public string EventName { get; set; }
+
+        [Display(Name = "Título de la ponencia(S / A)")]
+        [Required(ErrorMessage = "*{0} es obligatorio")]
+        [MaxLength(100, ErrorMessage = "*{0} debe tener máximo {1} caracteres")]
+        public string Title { get; set; }
+
 
         public TicketsStatus Status { get; set; }
 

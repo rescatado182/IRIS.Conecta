@@ -8,6 +8,9 @@ using IRIS.UI.Services.BL;
 using IRIS.UI.Services;
 using ColorCode.Compilation.Languages;
 using IRIS.UI.Pages.BL.Tickets.RequestTickets.Movility;
+using Blazored.LocalStorage;
+using Microsoft.AspNetCore.Components.Authorization;
+using IRIS.UI.AuthenticationProviders;
 
 namespace IRIS.UI
 {
@@ -24,6 +27,16 @@ namespace IRIS.UI
             builder.Services.AddHttpClient("GitHub", client => client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("TabBlazor", "1")));
 
             builder.Services.AddSingleton(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7225/") });
+
+            // Agregar servicios de autorización
+            builder.Services.AddAuthorizationCore();
+
+            builder.Services.AddScoped<AuthenticationProviderJWT>();
+            //builder.Services.AddScoped<AuthenticationStateProvider, AuthenticationProviderJWT>(x => x.GetRequiredService<AuthenticationProviderJWT>());
+            //builder.Services.AddScoped<ILoginService, AuthenticationProviderJWT>(x => x.GetRequiredService<AuthenticationProviderJWT>());
+
+            builder.Services.AddScoped<AuthenticationStateProvider, AuthenticationProviderJWT>();
+            builder.Services.AddScoped<ILoginService, AuthenticationProviderJWT>();
 
             builder.Services.AddScoped<IRepository, Repository>();
             builder.Services.AddScoped<IModalService, ModalService>();

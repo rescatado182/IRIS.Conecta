@@ -95,7 +95,488 @@ namespace IRIS.Conecta.Persistence.Migrations
                     b.HasIndex(new[] { "UserId" }, "IX_AcademicData_UserId");
 
                     b.ToTable("AcademicData", (string)null);
-                });          
+                });
+
+            modelBuilder.Entity("IRIS.Conecta.Domain.Entities.Masters.City", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CountryCode")
+                        .IsRequired()
+                        .HasMaxLength(2)
+                        .HasColumnType("nchar(2)")
+                        .HasColumnName("country_code")
+                        .IsFixedLength();
+
+                    b.Property<int>("CountryId")
+                        .HasColumnType("int")
+                        .HasColumnName("country_id");
+
+                    b.Property<string>("CountryName")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)")
+                        .HasColumnName("country_name");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2014, 1, 1, 12, 1, 1, 0, DateTimeKind.Unspecified))
+                        .HasColumnName("created_at");
+
+                    b.Property<bool>("Flag")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true)
+                        .HasColumnName("flag");
+
+                    b.Property<decimal>("Latitude")
+                        .HasColumnType("decimal(10, 8)")
+                        .HasColumnName("latitude");
+
+                    b.Property<decimal>("Longitude")
+                        .HasColumnType("decimal(11, 8)")
+                        .HasColumnName("longitude");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)")
+                        .HasColumnName("name");
+
+                    b.Property<string>("StateCode")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)")
+                        .HasColumnName("state_code");
+
+                    b.Property<int>("StateId")
+                        .HasColumnType("int")
+                        .HasColumnName("state_id");
+
+                    b.Property<string>("StateName")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)")
+                        .HasColumnName("state_name");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasColumnName("updated_at")
+                        .HasDefaultValueSql("(getdate())");
+
+                    b.Property<string>("WikiDataId")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)")
+                        .HasColumnName("wikiDataId");
+
+                    b.HasKey("Id")
+                        .HasName("PK__Cities__3213E83FCFF12A69");
+
+                    b.HasIndex("CountryId");
+
+                    b.HasIndex("StateId");
+
+                    b.ToTable("Cities");
+                });
+
+            modelBuilder.Entity("IRIS.Conecta.Domain.Entities.Masters.Country", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Capital")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)")
+                        .HasColumnName("capital");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("created_at");
+
+                    b.Property<string>("Currency")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)")
+                        .HasColumnName("currency");
+
+                    b.Property<string>("CurrencyName")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)")
+                        .HasColumnName("currency_name");
+
+                    b.Property<string>("CurrencySymbol")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)")
+                        .HasColumnName("currency_symbol");
+
+                    b.Property<string>("Emoji")
+                        .HasMaxLength(191)
+                        .HasColumnType("nvarchar(191)")
+                        .HasColumnName("emoji");
+
+                    b.Property<string>("EmojiU")
+                        .HasMaxLength(191)
+                        .HasColumnType("nvarchar(191)")
+                        .HasColumnName("emojiU");
+
+                    b.Property<bool>("Flag")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true)
+                        .HasColumnName("flag");
+
+                    b.Property<string>("Iso2")
+                        .HasMaxLength(2)
+                        .HasColumnType("nchar(2)")
+                        .HasColumnName("iso2")
+                        .IsFixedLength();
+
+                    b.Property<string>("Iso3")
+                        .HasMaxLength(3)
+                        .HasColumnType("nchar(3)")
+                        .HasColumnName("iso3")
+                        .IsFixedLength();
+
+                    b.Property<decimal?>("Latitude")
+                        .HasColumnType("decimal(10, 8)")
+                        .HasColumnName("latitude");
+
+                    b.Property<decimal?>("Longitude")
+                        .HasColumnType("decimal(11, 8)")
+                        .HasColumnName("longitude");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasColumnName("name");
+
+                    b.Property<string>("Nationality")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)")
+                        .HasColumnName("nationality");
+
+                    b.Property<string>("Native")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)")
+                        .HasColumnName("native");
+
+                    b.Property<string>("NumericCode")
+                        .HasMaxLength(3)
+                        .HasColumnType("nchar(3)")
+                        .HasColumnName("numeric_code")
+                        .IsFixedLength();
+
+                    b.Property<string>("Phonecode")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)")
+                        .HasColumnName("phonecode");
+
+                    b.Property<string>("Region")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)")
+                        .HasColumnName("region");
+
+                    b.Property<int?>("RegionId")
+                        .HasColumnType("int")
+                        .HasColumnName("region_id");
+
+                    b.Property<string>("Subregion")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)")
+                        .HasColumnName("subregion");
+
+                    b.Property<int?>("SubregionId")
+                        .HasColumnType("int")
+                        .HasColumnName("subregion_id");
+
+                    b.Property<string>("Timezones")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("timezones");
+
+                    b.Property<string>("Tld")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)")
+                        .HasColumnName("tld");
+
+                    b.Property<string>("Translations")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("translations");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasColumnName("updated_at")
+                        .HasDefaultValueSql("(getdate())");
+
+                    b.Property<string>("WikiDataId")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)")
+                        .HasColumnName("wikiDataId");
+
+                    b.HasKey("Id")
+                        .HasName("PK__Countrie__3213E83FA74F3AF0");
+
+                    b.ToTable("Countries");
+                });
+
+            modelBuilder.Entity("IRIS.Conecta.Domain.Entities.Masters.Department", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("Id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DateModified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DepartmentName")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)")
+                        .HasColumnName("Department");
+
+                    b.Property<int>("FacultyId")
+                        .HasColumnType("int")
+                        .HasColumnName("FacultyId");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id")
+                        .HasName("PK_Departments");
+
+                    b.HasIndex(new[] { "DepartmentName" }, "IX_Departments_DepartmentName")
+                        .IsUnique();
+
+                    b.HasIndex(new[] { "FacultyId" }, "IX_Departments_FacultyId_Name");
+
+                    b.HasIndex(new[] { "Id" }, "IX_Departments_Id")
+                        .IsUnique();
+
+                    b.ToTable("Departments");
+                });
+
+            modelBuilder.Entity("IRIS.Conecta.Domain.Entities.Masters.Faculty", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("Id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DateModified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FacultyName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id")
+                        .HasName("PK_Faculties");
+
+                    b.HasIndex(new[] { "FacultyName" }, "IX_Faculties_Name")
+                        .IsUnique();
+
+                    b.ToTable("Faculties");
+                });
+
+            modelBuilder.Entity("IRIS.Conecta.Domain.Entities.Masters.Program", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("Id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DateModified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DepartmentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProgramName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("ProgramType")
+                        .HasColumnType("int")
+                        .HasColumnName("ProgramType");
+
+                    b.HasKey("Id")
+                        .HasName("PK_Programs");
+
+                    b.HasIndex(new[] { "DepartmentId" }, "IX_Programs_DepartmentId");
+
+                    b.HasIndex(new[] { "Id" }, "IX_Programs_Id")
+                        .IsUnique();
+
+                    b.HasIndex(new[] { "ProgramName" }, "IX_Programs_ProgramName")
+                        .IsUnique();
+
+                    b.HasIndex(new[] { "ProgramType" }, "IX_Programs_ProgramType");
+
+                    b.ToTable("Programs");
+                });
+
+            modelBuilder.Entity("IRIS.Conecta.Domain.Entities.Masters.State", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CountryCode")
+                        .IsRequired()
+                        .HasMaxLength(2)
+                        .HasColumnType("nchar(2)")
+                        .HasColumnName("country_code")
+                        .IsFixedLength();
+
+                    b.Property<int>("CountryId")
+                        .HasColumnType("int")
+                        .HasColumnName("country_id");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("created_at");
+
+                    b.Property<string>("FipsCode")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)")
+                        .HasColumnName("fips_code");
+
+                    b.Property<bool>("Flag")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true)
+                        .HasColumnName("flag");
+
+                    b.Property<string>("Iso2")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)")
+                        .HasColumnName("iso2");
+
+                    b.Property<decimal?>("Latitude")
+                        .HasColumnType("decimal(10, 8)")
+                        .HasColumnName("latitude");
+
+                    b.Property<decimal?>("Longitude")
+                        .HasColumnType("decimal(11, 8)")
+                        .HasColumnName("longitude");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)")
+                        .HasColumnName("name");
+
+                    b.Property<string>("Type")
+                        .HasMaxLength(191)
+                        .HasColumnType("nvarchar(191)")
+                        .HasColumnName("type");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasColumnName("updated_at")
+                        .HasDefaultValueSql("(getdate())");
+
+                    b.Property<string>("WikiDataId")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)")
+                        .HasColumnName("wikiDataId");
+
+                    b.HasKey("Id")
+                        .HasName("PK__states__3213E83F220489F8");
+
+                    b.HasIndex("CountryId");
+
+                    b.ToTable("states", (string)null);
+                });
+
+            modelBuilder.Entity("IRIS.Conecta.Domain.Entities.Masters.TemplateResponses", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("Id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DateModified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RequestTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TemplateName")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)")
+                        .HasColumnName("TemplateName");
+
+                    b.HasKey("Id")
+                        .HasName("PK_TemplateResponses");
+
+                    b.HasIndex(new[] { "Id" }, "IX_TemplateResponses_Id")
+                        .IsUnique();
+
+                    b.HasIndex(new[] { "RequestTypeId" }, "IX_TemplateResponses_RequestTypeId");
+
+                    b.ToTable("TemplateResponses");
+                });
 
             modelBuilder.Entity("IRIS.Conecta.Domain.Entities.PersonalData", b =>
                 {
@@ -211,7 +692,51 @@ namespace IRIS.Conecta.Persistence.Migrations
                     b.HasIndex(new[] { "UserId" }, "IX_PersonalData_UserId");
 
                     b.ToTable("PersonalData", (string)null);
-                });            
+                });
+
+            modelBuilder.Entity("IRIS.Conecta.Domain.Entities.RequestType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DateModified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DepartmentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Path")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RequestName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id")
+                        .HasName("PK_RequestTypes");
+
+                    b.HasIndex("DepartmentId");
+
+                    b.HasIndex(new[] { "Id" }, "IX_RequestTypeId")
+                        .IsUnique();
+
+                    b.HasIndex(new[] { "RequestName" }, "IX_RequestTypes_DepartmentId_Name");
+
+                    b.ToTable("RequestTypes", (string)null);
+                });
 
             modelBuilder.Entity("IRIS.Conecta.Domain.Entities.Ticket", b =>
                 {
@@ -357,8 +882,70 @@ namespace IRIS.Conecta.Persistence.Migrations
                     b.Navigation("Program");
 
                     b.Navigation("Ticket");
-                });          
-            
+                });
+
+            modelBuilder.Entity("IRIS.Conecta.Domain.Entities.Masters.City", b =>
+                {
+                    b.HasOne("IRIS.Conecta.Domain.Entities.Masters.Country", "Country")
+                        .WithMany("Cities")
+                        .HasForeignKey("CountryId")
+                        .IsRequired()
+                        .HasConstraintName("FK_cities_countries");
+
+                    b.HasOne("IRIS.Conecta.Domain.Entities.Masters.State", "State")
+                        .WithMany("Cities")
+                        .HasForeignKey("StateId")
+                        .IsRequired()
+                        .HasConstraintName("FK_cities_states");
+
+                    b.Navigation("Country");
+
+                    b.Navigation("State");
+                });
+
+            modelBuilder.Entity("IRIS.Conecta.Domain.Entities.Masters.Department", b =>
+                {
+                    b.HasOne("IRIS.Conecta.Domain.Entities.Masters.Faculty", "Faculty")
+                        .WithMany("Departments")
+                        .HasForeignKey("FacultyId")
+                        .IsRequired()
+                        .HasConstraintName("FK_Departments_Faculties_FacultyId");
+
+                    b.Navigation("Faculty");
+                });
+
+            modelBuilder.Entity("IRIS.Conecta.Domain.Entities.Masters.Program", b =>
+                {
+                    b.HasOne("IRIS.Conecta.Domain.Entities.Masters.Department", "Department")
+                        .WithMany("Programs")
+                        .HasForeignKey("DepartmentId")
+                        .IsRequired()
+                        .HasConstraintName("FK_Programs_Deparments_DepartmentId");
+
+                    b.Navigation("Department");
+                });
+
+            modelBuilder.Entity("IRIS.Conecta.Domain.Entities.Masters.State", b =>
+                {
+                    b.HasOne("IRIS.Conecta.Domain.Entities.Masters.Country", "Country")
+                        .WithMany("States")
+                        .HasForeignKey("CountryId")
+                        .IsRequired()
+                        .HasConstraintName("FK_states_countries");
+
+                    b.Navigation("Country");
+                });
+
+            modelBuilder.Entity("IRIS.Conecta.Domain.Entities.Masters.TemplateResponses", b =>
+                {
+                    b.HasOne("IRIS.Conecta.Domain.Entities.RequestType", "RequestType")
+                        .WithMany("TemplateResponses")
+                        .HasForeignKey("RequestTypeId")
+                        .IsRequired()
+                        .HasConstraintName("FK_TemplateResponses_RequestsType_RequestTypeId");
+
+                    b.Navigation("RequestType");
+                });
 
             modelBuilder.Entity("IRIS.Conecta.Domain.Entities.PersonalData", b =>
                 {
@@ -407,7 +994,18 @@ namespace IRIS.Conecta.Persistence.Migrations
                     b.Navigation("StateResidence");
 
                     b.Navigation("Ticket");
-                });         
+                });
+
+            modelBuilder.Entity("IRIS.Conecta.Domain.Entities.RequestType", b =>
+                {
+                    b.HasOne("IRIS.Conecta.Domain.Entities.Masters.Department", "Department")
+                        .WithMany("RequestTypes")
+                        .HasForeignKey("DepartmentId")
+                        .IsRequired()
+                        .HasConstraintName("FK_RequestTypes_Departments_DepartmentId");
+
+                    b.Navigation("Department");
+                });
 
             modelBuilder.Entity("IRIS.Conecta.Domain.Entities.Ticket", b =>
                 {
@@ -418,7 +1016,47 @@ namespace IRIS.Conecta.Persistence.Migrations
                         .HasConstraintName("FK_Tickets_RequestTypes_RequestTypeId");
 
                     b.Navigation("RequestType");
-                });          
+                });
+
+            modelBuilder.Entity("IRIS.Conecta.Domain.Entities.Masters.City", b =>
+                {
+                    b.Navigation("PersonalDatas");
+                });
+
+            modelBuilder.Entity("IRIS.Conecta.Domain.Entities.Masters.Country", b =>
+                {
+                    b.Navigation("Cities");
+
+                    b.Navigation("PersonalDatas");
+
+                    b.Navigation("States");
+                });
+
+            modelBuilder.Entity("IRIS.Conecta.Domain.Entities.Masters.Department", b =>
+                {
+                    b.Navigation("Programs");
+
+                    b.Navigation("RequestTypes");
+                });
+
+            modelBuilder.Entity("IRIS.Conecta.Domain.Entities.Masters.Faculty", b =>
+                {
+                    b.Navigation("Departments");
+                });
+
+            modelBuilder.Entity("IRIS.Conecta.Domain.Entities.Masters.State", b =>
+                {
+                    b.Navigation("Cities");
+
+                    b.Navigation("PersonalDatas");
+                });
+
+            modelBuilder.Entity("IRIS.Conecta.Domain.Entities.RequestType", b =>
+                {
+                    b.Navigation("TemplateResponses");
+
+                    b.Navigation("Tickets");
+                });
 
             modelBuilder.Entity("IRIS.Conecta.Domain.Entities.Ticket", b =>
                 {

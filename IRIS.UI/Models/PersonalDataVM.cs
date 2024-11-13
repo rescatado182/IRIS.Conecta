@@ -57,14 +57,15 @@ namespace IRIS.UI.Models
         [MaxLength(100, ErrorMessage = "*{0} debe tener máximo {1} caracteres")]
         public string Email { get; set; }
 
-        [Display(Name = "Correo electronico ITM")]
-        [Required(ErrorMessage = "*{0} es obligatorio")]
-        [MaxLength(100, ErrorMessage = "*{0} debe tener máximo {1} caracteres")]
+        //[Display(Name = "Correo electronico ITM")]
+        //[Required(ErrorMessage = "*{0} es obligatorio")]
+        //[MaxLength(100, ErrorMessage = "*{0} debe tener máximo {1} caracteres")]
 
-        public string EmailInstitutional { get; set; }
+        //public string EmailInstitutional { get; set; }
 
         [Display(Name = "Telefono")]
         [DataType(DataType.PhoneNumber)]
+        [Required(ErrorMessage = "*Selecciona un {0} válido")]
         [MaxLength(10, ErrorMessage = "*{0} debe tener máximo {1} caracteres")]
         [RegularExpression(@"\+?(\d{1,3})?[-.\s]?(\(\d{1,4}\)|\d{1,4})[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}")]
         public string Phone { get; set; }
@@ -72,6 +73,7 @@ namespace IRIS.UI.Models
 
         [Display(Name = "Celular")]
         [DataType(DataType.PhoneNumber)]
+        [Required(ErrorMessage = "*Selecciona un {0} válido")]
         [MaxLength(15, ErrorMessage = "*{0} debe tener máximo {1} caracteres")]
         [RegularExpression(@"\+?(\d{1,3})?[-.\s]?(\(\d{1,4}\)|\d{1,4})[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}")]
         public string Cellphone { get; set; }

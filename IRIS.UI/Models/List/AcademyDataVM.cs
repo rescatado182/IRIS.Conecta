@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
-namespace IRIS.UI.Models
+namespace IRIS.UI.Models.List
 {
     public class AcademyDataVM
     {
@@ -23,7 +23,7 @@ namespace IRIS.UI.Models
         [MaxLength(200, ErrorMessage = "*{0} no puede tener más de {1} carácteres")]
         public string ResearchProject { get; set; }
 
-        
+
         [Display(Name = "Promedio crédito")]
         [Required(ErrorMessage = "*{0} es obligatorio")]
         [Range(0, 5, ErrorMessage = "El promedio debe estar entre 0 y 5.")]
@@ -36,8 +36,8 @@ namespace IRIS.UI.Models
 
         [Display(Name = "Semestre Matriculado")]
         [Required(ErrorMessage = "*{0} es obligatorio")]
-        [Range(0, 5, ErrorMessage = "El promedio debe estar entre 0 y 10")]
-        public int enrolledSemester { get; set; }
+        [Range(0, 10, ErrorMessage = "El semestre debe estar entre 0 y 10")]
+        public int EnrolledSemester { get; set; }
 
         [Display(Name = "G. de investigación/Semillero")]
         [Required(ErrorMessage = "*{0} es obligatorio")]

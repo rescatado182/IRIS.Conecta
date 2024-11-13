@@ -3,6 +3,7 @@ using IRIS.Frontend.Repositories;
 using IRIS.UI.Data;
 using IRIS.UI.Interfaces;
 using IRIS.UI.Models;
+using IRIS.UI.Models.Save;
 using Microsoft.AspNetCore.Components;
 using System.ComponentModel.DataAnnotations;
 using System.Linq.Expressions;
@@ -195,7 +196,8 @@ private DateTimeOffset selectedFinalDate;
             var updatedMovilityType = new MovilityTypeSaveVM
             {
                 id = idTicket.Value,
-                eventName = "Movilidad",
+                eventName = MovilityRequestState.movilityType.EventName.ToString(),
+                title = MovilityRequestState.movilityType.Title.ToString(),
                 status = TicketsStatus.Open,
                 movilityType = EnumMovilityType.InstitutionalRepresentation.ToString(),
                 country = MovilityRequestState.movilityType.DestinationCountryId > 0
