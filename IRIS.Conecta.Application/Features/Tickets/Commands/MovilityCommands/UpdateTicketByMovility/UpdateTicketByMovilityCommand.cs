@@ -19,9 +19,10 @@ namespace IRIS.Conecta.Application.Features.Tickets.Commands.MovilityCommands.Up
         public string Phone { get; set; }
         public string ContactData { get; set; }
         public string ExternalInstitution { get; set; }
-        public DateOnly StartDate { get; set; }
-        public DateOnly EndDate { get; set; }
+        public DateOnly StartDateMovility { get; set; }
+        public DateOnly EndDateMovility { get; set; }
 
         public string UserId { get; set; }
+        public string ManagerUserId { get; set; }
     }
 }

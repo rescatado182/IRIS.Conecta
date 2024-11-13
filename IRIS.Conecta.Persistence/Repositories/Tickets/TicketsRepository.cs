@@ -1,14 +1,17 @@
-﻿using IRIS.Conecta.Application.Contracts.Persistence;
-using IRIS.Conecta.Domain.Entities;
+﻿using IRIS.Conecta.Application.Contracts.Persistence.Tickets;
+using IRIS.Conecta.Domain.Entities.Tickets;
 using IRIS.Conecta.Domain.Enums;
 using IRIS.Conecta.Persistence.DatabaseContext;
 using Microsoft.EntityFrameworkCore;
 
-namespace IRIS.Conecta.Persistence.Repositories
+namespace IRIS.Conecta.Persistence.Repositories.Tickets
 {
-    public class TicketsRepository(IRISConectaDatabaseContext context) :
-        GenericRepository<Ticket>(context), ITicketsRepository
+    public class TicketsRepository : GenericRepository<Ticket>, ITicketsRepository
     {
+        public TicketsRepository(IRISConectaDatabaseContext context) : base(context)
+        {
+        }
+
         public async Task<List<Ticket>> GetTicketsByUser(string userId)
         {
             var tickets = await _context.Tickets
@@ -24,6 +27,6 @@ namespace IRIS.Conecta.Persistence.Repositories
             _context.Entry(ticket).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }
-
+        
     }
 }

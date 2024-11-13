@@ -1,6 +1,10 @@
 ﻿using IRIS.Conecta.Application.Contracts.Persistence;
+using IRIS.Conecta.Application.Contracts.Persistence.Masters;
+using IRIS.Conecta.Application.Contracts.Persistence.Tickets;
 using IRIS.Conecta.Persistence.DatabaseContext;
 using IRIS.Conecta.Persistence.Repositories;
+using IRIS.Conecta.Persistence.Repositories.Masters;
+using IRIS.Conecta.Persistence.Repositories.Tickets;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,7 +24,9 @@ namespace IRIS.Conecta.Persistence
             services.AddScoped<IProgramRepository, ProgramsRepository>();
 
             services.AddScoped<IRequestTypeRepository, RequestTypesRepository>();
+
             services.AddScoped<ITicketsRepository, TicketsRepository>();
+            services.AddScoped<ITicketsViewRepository, TicketsViewsRepository>();
 
             services.AddScoped<IAcademicDataRepository, AcademicDataRepository>();
             services.AddScoped<IPersonalDataRepository, PersonalDataRepository>();            

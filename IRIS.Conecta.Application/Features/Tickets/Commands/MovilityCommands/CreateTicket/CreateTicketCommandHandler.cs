@@ -1,7 +1,8 @@
 ﻿using AutoMapper;
 using IRIS.Conecta.Application.Contracts.Persistence;
+using IRIS.Conecta.Application.Contracts.Persistence.Tickets;
 using IRIS.Conecta.Application.Exceptions;
-using IRIS.Conecta.Domain.Entities;
+using IRIS.Conecta.Domain.Entities.Tickets;
 using MediatR;
 
 namespace IRIS.Conecta.Application.Features.Tickets.Commands.MovilityCommands.CreateTicket

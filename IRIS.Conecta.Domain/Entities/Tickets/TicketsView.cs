@@ -1,20 +1,26 @@
 ﻿using IRIS.Conecta.Domain.Base;
 using IRIS.Conecta.Domain.Enums;
 
-namespace IRIS.Conecta.Domain.Entities
+namespace IRIS.Conecta.Domain.Entities.Tickets
 {
-    public class Ticket : BaseEntity
+    public class TicketsView : BaseEntity
     {
         public int Id { get; set; }
 
         // Título de la Ponencia (S/A)
         public required string Title { get; set; }
-        
+
         // Nombre de la actividad que origina la movilidad
         public string? EventName { get; set; }
         public required TicketsStatus Status { get; set; }
         public int RequestTypeId { get; set; }
-        
+
+        public string? RequestName { get; set; }
+        public string? Department { get; set; }
+        public string? FacultyName { get; set; }
+
+        public string? FullName { get; set; }
+
         #region Justificación
 
         // Convenio (S/A)
@@ -44,13 +50,13 @@ namespace IRIS.Conecta.Domain.Entities
 
         public required string UserId { get; set; }
 
-        public int PersonalDataId { get; set; }
+        public string? ManagerUserId { get; set; }        
+        
+        public DateOnly StartDateMovility { get; set; }
+        public DateOnly EndDateMovility { get; set; }
 
-        public int AcademicDataId { get; set; }
-
-        // TODO: Fecha de movilidad y fecha de requerimientos son diferentes?
-        public DateOnly StartDate { get; set; }
-        public DateOnly EndDate { get; set; }
+        public DateOnly StartDateRequirement { get; set; }
+        public DateOnly EndDateRequirement { get; set; }
 
         #endregion
 
@@ -58,16 +64,6 @@ namespace IRIS.Conecta.Domain.Entities
         public TicketRequirements? TicketRequirements { get; set; } = null;
 
         public double? Total { get; set; }
-
-        #endregion
-
-        #region Relationships
-        public required RequestType RequestType { get; set; }
-
-        public virtual required PersonalData PersonalData { get; set; }
-
-        public required AcademicData AcademicData { get; set; }
-
 
         #endregion
     }

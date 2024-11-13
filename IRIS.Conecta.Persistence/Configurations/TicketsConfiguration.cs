@@ -1,4 +1,5 @@
 ﻿using IRIS.Conecta.Domain.Entities;
+using IRIS.Conecta.Domain.Entities.Tickets;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -20,7 +21,9 @@ namespace IRIS.Conecta.Persistence.Configurations
 
             builder.Property(e => e.Id);
             builder.Property(e => e.RequestTypeId);
-            
+            builder.Property(e => e.UserId);
+            builder.Property(e => e.ManagerUserId);
+
             builder.Property(e => e.Status)
                 .HasColumnName("Status")
                 .IsRequired();
@@ -47,8 +50,12 @@ namespace IRIS.Conecta.Persistence.Configurations
             builder.Property(e => e.IsAgreement)
                 .HasDefaultValue(false);
 
-            builder.Property(e => e.StartDate).HasPrecision(0);
-            builder.Property(e => e.EndDate).HasPrecision(0);
+            builder.Property(e => e.StartDateMovility).HasPrecision(0);
+            builder.Property(e => e.EndDateMovility).HasPrecision(0);
+
+            builder.Property(e => e.StartDateRequirement).HasPrecision(0);
+            builder.Property(e => e.EndDateRequirement).HasPrecision(0);
+
             builder.Property(e => e.DeliveryDate).HasPrecision(0);
 
             builder.Property(e => e.Total).HasColumnType("float");

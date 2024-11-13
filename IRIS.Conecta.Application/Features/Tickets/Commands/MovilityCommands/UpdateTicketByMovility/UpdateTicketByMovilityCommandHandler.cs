@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using IRIS.Conecta.Application.Contracts.Persistence;
+using IRIS.Conecta.Application.Contracts.Persistence.Tickets;
 using IRIS.Conecta.Application.Exceptions;
 using MediatR;
 

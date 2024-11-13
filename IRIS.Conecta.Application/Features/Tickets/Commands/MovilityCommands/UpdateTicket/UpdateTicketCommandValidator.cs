@@ -36,12 +36,12 @@ namespace IRIS.Conecta.Application.Features.Tickets.Commands.MovilityCommands.Up
                     return requestTypeExists != null;
                 })
                 .WithMessage("{PropertyName} no existe.");
-
         }
 
         private bool BeAValidDate(DateOnly date)
         {
             return !date.Equals(default(DateTime));
         }
+        
     }
 }

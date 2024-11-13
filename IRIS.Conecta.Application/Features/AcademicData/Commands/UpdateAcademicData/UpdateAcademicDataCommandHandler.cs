@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using IRIS.Conecta.Application.Contracts.Persistence;
+using IRIS.Conecta.Application.Contracts.Persistence.Tickets;
 using IRIS.Conecta.Application.Exceptions;
 using MediatR;
 
@@ -30,7 +31,7 @@ namespace IRIS.Conecta.Application.Features.AcademicData.Commands.UpdateAcademic
             }
 
             // Mapping data
-            var data = _mapper.Map<Domain.Entities.AcademicData>(request.AcademicDataDto);
+            var data = _mapper.Map<Domain.Entities.AcademicData>(request);
 
             // Update record
             await _academicDataRepository.UpdateAsync(data);

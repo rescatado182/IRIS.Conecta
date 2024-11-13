@@ -16,7 +16,7 @@ namespace IRIS.Conecta.Application.Features.AcademicData.Dtos
         public int EnrolledSemester { get; set; }
         
         public bool IsInstitutionalGroup { get; set; }
-        public required int UserId { get; set; }
+        public string UserId { get; set; }
         public int TicketId { get; set; }
     }
 }

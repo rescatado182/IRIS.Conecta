@@ -1,9 +1,9 @@
-﻿using IRIS.Conecta.Application.Contracts.Persistence;
+﻿using IRIS.Conecta.Application.Contracts.Persistence.Masters;
 using IRIS.Conecta.Domain.Entities.Masters;
 using IRIS.Conecta.Persistence.DatabaseContext;
 using Microsoft.EntityFrameworkCore;
 
-namespace IRIS.Conecta.Persistence.Repositories
+namespace IRIS.Conecta.Persistence.Repositories.Masters
 {
     public class DepartmentsRepository(IRISConectaDatabaseContext context) :
         GenericRepository<Department>(context), IDepartmentRepository

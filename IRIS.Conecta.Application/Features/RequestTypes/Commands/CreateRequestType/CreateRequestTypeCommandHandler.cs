@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using IRIS.Conecta.Application.Contracts.Persistence;
+using IRIS.Conecta.Application.Contracts.Persistence.Masters;
 using IRIS.Conecta.Application.Exceptions;
 using IRIS.Conecta.Domain.Entities;
 using MediatR;
@@ -10,21 +11,20 @@ namespace IRIS.Conecta.Application.Features.RequestTypes.Commands.CreateRequestT
     {
         private readonly IMapper _mapper;
         private readonly IRequestTypeRepository _requestTypeRepository;
-        private readonly IProgramRepository _ProgramRepository;
+        private readonly IDepartmentRepository _departmentRepository;
 
         public CreateRequestTypeCommandHandler(IMapper mapper, 
             IRequestTypeRepository requestTypeRepository,
-            IProgramRepository ProgramRepository)
+            IDepartmentRepository departmentRepository)
         {
             _mapper                 = mapper;
-            _ProgramRepository   = ProgramRepository;
-            _requestTypeRepository  = requestTypeRepository;
-            
+            _departmentRepository   = departmentRepository;
+            _requestTypeRepository  = requestTypeRepository;            
         }
         public async Task<int> Handle(CreateRequestTypeCommand request, CancellationToken cancellationToken)
         {
             // Validate incomming data
-            var validator = new CreateRequestTypeCommandValidator(_ProgramRepository);
+            var validator = new CreateRequestTypeCommandValidator(_departmentRepository);
             var validationResult = await validator.ValidateAsync(request, cancellationToken);
 
             if (!validationResult.IsValid)

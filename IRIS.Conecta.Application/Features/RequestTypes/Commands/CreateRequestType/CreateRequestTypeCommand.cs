@@ -6,6 +6,6 @@ namespace IRIS.Conecta.Application.Features.RequestTypes.Commands.CreateRequestT
     {
         public string RequestName { get; set; } = null!;
         public string Path { get; set; } = null!;
-        public int ProgramId { get; set; }
+        public int DepartmentId { get; set; }
     }
 }

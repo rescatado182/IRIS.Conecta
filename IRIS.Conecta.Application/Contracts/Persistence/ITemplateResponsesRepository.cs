@@ -1,4 +1,4 @@
-﻿using IRIS.Conecta.Domain.Entities.Masters;
+﻿using IRIS.Conecta.Domain.Entities;
 
 namespace IRIS.Conecta.Application.Contracts.Persistence
 {

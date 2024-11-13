@@ -41,17 +41,20 @@ namespace IRIS.Conecta.Application.Features.Tickets.Dtos
 
         public string ExternalInstitution { get; set; }
 
+        public DateOnly StartDateMovility { get; set; }
+        public DateOnly EndDateMovility { get; set; }
 
-        // TODO: Fecha de movilidad y fecha de requerimientos son diferentes?
-        public DateOnly StartDate { get; set; }
-        public DateOnly EndDate { get; set; }
+        public DateOnly StartDateRequirement { get; set; }
+        public DateOnly EndDateRequirement { get; set; }
+
+        public string UserId { get; set; }
+        public string ManagerUserId { get; set; }
 
         #endregion
 
         #region Requirements
         public TicketRequirements TicketRequirements { get; set; }
-
-        public double Total { get; set; }
+        public double Total { get; set; }        
 
         #endregion
     }

@@ -7,9 +7,10 @@ namespace IRIS.Conecta.Application.Features.Tickets.Commands.MovilityCommands.Up
     {
         public int Id { get; set; }
         public TicketsStatus Status { get; set; }
-        public DateOnly StartDate { get; set; }
-        public DateOnly EndDate { get; set; }
+        public DateOnly StartDateRequirement { get; set; }
+        public DateOnly EndDateRequirement { get; set; }
         public double Total { get; set; }
         public string UserId { get; set; }
+        public string ManagerUserId { get; set; }
     }
 }

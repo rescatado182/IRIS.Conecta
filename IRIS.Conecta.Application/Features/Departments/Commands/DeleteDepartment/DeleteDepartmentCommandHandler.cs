@@ -1,4 +1,4 @@
-﻿using IRIS.Conecta.Application.Contracts.Persistence;
+﻿using IRIS.Conecta.Application.Contracts.Persistence.Masters;
 using IRIS.Conecta.Application.Exceptions;
 using IRIS.Conecta.Domain.Entities.Masters;
 using MediatR;

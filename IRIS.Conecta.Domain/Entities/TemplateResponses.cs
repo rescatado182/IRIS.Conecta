@@ -1,6 +1,6 @@
 ﻿using IRIS.Conecta.Domain.Base;
 
-namespace IRIS.Conecta.Domain.Entities.Masters
+namespace IRIS.Conecta.Domain.Entities
 {
     public class TemplateResponses : BaseEntity
     {
@@ -11,6 +11,6 @@ namespace IRIS.Conecta.Domain.Entities.Masters
         public int RequestTypeId { get; set; }
 
         public virtual required RequestType RequestType { get; set; }
-        
+
     }
 }

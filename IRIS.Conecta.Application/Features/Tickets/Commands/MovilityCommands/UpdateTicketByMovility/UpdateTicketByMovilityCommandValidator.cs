@@ -4,7 +4,6 @@ namespace IRIS.Conecta.Application.Features.Tickets.Commands.MovilityCommands.Up
 {
     public class UpdateTicketByMovilityCommandValidator : AbstractValidator<UpdateTicketByMovilityCommand>
     {
-
         public UpdateTicketByMovilityCommandValidator()
         {
 
@@ -28,7 +27,6 @@ namespace IRIS.Conecta.Application.Features.Tickets.Commands.MovilityCommands.Up
                 .IsInEnum()
                 .NotEmpty().WithMessage("{PropertyName} es requerido.");
 
-
             RuleFor(p => p.ContactData)
                .NotEmpty().WithMessage("{PropertyName} es requerida.")
                .MaximumLength(200).WithMessage("{PropertyName} no debe exceder {ComparisonValue} carácteres.");
@@ -36,12 +34,11 @@ namespace IRIS.Conecta.Application.Features.Tickets.Commands.MovilityCommands.Up
             RuleFor(p => p.ExternalInstitution)
                 .NotEmpty().WithMessage("{PropertyName} es requerida.");
 
-
-            RuleFor(p => p.StartDate)
+            RuleFor(p => p.StartDateMovility)
                 .Must(BeAValidDate).WithMessage("{PropertyName} debe ser una fecha válida.")
                 .NotEmpty().WithMessage("{PropertyName} es requerido.");
 
-            RuleFor(p => p.EndDate)
+            RuleFor(p => p.EndDateMovility)
                 .Must(BeAValidDate).WithMessage("{PropertyName} debe ser una fecha válida.")
                 .NotEmpty().WithMessage("{PropertyName} es requerido.");
 

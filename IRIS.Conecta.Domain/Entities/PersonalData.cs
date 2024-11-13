@@ -1,5 +1,6 @@
 ﻿using IRIS.Conecta.Domain.Base;
 using IRIS.Conecta.Domain.Entities.Masters;
+using IRIS.Conecta.Domain.Entities.Tickets;
 using IRIS.Conecta.Domain.Enums;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;

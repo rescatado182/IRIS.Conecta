@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using IRIS.Conecta.Application.Contracts.Persistence;
+using IRIS.Conecta.Application.Contracts.Persistence.Masters;
 using IRIS.Conecta.Application.Exceptions;
 using MediatR;
 
@@ -9,15 +10,15 @@ namespace IRIS.Conecta.Application.Features.RequestTypes.Commands.UpdateRequestT
     {
         private readonly IMapper mapper;
         private readonly IRequestTypeRepository requestTypeRepository;
-        private readonly IProgramRepository ProgramRepository;
+        private readonly IDepartmentRepository departmentRepository;
 
         public UpdateRequestTypeCommandHandler(IMapper mapper, 
             IRequestTypeRepository requestTypeRepository,
-            IProgramRepository ProgramRepository)
+            IDepartmentRepository departmentRepository)
         {
             this.mapper = mapper;
             this.requestTypeRepository  = requestTypeRepository;
-            this.ProgramRepository   = ProgramRepository;
+            this.departmentRepository   = departmentRepository;
         }
         public async Task<Unit> Handle(UpdateRequestTypeCommand request, CancellationToken cancellationToken)
         {
@@ -28,7 +29,7 @@ namespace IRIS.Conecta.Application.Features.RequestTypes.Commands.UpdateRequestT
                 throw new NotFoundException(nameof(requestType), request.Id);
             }
 
-            var validator = new UpdateRequestTypeValidator(this.ProgramRepository);
+            var validator = new UpdateRequestTypeValidator(this.departmentRepository);
             var validationResult = await validator.ValidateAsync(request, cancellationToken);
 
             if ( !validationResult.IsValid ) {

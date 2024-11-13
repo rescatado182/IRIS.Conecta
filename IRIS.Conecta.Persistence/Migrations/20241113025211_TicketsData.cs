@@ -6,11 +6,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace IRIS.Conecta.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class PersonalAcademicDataByTickets : Migration
+    public partial class TicketsData : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
-        { 
+        {            
 
             migrationBuilder.CreateTable(
                 name: "Tickets",
@@ -34,10 +34,13 @@ namespace IRIS.Conecta.Persistence.Migrations
                     ContactData = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
                     ExternalInstitution = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ManagerUserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PersonalDataId = table.Column<int>(type: "int", nullable: false),
                     AcademicDataId = table.Column<int>(type: "int", nullable: false),
-                    StartDate = table.Column<DateOnly>(type: "date", precision: 0, nullable: false),
-                    EndDate = table.Column<DateOnly>(type: "date", precision: 0, nullable: false),
+                    StartDateMovility = table.Column<DateOnly>(type: "date", precision: 0, nullable: false),
+                    EndDateMovility = table.Column<DateOnly>(type: "date", precision: 0, nullable: false),
+                    StartDateRequirement = table.Column<DateOnly>(type: "date", precision: 0, nullable: false),
+                    EndDateRequirement = table.Column<DateOnly>(type: "date", precision: 0, nullable: false),
                     TicketRequirements = table.Column<int>(type: "int", nullable: true),
                     Total = table.Column<double>(type: "float", nullable: true),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -180,7 +183,7 @@ namespace IRIS.Conecta.Persistence.Migrations
                 name: "IX_AcademicData_UserId",
                 table: "AcademicData",
                 column: "UserId");
-         
+           
             migrationBuilder.CreateIndex(
                 name: "IX_PersonalData_BornCityId",
                 table: "PersonalData",
@@ -237,6 +240,7 @@ namespace IRIS.Conecta.Persistence.Migrations
                 name: "IX_PersonalData_UserId",
                 table: "PersonalData",
                 column: "UserId");
+           
 
             migrationBuilder.CreateIndex(
                 name: "IX_Ticket_Id",
@@ -267,10 +271,10 @@ namespace IRIS.Conecta.Persistence.Migrations
                 name: "AcademicData");
 
             migrationBuilder.DropTable(
-                name: "PersonalData");           
+                name: "PersonalData");         
 
             migrationBuilder.DropTable(
-                name: "Tickets");           
+                name: "Tickets");         
         }
     }
 }

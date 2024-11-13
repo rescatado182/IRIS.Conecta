@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using IRIS.Conecta.Application.Contracts.Persistence;
+using IRIS.Conecta.Application.Contracts.Persistence.Masters;
 using IRIS.Conecta.Application.Features.Program.Dtos;
 using MediatR;
 

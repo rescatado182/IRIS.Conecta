@@ -14,11 +14,11 @@ namespace IRIS.Conecta.Application.Features.Tickets.Commands.MovilityCommands.Up
                 .NotEmpty().WithMessage("{PropertyName} es requerida.")
                 .GreaterThan(0).WithMessage("{PropertyName} debe ser un monto válido.");
 
-            RuleFor(p => p.StartDate)
+            RuleFor(p => p.StartDateRequirement)
                 .Must(BeAValidDate).WithMessage("{PropertyName} debe ser una fecha válida.")
                 .NotEmpty().WithMessage("{PropertyName} es requerido.");
 
-            RuleFor(p => p.EndDate)
+            RuleFor(p => p.EndDateRequirement)
                 .Must(BeAValidDate).WithMessage("{PropertyName} debe ser una fecha válida.")
                 .NotEmpty().WithMessage("{PropertyName} es requerido.");
 

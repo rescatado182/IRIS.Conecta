@@ -1,4 +1,4 @@
-﻿using IRIS.Conecta.Application.Contracts.Persistence;
+﻿using IRIS.Conecta.Application.Contracts.Persistence.Masters;
 using MediatR;
 using System;
 using System.Collections.Generic;

@@ -1,6 +1,7 @@
 ﻿using IRIS.Conecta.Domain.Base;
 using IRIS.Conecta.Domain.Entities;
 using IRIS.Conecta.Domain.Entities.Masters;
+using IRIS.Conecta.Domain.Entities.Tickets;
 using Microsoft.EntityFrameworkCore;
 
 namespace IRIS.Conecta.Persistence.DatabaseContext
@@ -20,8 +21,11 @@ namespace IRIS.Conecta.Persistence.DatabaseContext
         public DbSet<Program> Programs { get; set; }
 
         public DbSet<RequestType> RequestTypes { get; set; }
-        public DbSet<Ticket> Tickets { get; set; }
         public DbSet<TemplateResponses> TemplateResponses { get; set; }
+
+        public DbSet<Ticket> Tickets { get; set; }
+
+        public DbSet<TicketsView> TicketsViews { get; set; }
 
         public DbSet<PersonalData> PersonalDatas { get; set; }
         public DbSet<AcademicData> AcademicDatas { get; set; }
@@ -46,6 +50,6 @@ namespace IRIS.Conecta.Persistence.DatabaseContext
 
             return base.SaveChangesAsync(cancellationToken);
         }
-
+        
     }
 }

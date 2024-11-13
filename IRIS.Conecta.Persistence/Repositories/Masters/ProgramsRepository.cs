@@ -1,11 +1,11 @@
-﻿using IRIS.Conecta.Application.Contracts.Persistence;
+﻿using IRIS.Conecta.Application.Contracts.Persistence.Masters;
 using IRIS.Conecta.Domain.Entities.Masters;
 using IRIS.Conecta.Persistence.DatabaseContext;
 using Microsoft.EntityFrameworkCore;
 
-namespace IRIS.Conecta.Persistence.Repositories
+namespace IRIS.Conecta.Persistence.Repositories.Masters
 {
-    public class ProgramsRepository(IRISConectaDatabaseContext context) : 
+    public class ProgramsRepository(IRISConectaDatabaseContext context) :
         GenericRepository<Program>(context), IProgramRepository
     {
         public async Task<List<Program>> GetProgramswithDetails()

@@ -1,11 +1,11 @@
-﻿using IRIS.Conecta.Application.Contracts.Persistence;
+﻿using IRIS.Conecta.Application.Contracts.Persistence.Masters;
 using IRIS.Conecta.Domain.Entities.Masters;
 using IRIS.Conecta.Persistence.DatabaseContext;
 using Microsoft.EntityFrameworkCore;
 
-namespace IRIS.Conecta.Persistence.Repositories
+namespace IRIS.Conecta.Persistence.Repositories.Masters
 {
-    public class FacultiesRepository(IRISConectaDatabaseContext context) : 
+    public class FacultiesRepository(IRISConectaDatabaseContext context) :
         GenericRepository<Faculty>(context), IFacultyRepository
     {
 
@@ -26,6 +26,6 @@ namespace IRIS.Conecta.Persistence.Repositories
 
         //    return faculty;
         //}
-        
+
     }
 }

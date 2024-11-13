@@ -1,5 +1,6 @@
 ﻿using IRIS.Conecta.Domain.Base;
 using IRIS.Conecta.Domain.Entities.Masters;
+using IRIS.Conecta.Domain.Entities.Tickets;
 
 namespace IRIS.Conecta.Domain.Entities
 {

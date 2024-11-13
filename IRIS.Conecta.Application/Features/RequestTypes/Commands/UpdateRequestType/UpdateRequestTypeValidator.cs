@@ -1,30 +1,32 @@
 ﻿using FluentValidation;
-using IRIS.Conecta.Application.Contracts.Persistence;
+using IRIS.Conecta.Application.Contracts.Persistence.Masters;
 
 namespace IRIS.Conecta.Application.Features.RequestTypes.Commands.UpdateRequestType
 {
     public class UpdateRequestTypeValidator : AbstractValidator<UpdateRequestTypeCommand>
     {
-        private readonly IProgramRepository ProgramRepository;
-        
-        public UpdateRequestTypeValidator(IProgramRepository ProgramRepository)
+        private readonly IDepartmentRepository departmentRepository;
+
+        public UpdateRequestTypeValidator(IDepartmentRepository departmentRepository)
         {
-            this.ProgramRepository   = ProgramRepository;
+            this.departmentRepository = departmentRepository;
 
             RuleFor(p => p.RequestName)
                 .NotEmpty().WithMessage("{PropertyName} es requerida.")
                 .NotEmpty()
                 .MaximumLength(100).WithMessage("{PropertyName} no debe exceder {ComparisonValue} carácteres.");
 
-            RuleFor(p => p.ProgramId)
+            RuleFor(p => p.DepartmentId)
                 .GreaterThan(0)
                 .NotEmpty()
                 .MustAsync(async (id, token) =>
                 {
-                    var ProgramExists = await this.ProgramRepository.GetByIdAsync(id);
-                    return ProgramExists != null;
+                    var DepartmentExists = await this.departmentRepository.GetByIdAsync(id);
+                    return DepartmentExists != null;
                 })
                 .WithMessage("{PropertyName} no existe.");
+            
+            
         }
 
         //private async Task<bool> RequestTypeMustExists(int id, CancellationToken cancellationToken)

@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using IRIS.Conecta.Application.Contracts.Persistence;
+using IRIS.Conecta.Application.Contracts.Persistence.Masters;
 
 namespace IRIS.Conecta.Application.Features.Faculties.Commands.UpdateFaculty
 {

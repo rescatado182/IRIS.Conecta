@@ -1,4 +1,4 @@
-﻿using IRIS.Conecta.Domain.Entities.Masters;
+﻿using IRIS.Conecta.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

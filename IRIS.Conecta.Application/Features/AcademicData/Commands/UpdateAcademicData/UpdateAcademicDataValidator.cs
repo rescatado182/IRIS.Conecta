@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using IRIS.Conecta.Application.Contracts.Persistence;
+using IRIS.Conecta.Application.Contracts.Persistence.Tickets;
 
 namespace IRIS.Conecta.Application.Features.AcademicData.Commands.UpdateAcademicData
 {
@@ -11,27 +11,27 @@ namespace IRIS.Conecta.Application.Features.AcademicData.Commands.UpdateAcademic
         {
             this.ticketsRepository = ticketsRepository;
 
-            RuleFor(p => p.AcademicDataDto.ResearchGroup)
+            RuleFor(p => p.ResearchGroup)
                 .NotEmpty().WithMessage("{PropertyName} es requerido.")
                 .NotNull()
                 .MaximumLength(200).WithMessage("{PropertyName} no debe exceder {ComparisonValue} carácteres.");
 
-            RuleFor(p => p.AcademicDataDto.ResearchProject)
+            RuleFor(p => p.ResearchProject)
                 .NotEmpty().WithMessage("{PropertyName} es requerido.")
                 .NotNull()
                 .MaximumLength(200).WithMessage("{PropertyName} no debe exceder {ComparisonValue} carácteres.");
 
-            RuleFor(p => p.AcademicDataDto.ProgramType)
+            RuleFor(p => p.ProgramType)
                 .IsInEnum()
                 .NotEmpty().WithMessage("{PropertyName} es requerido.");
 
-            RuleFor(p => p.AcademicDataDto.AverageCredit)
+            RuleFor(p => p.AverageCredit)
                 .NotEmpty().WithMessage("{PropertyName} es requerido.");
 
-            RuleFor(p => p.AcademicDataDto.EnrolledSemester)
+            RuleFor(p => p.EnrolledSemester)
                 .NotEmpty().WithMessage("{PropertyName} es requerido.");
 
-            RuleFor(p => p.AcademicDataDto.TicketId)
+            RuleFor(p => p.TicketId)
                 .GreaterThan(0)
                 .NotEmpty()
                 .MustAsync(async (id, token) => {

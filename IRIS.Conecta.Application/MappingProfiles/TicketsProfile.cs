@@ -4,7 +4,7 @@ using IRIS.Conecta.Application.Features.Tickets.Commands.MovilityCommands.Update
 using IRIS.Conecta.Application.Features.Tickets.Commands.MovilityCommands.UpdateTicketByMovility;
 using IRIS.Conecta.Application.Features.Tickets.Commands.MovilityCommands.UpdateTicketByRequirements;
 using IRIS.Conecta.Application.Features.Tickets.Dtos;
-using IRIS.Conecta.Domain.Entities;
+using IRIS.Conecta.Domain.Entities.Tickets;
 
 namespace IRIS.Conecta.Application.MappingProfiles
 {
