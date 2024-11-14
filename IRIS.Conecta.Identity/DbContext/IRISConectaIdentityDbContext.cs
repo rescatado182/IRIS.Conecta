@@ -1,7 +1,10 @@
-﻿using IRIS.Conecta.Identity.Models;
+﻿using IRIS.Conecta.Domain.Base;
+using IRIS.Conecta.Identity.Models;
+using IRIS.Conecta.Identity.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Threading;
 
 namespace IRIS.Conecta.Identity.DbContext
 {
@@ -47,6 +50,7 @@ namespace IRIS.Conecta.Identity.DbContext
             });
 
             builder.ApplyConfigurationsFromAssembly(typeof(IRISConectaIdentityDbContext).Assembly);
+
         }
 
     }

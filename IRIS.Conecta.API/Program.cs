@@ -1,6 +1,7 @@
 using IRIS.Conecta.API.Middleware;
 using IRIS.Conecta.Application;
 using IRIS.Conecta.Identity;
+using IRIS.Conecta.Infrastructure;
 using IRIS.Conecta.Persistence;
 using System.Text.Json.Serialization;
 
@@ -8,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddApplicationServices();
+builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddPersistenceServices(builder.Configuration);
 builder.Services.AddIdentityServices(builder.Configuration);
 

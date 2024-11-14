@@ -6,6 +6,6 @@
         Closed      = 2,
         InProcess   = 3,
         Resolved    = 4,
-        Responded   = 5
+        Cancelled   = 5
     }
 }

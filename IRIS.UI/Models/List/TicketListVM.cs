@@ -7,10 +7,10 @@
         public string EventName { get; set; }
         public string Status { get; set; }
         public int RequestTypeId { get; set; }
-        public string? AgreementName { get; set; }
+        public string AgreementName { get; set; }
         public string Description { get; set; }
         public bool IsAgreement { get; set; }
-        public string? Results { get; set; }
+        public string Results { get; set; }
         public DateTime DeliveryDate { get; set; } // Asumiendo que lo manejas como DateTime
         public string MovilityType { get; set; } // Cambia esto a un enum si tienes tipos definidos
         public string Country { get; set; }

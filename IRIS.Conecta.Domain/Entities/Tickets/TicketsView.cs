@@ -50,8 +50,10 @@ namespace IRIS.Conecta.Domain.Entities.Tickets
 
         public required string UserId { get; set; }
 
-        public string? ManagerUserId { get; set; }        
-        
+        public string? ManagerUserId { get; set; }
+
+        public string? ManagerFullName { get; set; }
+
         public DateOnly StartDateMovility { get; set; }
         public DateOnly EndDateMovility { get; set; }
 

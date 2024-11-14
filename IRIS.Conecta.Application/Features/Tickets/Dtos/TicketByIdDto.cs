@@ -53,7 +53,7 @@ namespace IRIS.Conecta.Application.Features.Tickets.Dtos
         #endregion
 
         #region Requirements
-        public TicketRequirements TicketRequirements { get; set; }
+        public List<TicketRequirements> TicketRequirements { get; set; } = [];
         public double Total { get; set; }        
 
         #endregion
