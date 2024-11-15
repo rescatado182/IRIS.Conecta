@@ -4,8 +4,10 @@ namespace IRIS.Conecta.Application.Contracts.Identity
 {
     public interface IUserService
     {
+        Task<Student> GetUser(string userId);
+
         Task<List<Student>> GetStudents();
 
-        Task<Student> GetStudent(string userId);
+        Task<List<Student>> GetManagers();
     }
 }
