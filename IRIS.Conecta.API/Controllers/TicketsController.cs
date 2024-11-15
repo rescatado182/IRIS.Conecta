@@ -1,10 +1,12 @@
-﻿using IRIS.Conecta.Application.Features.Tickets.Commands.MovilityCommands.CreateTicket;
+﻿using IRIS.Conecta.Application.Features.Tickets.Commands.ChangeTicketStatus;
+using IRIS.Conecta.Application.Features.Tickets.Commands.MovilityCommands.CreateTicket;
 using IRIS.Conecta.Application.Features.Tickets.Commands.MovilityCommands.UpdateTicket;
 using IRIS.Conecta.Application.Features.Tickets.Commands.MovilityCommands.UpdateTicketByMovility;
 using IRIS.Conecta.Application.Features.Tickets.Commands.MovilityCommands.UpdateTicketByRequirements;
 using IRIS.Conecta.Application.Features.Tickets.Dtos;
 using IRIS.Conecta.Application.Features.Tickets.Queries.GetTicketById;
 using IRIS.Conecta.Application.Features.Tickets.Queries.GetTicketsList;
+using IRIS.Conecta.Application.Features.Tickets.Queries.GetTicketsListByUserId;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -25,6 +27,16 @@ namespace IRIS.Conecta.API.Controllers
         public async Task<ActionResult<List<TicketsListDto>>> Get()
         {
             var tickets = await this.mediator.Send( new GetTicketsListRequest() );
+            return Ok(tickets);
+        }
+
+        [HttpGet("GetTicketsByUser/{userId}")]
+        public async Task<ActionResult<List<TicketsListDto>>> GetTicketsByUser(string userId)
+        {
+            var tickets = await this.mediator.Send(new GetTicketsListByUserIdRequest()
+            {
+                UserId = userId
+            });
             return Ok(tickets);
         }
 
@@ -75,6 +87,18 @@ namespace IRIS.Conecta.API.Controllers
         public async Task<ActionResult> PutByRequirements(UpdateTicketByRequirementsCommand updateTicketByRequirements)
         {
             await this.mediator.Send(updateTicketByRequirements);
+            return NoContent();
+        }
+
+        [HttpPut]
+        [Route("ChangeTicketStatus")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
+        public async Task<ActionResult> ChangeTicketStatus(ChangeTicketStatusCommand changeTicketStatusCommand)
+        {
+            await this.mediator.Send(changeTicketStatusCommand);
             return NoContent();
         }
 

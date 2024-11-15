@@ -27,13 +27,15 @@ namespace IRIS.Conecta.Application.Features.Tickets.Dtos
         public string FullName { get; set; }
         public string ManagerUserId { get; set; }
 
+        public string ManagerFullName { get; set; }
+
         public DateOnly StartDateMovility { get; set; }
         public DateOnly EndDateMovility { get; set; }
 
         public DateOnly StartDateRequirement { get; set; }
         public DateOnly EndDateRequirement { get; set; }
 
-        public DateOnly CreateDate { get; set; }
+        public DateTime DateCreated { get; set; }
 
     }
 }

@@ -2,6 +2,7 @@
 using IRIS.Conecta.Domain.Entities.Tickets;
 using IRIS.Conecta.Persistence.DatabaseContext;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Primitives;
 using System.Text;
 
 namespace IRIS.Conecta.Persistence.Repositories.Tickets
@@ -19,7 +20,9 @@ namespace IRIS.Conecta.Persistence.Repositories.Tickets
         {
             sqlQuery.Append(
                         "SELECT t.*, r.RequestName, d.Department, f.FacultyName, " +
-                        "CONCAT(u.FirstName, ' ', u.LastName) AS FullName " +
+                        "CONCAT(u.FirstName, ' ', u.LastName) AS FullName, " +
+                            "(SELECT CONCAT(iu.FirstName, ' ', iu.LastName) " +
+                            "FROM [Identity.Users] iu WHERE iu.Id = t.ManagerUserId) AS ManagerFullName " +
                         "FROM Tickets t " +
                         "INNER JOIN RequestTypes r ON t.RequestTypeId = r.Id " +
                         "INNER JOIN Departments d ON r.DepartmentId = d.Id " +

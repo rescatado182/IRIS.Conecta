@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using IRIS.Conecta.Application.Features.Tickets.Commands.ChangeTicketStatus;
 using IRIS.Conecta.Application.Features.Tickets.Commands.MovilityCommands.CreateTicket;
 using IRIS.Conecta.Application.Features.Tickets.Commands.MovilityCommands.UpdateTicket;
 using IRIS.Conecta.Application.Features.Tickets.Commands.MovilityCommands.UpdateTicketByMovility;
@@ -16,6 +17,8 @@ namespace IRIS.Conecta.Application.MappingProfiles
             CreateMap<UpdateTicketCommand, Ticket>().ReverseMap();
             CreateMap<UpdateTicketByMovilityCommand, Ticket>().ReverseMap();
             CreateMap<UpdateTicketByRequirementsCommand, Ticket>().ReverseMap();
+            
+            CreateMap<ChangeTicketStatusCommand, Ticket>();
 
             CreateMap<Ticket, TicketByIdDto>().ReverseMap();
             CreateMap<Ticket, TicketsListDto>();

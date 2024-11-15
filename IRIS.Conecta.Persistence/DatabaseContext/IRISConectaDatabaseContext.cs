@@ -40,7 +40,7 @@ namespace IRIS.Conecta.Persistence.DatabaseContext
         {
             foreach (var entry in ChangeTracker.Entries<BaseEntity>())
             {
-                entry.Entity.DateModified = DateTime.Now;
+                entry.Entity.DateModified = DateTime.Now;                
 
                 if (entry.State == EntityState.Added)
                 {
