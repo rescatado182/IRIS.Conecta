@@ -50,7 +50,7 @@ namespace IRIS.Conecta.Domain.Entities.Tickets
 
         public int AcademicDataId { get; set; }
 
-        public int NotificationId { get; set; }
+        //public int NotificationId { get; set; }
 
         // 
         public DateOnly StartDateMovility { get; set; }
@@ -75,7 +75,7 @@ namespace IRIS.Conecta.Domain.Entities.Tickets
 
         public required AcademicData AcademicData { get; set; }
 
-        public required ICollection<Notifications> Notifications { get; set; }
+        //public required ICollection<Notifications> Notifications { get; set; }
 
         #endregion
     }
