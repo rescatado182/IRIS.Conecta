@@ -3,7 +3,7 @@ using DocumentFormat.OpenXml.Presentation;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
-namespace IRIS.UI.Models
+namespace IRIS.UI.Models.List
 {
     public class MovilityTypeVM
     {
@@ -85,8 +85,8 @@ namespace IRIS.UI.Models
         [MaxLength(200, ErrorMessage = "*{0} debe tener máximo {1} caracteres")]
         public string externalInstitution { get; set; }
 
-        public DateOnly StartDate { get; set; }
-        public DateOnly EndDate { get; set; }
+        public DateOnly StartDateMovility { get; set; }
+        public DateOnly EndDateMovility { get; set; }
 
 
 

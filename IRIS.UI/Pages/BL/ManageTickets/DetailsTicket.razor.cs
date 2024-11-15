@@ -21,7 +21,7 @@ namespace IRIS.UI.Pages.BL.ManageTickets
 
         private TicketsStatus CurrentStatus = TicketsStatus.Open;
 
-        public TicketListVM ticket { get; set; }
+        public TicketListVM ticket { get; set; } = null!;
 
         [Parameter] public int ticketId { get; set; }
 

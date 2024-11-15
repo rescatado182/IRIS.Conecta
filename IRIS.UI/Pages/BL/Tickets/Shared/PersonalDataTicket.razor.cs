@@ -14,10 +14,10 @@ using TabBlazor.Services;
 using TabBlazor;
 using IRIS.UI.Pages.BL.Tickets.RequestTickets.Movility;
 using System.Diagnostics.Metrics;
-using IRIS.UI.Models;
 using IRIS.UI.Interfaces;
 using System.Text.Json;
 using IRIS.UI.Models.Save;
+using IRIS.UI.Models.List;
 
 namespace IRIS.UI.Pages.BL.Tickets.Shared
 {
@@ -28,6 +28,10 @@ namespace IRIS.UI.Pages.BL.Tickets.Shared
         [Inject] private IRepository Repository { get; set; } = null!;
 
         private PersonalDataVM personalData = new PersonalDataVM();
+
+        private bool insertDataFirst;
+
+        private int idPersonalData;
 
 
         private EnumDocumentType selectedDocumentType;
@@ -64,50 +68,60 @@ namespace IRIS.UI.Pages.BL.Tickets.Shared
             return Task.FromResult<IEnumerable<ValidationResult>>(results);
         }
 
-        public async Task UpdateTicketPersonalDataAsync(int? idTicket, PersonalDataVM personalData)
+        public async Task<int> UpdateTicketPersonalDataAsync(int? idTicket, PersonalDataVM personalData, int idPersonalData)
         {
+            if (idTicket == null) throw new ArgumentNullException(nameof(idTicket), "Ticket ID cannot be null.");
+
+            var personalDataState = MovilityRequestState.personalData;
+
             var updatedPersonalData = new PersonalDataSaveVM
-            { 
+            {
+                id = idPersonalData,
                 personalDataDto = new PersonalDataSaveVM.PersonalDataDto
                 {
                     TicketId = idTicket.Value,
-                    FullName = MovilityRequestState.personalData.FullName,
-                    DocumentNumber = MovilityRequestState.personalData.DocumentNumber,
-                    DocumentType = (EnumDocumentType)MovilityRequestState.personalData.DocumentType, // Cast to DocumentTypeVM
-                    BornCountryId = MovilityRequestState.personalData.BornCountryId > 0
-                        ? MovilityRequestState.personalData.BornCountryId
-                        : 0,
-                    BornStateId = MovilityRequestState.personalData.BornStateId > 0
-                        ? MovilityRequestState.personalData.BornStateId
-                        : 0,
-                    BornCityId = MovilityRequestState.personalData.BornCityId > 0
-                        ? MovilityRequestState.personalData.BornCityId
-                        : 0,
-                    ResidenceStateId = MovilityRequestState.personalData.ResidenceStateId > 0
-                        ? MovilityRequestState.personalData.ResidenceStateId
-                        : 0,
-                    ResidenceCityId = MovilityRequestState.personalData.ResidenceCityId > 0
-                        ? MovilityRequestState.personalData.ResidenceCityId
-                        : 0,
-                    AddressResidence = MovilityRequestState.personalData.AddressResidence,
-                    PersonalEmail = MovilityRequestState.personalData.Email,
-                    Phone = MovilityRequestState.personalData.Phone,
-                    Cellphone = MovilityRequestState.personalData.Cellphone,
+                    FullName = personalDataState.FullName,
+                    DocumentNumber = personalDataState.DocumentNumber,
+                    DocumentType = (EnumDocumentType)personalDataState.DocumentType,
+                    BornCountryId = GetPositiveValueOrDefault(personalDataState.BornCountryId),
+                    BornStateId = GetPositiveValueOrDefault(personalDataState.BornStateId),
+                    BornCityId = GetPositiveValueOrDefault(personalDataState.BornCityId),
+                    ResidenceStateId = GetPositiveValueOrDefault(personalDataState.ResidenceStateId),
+                    ResidenceCityId = GetPositiveValueOrDefault(personalDataState.ResidenceCityId),
+                    AddressResidence = personalDataState.AddressResidence,
+                    PersonalEmail = personalDataState.Email,
+                    Phone = personalDataState.Phone,
+                    Cellphone = personalDataState.Cellphone,
                     UserId = "01c6e8f5-dc49-4a6b-abdd-4ba2b5955bf9"
                 }
             };
 
-            string jsonString = JsonSerializer.Serialize(updatedPersonalData, new JsonSerializerOptions { WriteIndented = true });
-            Console.WriteLine(jsonString);
+            Console.WriteLine(JsonSerializer.Serialize(updatedPersonalData, new JsonSerializerOptions { WriteIndented = true }));
 
+            var responseHttp = await (idPersonalData > 0
+                ? Repository.PutAsync("/api/personalData", updatedPersonalData)
+                : Repository.PostAsync("/api/personalData", updatedPersonalData));
 
-
-             var responseHttp = await Repository.PostAsync("/api/personalData", updatedPersonalData);
             if (responseHttp.Error)
             {
-                var message = await responseHttp.GetErrorMessageAsync();
-                Console.WriteLine(message);
+                Console.WriteLine(await responseHttp.GetErrorMessageAsync());
+                return 0;
             }
+
+            var resultContent = await responseHttp.HttpResponseMessage.Content.ReadAsStringAsync();
+            idPersonalData = ParseIdFromResponse(resultContent, idPersonalData);
+
+            return idPersonalData;
+        }
+
+        private static int GetPositiveValueOrDefault(int? value) => value > 0 ? value.Value : 0;
+
+        private static int ParseIdFromResponse(string responseContent, int currentId)
+        {
+            if (string.IsNullOrWhiteSpace(responseContent)) return currentId;
+
+            using var jsonDocument = JsonDocument.Parse(responseContent);
+            return jsonDocument.RootElement.TryGetProperty("id", out var idElement) ? idElement.GetInt32() : currentId;
         }
 
         private void SaveDataToDatabase()

@@ -56,9 +56,12 @@ namespace IRIS.UI.Models.Save
         [MaxLength(200, ErrorMessage = "*{0} debe tener máximo {1} caracteres")]
         public string externalInstitution { get; set; }
 
-        public DateOnly startDate { get; set; }
-        public DateOnly endDate { get; set; }
+        public DateOnly startDateMovility { get; set; }
+        public DateOnly endDateMovility { get; set; }
 
+        public string userId { get; set; }
+
+        public string managerUserId { get; set; }
 
 
         //[JsonIgnore]

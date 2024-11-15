@@ -1,6 +1,7 @@
 using IRIS.UI.Models;
 using Microsoft.AspNetCore.Components;
 using System.ComponentModel.DataAnnotations;
+using static IRIS.UI.EnumExtensions;
 
 namespace IRIS.UI.Pages.BL.Actions
 {
@@ -14,13 +15,27 @@ namespace IRIS.UI.Pages.BL.Actions
 
         private TicketsStatus SelectedStatus { get; set; }
 
-        private string CurrentStatusDisplayName =>
-            typeof(TicketsStatus)
-                .GetMember(CurrentStatus.ToString())[0]
-                .GetCustomAttributes(typeof(DisplayAttribute), false)
-                .Cast<DisplayAttribute>()
-                .SingleOrDefault()
-                ?.Name ?? CurrentStatus.ToString();
+        // Cambiar la definición de filteredStatuses a una lista de EnumItem<TicketsStatus>
+        private List<EnumItem<TicketsStatus>> enumTicketStatus { get; set; }
+
+        private string CurrentStatusDisplayName => EnumExtensions.GetDisplayName(CurrentStatus);
+
+        private IEnumerable<(TicketsStatus Status, string DisplayName)> StatusList =>
+            Enum.GetValues<TicketsStatus>()
+                .Cast<TicketsStatus>()
+                .Select(status => (status, EnumExtensions.GetDisplayName(status)))
+                .ToList();
+
+        protected override void OnInitialized()
+        {
+            // Cambiar la lista para que sea de EnumItem<TicketsStatus> en lugar de TicketsStatus
+            enumTicketStatus = EnumExtensions.GetList<TicketsStatus>()
+            .Where(status =>
+                status.Value == TicketsStatus.Committee ||
+                status.Value == TicketsStatus.InProcess ||
+                status.Value == TicketsStatus.Closed)
+            .ToList();
+        }
 
         private async Task OnSubmit()
         {
@@ -29,6 +44,10 @@ namespace IRIS.UI.Pages.BL.Actions
                 await OnStatusChanged.InvokeAsync(SelectedStatus);
                 // Puedes cerrar el offcanvas después de guardar los cambios
             }
+
+
+
+
         }
     }
 }

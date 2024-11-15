@@ -12,7 +12,7 @@ namespace IRIS.UI.Models
         InProcess = 3,
         [Display(Name = "Resuelto")]
         Resolved = 4,
-        [Display(Name = "Respuesto")]
-        Responded = 5
+        [Display(Name = "En Comite")]
+        Committee = 5
     }
 }

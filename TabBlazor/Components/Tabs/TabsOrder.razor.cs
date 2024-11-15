@@ -7,11 +7,13 @@ namespace TabBlazor
         private List<ITab> Tabs { get; set; } = new List<ITab>();
         public int CurrentTabIndex { get; set; } = 0;
 
+        private int numberCurrentTab = 3;
+
         public ITab ActiveTab { get; private set; }
 
         public bool IsLastTab => CurrentTabIndex >= Tabs.Count - 1;
         
-        public bool IsFirstTab => CurrentTabIndex == 0; 
+        public bool IsFirstTab => CurrentTabIndex == numberCurrentTab; 
 
 
         protected override void OnInitialized()
@@ -25,7 +27,7 @@ namespace TabBlazor
             if (Tabs.Any())
             {
                 Tabs[0].IsEnabled = true;  // Habilitar la primera pestaña por defecto
-                SetActivateTab(Tabs[0]);
+                SetActivateTab(Tabs[numberCurrentTab]);
             }
         }
 
@@ -33,7 +35,7 @@ namespace TabBlazor
         {
             if (!Tabs.Contains(tab))
             {
-                tab.IsEnabled = Tabs.Count == 0; // Solo habilita la primera pestaña al agregarla
+                tab.IsEnabled = Tabs.Count == numberCurrentTab; // Solo habilita la primera pestaña al agregarla
                 Tabs.Add(tab);
             }
 

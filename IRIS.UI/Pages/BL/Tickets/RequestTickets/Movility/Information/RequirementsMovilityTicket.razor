@@ -1,5 +1,6 @@
-﻿<h3>Requerimientos</h3>
+﻿@using IRIS.UI.Models
 
+<TablerForm Model="@MovilityRequestState.requirementsMovility">
 <DataGrid>
 
     <DataGridItem Title="Requerimientos solicitados">
@@ -8,7 +9,7 @@
                     SelectedTextExpression="e => GetRequirementTypesDisplayName(e)"
                     MultiSelect>
             <ListTemplate>
-                @GetRequirementTypesDisplayName(@context)
+                    @GetRequirementTypesDisplayName(@context)
             </ListTemplate>
         </ItemSelect>
 
@@ -18,7 +19,7 @@
 </DataGrid>
 
 <DataGrid>
-    
+
     <DataGridItem Title="Fecha de inicio">
             <Datepicker @bind-SelectedDate="selectedInitialDate" />
     </DataGridItem>
@@ -27,12 +28,14 @@
             <Datepicker @bind-SelectedDate="selectedFinalDate" />
     </DataGridItem>
 
-    <DataGridItem Title="Valor de la inscripción">
-        <input type="text" class="form-control" />
-    </DataGridItem>
+
+        <DataGridItem Title="Valor de la inscripción">
+            <input type="text" class="form-control" @bind="MovilityRequestState.requirementsMovility.Total" />
+            <ValidationMessage For="@(() => MovilityRequestState.requirementsMovility.Total)" class="text-danger" />
+        </DataGridItem>
 </DataGrid>
 
-
+</TablerForm>
 
 @*     <DataGridItem Title="Requerimientos solicitados">
         <Select Items="enumRequirementsTypes"

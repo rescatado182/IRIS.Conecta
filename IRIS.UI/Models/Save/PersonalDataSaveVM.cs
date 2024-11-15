@@ -3,9 +3,11 @@
 
     public class PersonalDataSaveVM
     {
+        public int id { get; set; }
         public PersonalDataDto personalDataDto { get; set; }
         public class PersonalDataDto
         {
+            
             public string FullName { get; set; } = null;
             public string DocumentNumber { get; set; }
             public EnumDocumentType DocumentType { get; set; }

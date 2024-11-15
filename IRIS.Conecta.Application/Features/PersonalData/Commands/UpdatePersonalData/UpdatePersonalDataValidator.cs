@@ -42,7 +42,7 @@ namespace IRIS.Conecta.Application.Features.PersonalData.Commands.UpdatePersonal
             RuleFor(p => p.PersonalDataDto.PersonalEmail)
                 .NotEmpty().WithMessage("{PropertyName} es requerido.")
                 .EmailAddress()
-                .MaximumLength(20).WithMessage("{PropertyName} no debe exceder {ComparisonValue} carácteres.");
+                .MaximumLength(100).WithMessage("{PropertyName} no debe exceder {ComparisonValue} carácteres.");
 
             RuleFor(p => p.PersonalDataDto.TicketId)
                 .GreaterThan(0)

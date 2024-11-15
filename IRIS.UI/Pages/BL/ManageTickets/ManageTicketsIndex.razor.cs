@@ -22,13 +22,13 @@ namespace IRIS.UI.Pages.BL.ManageTickets
 
         [Inject] private IRepository Repository { get; set; } = null!;
 
-        public List<TicketListVM>? tickets { get; set; }
+        public List<TicketManageListVM>? tickets { get; set; }
 
-        private static List<TicketListVM> selectedOrders = new List<TicketListVM>();
+        private static List<TicketManageListVM> selectedOrders = new List<TicketManageListVM>();
+
 
         protected override async Task OnInitializedAsync()
         {
-
 
             await ListAsync();
 
@@ -38,8 +38,8 @@ namespace IRIS.UI.Pages.BL.ManageTickets
         {
 
 
-            // var responseHttp = await Repository.GetAsync<List<TicketListVM>>("/api/Tickets");
-            var responseHttp = await Repository.GetAsync<TicketListVM>("/api/Tickets/1117");
+            var responseHttp = await Repository.GetAsync<List<TicketManageListVM>>("/api/Tickets");
+        
             if (responseHttp.Error)
             {
                 var message = await responseHttp.GetErrorMessageAsync();
@@ -47,24 +47,24 @@ namespace IRIS.UI.Pages.BL.ManageTickets
 
                 return false;
             }
-            var singleTicket = responseHttp.Response;
-            tickets = new List<TicketListVM> { singleTicket };
 
-            //tickets = responseHttp.Response;
+            tickets = responseHttp.Response;
+
             return true;
         }
 
-        private async Task OnItemEdit(TicketListVM ticket)
+
+        private async Task OnItemEdit(TicketManageListVM ticket)
         {
             await ShowDialog($"Edited order {ticket.Id}");
         }
 
-        private async Task OnItemAdd(TicketListVM ticket)
+        private async Task OnItemAdd(TicketManageListVM ticket)
         {
             await ShowDialog($"Added order {ticket.Id}");
         }
 
-        private async Task OnItemDelete(TicketListVM ticket)
+        private async Task OnItemDelete(TicketManageListVM ticket)
         {
             await ShowDialog($"Order deleted {ticket.Id}");
         }
@@ -80,15 +80,13 @@ namespace IRIS.UI.Pages.BL.ManageTickets
             });
         }
 
-        private Task<TicketListVM> AddItem()
+        private Task<TicketManageListVM> AddItem()
         {
-            return Task.FromResult(new TicketListVM
+            return Task.FromResult(new TicketManageListVM
             {
                 Id = 1, // o cualquier otro valor que desees asignar
-                Title = "Nuevo ticket",
-                Description = "Descripción del nuevo ticket",
                 Status = "Open", // Asigna el estado correspondiente
-                RequestTypeId = 1 // Asigna el ID del tipo de solicitud correspondiente
+
             });
         }
 

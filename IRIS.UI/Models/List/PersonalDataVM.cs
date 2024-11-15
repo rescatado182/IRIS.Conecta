@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
-namespace IRIS.UI.Models
+namespace IRIS.UI.Models.List
 {
     public class PersonalDataVM
     {

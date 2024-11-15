@@ -45,12 +45,33 @@ namespace IRIS.UI.Pages.BL.Tickets.Shared
             programs = SampleData.GetPrograms();
         }
 
-        public async Task UpdateTicketAcademyDataAsync(int? idTicket, AcademyDataVM academyData)
+        public async Task<int> UpdateTicketAcademyDataAsync(int? idTicket, AcademyDataVM academyData, int academicDataId)
         {
-            var updatedAcademicData = new AcademyDataSaveVM
+            var updatedAcademicData = CreateUpdatedAcademicData(idTicket, academyData, academicDataId);
+
+            LogJsonPayload(updatedAcademicData);
+
+            var responseHttp = academicDataId > 0
+                ? await Repository.PutAsync("/api/academicData", updatedAcademicData)
+                : await Repository.PostAsync("/api/academicData", updatedAcademicData);
+
+            if (responseHttp.Error)
             {
+                await LogAndShowErrorAsync(responseHttp);
+                return 0;
+            }
+
+            return await GetUpdatedEntityIdAsync(responseHttp) ?? 0;
+        }
+
+        private AcademyDataSaveVM CreateUpdatedAcademicData(int? idTicket, AcademyDataVM academyData, int academicDataId)
+        {
+            return new AcademyDataSaveVM
+            {
+                id = academicDataId,
                 academicDataDto = new AcademyDataSaveVM.AcademicDataDto
                 {
+                    TicketId = idTicket.Value,
                     ProgramId = MovilityRequestState.academyData.ProgramId,
                     ResearchProject = MovilityRequestState.academyData.ResearchProject,
                     ResearchGroup = MovilityRequestState.academyData.ResearchGroup,
@@ -58,24 +79,32 @@ namespace IRIS.UI.Pages.BL.Tickets.Shared
                     AverageCredit = MovilityRequestState.academyData.AverageCredit,
                     EnrolledSemester = MovilityRequestState.academyData.EnrolledSemester,
                     IsInstitutionalGroup = MovilityRequestState.academyData.IsInstitutionalGroup,
-                    UserId = "01c6e8f5-dc49-4a6b-abdd-4ba2b5955bf9",
-                    TicketId = idTicket.Value
-
+                    UserId = "1001"
                 }
             };
+        }
 
-
-            string jsonString = JsonSerializer.Serialize(updatedAcademicData, new JsonSerializerOptions { WriteIndented = true });
+        private void LogJsonPayload(object data)
+        {
+            string jsonString = JsonSerializer.Serialize(data, new JsonSerializerOptions { WriteIndented = true });
             Console.WriteLine(jsonString);
+        }
 
+        private async Task LogAndShowErrorAsync(HttpResponseWrapper<object> responseHttp)
+        {
+            var message = await responseHttp.GetErrorMessageAsync();
+            Console.WriteLine(message);
+        }
 
+        private async Task<int?> GetUpdatedEntityIdAsync(HttpResponseWrapper<object> responseHttp)
+        {
+            var resultContent = await responseHttp.HttpResponseMessage.Content.ReadAsStringAsync();
+            if (string.IsNullOrEmpty(resultContent)) return null;
 
-            var responseHttp = await Repository.PostAsync("/api/academicData", updatedAcademicData);
-            if (responseHttp.Error)
-            {
-                var message = await responseHttp.GetErrorMessageAsync();
-                Console.WriteLine(message);
-            }
+            using var jsonDocument = JsonDocument.Parse(resultContent);
+            return jsonDocument.RootElement.TryGetProperty("id", out var idElement)
+                ? idElement.GetInt32()
+                : (int?)null;
         }
 
         private async Task<IEnumerable<FacultyVM>> SearchFaculties(string searchText)

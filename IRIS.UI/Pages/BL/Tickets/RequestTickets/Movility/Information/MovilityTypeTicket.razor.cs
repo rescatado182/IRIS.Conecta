@@ -3,6 +3,7 @@ using IRIS.Frontend.Repositories;
 using IRIS.UI.Data;
 using IRIS.UI.Interfaces;
 using IRIS.UI.Models;
+using IRIS.UI.Models.List;
 using IRIS.UI.Models.Save;
 using Microsoft.AspNetCore.Components;
 using System.ComponentModel.DataAnnotations;
@@ -42,12 +43,12 @@ private DateTimeOffset selectedFinalDate;
 
         protected override async Task OnInitializedAsync()
         {
-            selectedInitialDate = MovilityRequestState.movilityType.StartDate != null && MovilityRequestState.movilityType.StartDate != DateOnly.MinValue
-                ? new DateTimeOffset(MovilityRequestState.movilityType.StartDate.ToDateTime(TimeOnly.MinValue))
+            selectedInitialDate = MovilityRequestState.movilityType.StartDateMovility != null && MovilityRequestState.movilityType.StartDateMovility != DateOnly.MinValue
+                ? new DateTimeOffset(MovilityRequestState.movilityType.StartDateMovility.ToDateTime(TimeOnly.MinValue))
                 : DateTimeOffset.Now;
 
-            selectedFinalDate = MovilityRequestState.movilityType.EndDate != null && MovilityRequestState.movilityType.EndDate != DateOnly.MinValue
-                ? new DateTimeOffset(MovilityRequestState.movilityType.EndDate.ToDateTime(TimeOnly.MinValue))
+            selectedFinalDate = MovilityRequestState.movilityType.EndDateMovility != null && MovilityRequestState.movilityType.EndDateMovility != DateOnly.MinValue
+                ? new DateTimeOffset(MovilityRequestState.movilityType.EndDateMovility.ToDateTime(TimeOnly.MinValue))
                 : DateTimeOffset.Now;
             enumMovilityType = EnumHelper.GetEnumSelectItems<EnumMovilityType>();
             //enumMovilityType = EnumHelper.GetList<EnumMovilityType>();
@@ -133,24 +134,24 @@ private DateTimeOffset selectedFinalDate;
 
         public async Task<bool> ValidateDatesAsync(MovilityTypeVM movilityType)
         {
-            movilityType.StartDate = DateOnly.FromDateTime(selectedInitialDate.DateTime);
-            movilityType.EndDate = DateOnly.FromDateTime(selectedFinalDate.DateTime);
+            movilityType.StartDateMovility = DateOnly.FromDateTime(selectedInitialDate.DateTime);
+            movilityType.EndDateMovility = DateOnly.FromDateTime(selectedFinalDate.DateTime);
 
-            if (movilityType.StartDate > movilityType.EndDate)
+            if (movilityType.StartDateMovility > movilityType.EndDateMovility)
             {
                 await ToastService.AddToastAsync(new ToastModel { Title = "Fecha Inicio de Movilidad", Message = "La fecha de inicio de Movilidad debe ser menor a la fecha de fin" });
                 return false;
             }
 
             //start date must be greater than today
-            if (movilityType.StartDate < DateOnly.FromDateTime(DateTime.Now))
+            if (movilityType.StartDateMovility < DateOnly.FromDateTime(DateTime.Now))
             {
                 await ToastService.AddToastAsync(new ToastModel { Title = "Fecha Inicio de Movilidad", Message = "La fecha de inicio de Movilidad debe ser mayor a la fecha actual" });
                 return false;
             }
 
-            MovilityRequestState.movilityType.StartDate = movilityType.StartDate;
-            MovilityRequestState.movilityType.EndDate = movilityType.EndDate;
+            MovilityRequestState.movilityType.StartDateMovility = movilityType.StartDateMovility;
+            MovilityRequestState.movilityType.EndDateMovility = movilityType.EndDateMovility;
             return true;
         }
 
@@ -191,9 +192,26 @@ private DateTimeOffset selectedFinalDate;
 
         }
 
-        public async Task UpdateTicketMovilityTypeAsync(int? idTicket, MovilityTypeVM movilityType)
+        public async Task<int> UpdateTicketMovilityTypeAsync(int? idTicket, MovilityTypeVM movilityType, int movilityTypeId)
         {
-            var updatedMovilityType = new MovilityTypeSaveVM
+            var updatedMovilityType = CreateUpdatedMovilityType(idTicket, movilityType);
+
+            LogJsonPayload(updatedMovilityType);
+
+            var responseHttp = await Repository.PutAsync("/api/tickets/updateTicketByMovility", updatedMovilityType);
+
+            if (responseHttp.Error)
+            {
+                await LogAndShowErrorAsync(responseHttp);
+                return 0;
+            }
+
+            return await GetUpdatedEntityIdAsync(responseHttp) ?? 0;
+        }
+
+        private MovilityTypeSaveVM CreateUpdatedMovilityType(int? idTicket, MovilityTypeVM movilityType)
+        {
+            return new MovilityTypeSaveVM
             {
                 id = idTicket.Value,
                 eventName = MovilityRequestState.movilityType.EventName.ToString(),
@@ -201,29 +219,44 @@ private DateTimeOffset selectedFinalDate;
                 status = TicketsStatus.Open,
                 movilityType = EnumMovilityType.InstitutionalRepresentation.ToString(),
                 country = MovilityRequestState.movilityType.DestinationCountryId > 0
-                  ? MovilityRequestState.movilityType.DestinationCountryId.ToString()
-                  : string.Empty,
+                    ? MovilityRequestState.movilityType.DestinationCountryId.ToString()
+                    : string.Empty,
                 city = MovilityRequestState.movilityType.DestinationCityId > 0
-               ? MovilityRequestState.movilityType.DestinationCityId.ToString()
-               : string.Empty,
+                    ? MovilityRequestState.movilityType.DestinationCityId.ToString()
+                    : string.Empty,
                 phone = MovilityRequestState.movilityType.Phone.ToString(),
                 contactData = MovilityRequestState.movilityType.ContactData.ToString(),
                 externalInstitution = MovilityRequestState.movilityType.externalInstitution.ToString(),
-                startDate = MovilityRequestState.movilityType.StartDate,
-                endDate = MovilityRequestState.movilityType.EndDate
+                startDateMovility = MovilityRequestState.movilityType.StartDateMovility,
+                endDateMovility = MovilityRequestState.movilityType.EndDateMovility,
+                userId = "1001",
+                managerUserId = "1001"
             };
-
-            string jsonString = JsonSerializer.Serialize(updatedMovilityType, new JsonSerializerOptions { WriteIndented = true });
-            Console.WriteLine(jsonString);
-
-            var responseHttp = await Repository.PutAsync("/api/tickets/updateTicketByMovility", updatedMovilityType);
-            if (responseHttp.Error)
-            {
-                var message = await responseHttp.GetErrorMessageAsync();
-                Console.WriteLine(message);
-            }
-
         }
+
+        private void LogJsonPayload(object data)
+        {
+            string jsonString = JsonSerializer.Serialize(data, new JsonSerializerOptions { WriteIndented = true });
+            Console.WriteLine(jsonString);
+        }
+
+        private async Task LogAndShowErrorAsync(HttpResponseWrapper<object> responseHttp)
+        {
+            var message = await responseHttp.GetErrorMessageAsync();
+            Console.WriteLine(message);
+        }
+
+        private async Task<int?> GetUpdatedEntityIdAsync(HttpResponseWrapper<object> responseHttp)
+        {
+            var resultContent = await responseHttp.HttpResponseMessage.Content.ReadAsStringAsync();
+            if (string.IsNullOrEmpty(resultContent)) return null;
+
+            using var jsonDocument = JsonDocument.Parse(resultContent);
+            return jsonDocument.RootElement.TryGetProperty("id", out var idElement)
+                ? idElement.GetInt32()
+                : (int?)null;
+        }
+
 
 
     }

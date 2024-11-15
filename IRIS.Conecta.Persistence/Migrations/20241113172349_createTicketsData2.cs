@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace IRIS.Conecta.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialData : Migration
+    public partial class createTicketsData2 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -65,6 +65,7 @@ namespace IRIS.Conecta.Persistence.Migrations
                 {
                     table.PrimaryKey("PK_Faculties", x => x.Id);
                 });
+
 
             migrationBuilder.CreateTable(
                 name: "states",
@@ -246,10 +247,13 @@ namespace IRIS.Conecta.Persistence.Migrations
                     ContactData = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
                     ExternalInstitution = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ManagerUserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PersonalDataId = table.Column<int>(type: "int", nullable: false),
                     AcademicDataId = table.Column<int>(type: "int", nullable: false),
-                    StartDate = table.Column<DateOnly>(type: "date", precision: 0, nullable: false),
-                    EndDate = table.Column<DateOnly>(type: "date", precision: 0, nullable: false),
+                    StartDateMovility = table.Column<DateOnly>(type: "date", precision: 0, nullable: false),
+                    EndDateMovility = table.Column<DateOnly>(type: "date", precision: 0, nullable: false),
+                    StartDateRequirement = table.Column<DateOnly>(type: "date", precision: 0, nullable: false),
+                    EndDateRequirement = table.Column<DateOnly>(type: "date", precision: 0, nullable: false),
                     TicketRequirements = table.Column<int>(type: "int", nullable: true),
                     Total = table.Column<double>(type: "float", nullable: true),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -570,6 +574,9 @@ namespace IRIS.Conecta.Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "TemplateResponses");
+
+
+
 
             migrationBuilder.DropTable(
                 name: "Programs");
