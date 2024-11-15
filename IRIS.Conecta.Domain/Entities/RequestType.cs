@@ -13,10 +13,7 @@ namespace IRIS.Conecta.Domain.Entities
         public virtual Department Department { get; set; } = null!;
 
         public virtual ICollection<TemplateResponses> TemplateResponses { get; set; } = [];
-        public virtual ICollection<Ticket> Tickets { get; set; } = [];
-
-
-
+        public virtual ICollection<Ticket> Tickets { get; set; } = []; 
 
     }
 }
