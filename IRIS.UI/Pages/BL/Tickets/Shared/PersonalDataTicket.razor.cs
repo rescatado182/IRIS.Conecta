@@ -68,7 +68,7 @@ namespace IRIS.UI.Pages.BL.Tickets.Shared
             return Task.FromResult<IEnumerable<ValidationResult>>(results);
         }
 
-        public async Task<int> UpdateTicketPersonalDataAsync(int? idTicket, PersonalDataVM personalData, int idPersonalData)
+        public async Task<int> UpdateTicketPersonalDataAsync(int? idTicket, PersonalDataVM personalData, int idPersonalData, string userId)
         {
             if (idTicket == null) throw new ArgumentNullException(nameof(idTicket), "Ticket ID cannot be null.");
 
@@ -92,7 +92,7 @@ namespace IRIS.UI.Pages.BL.Tickets.Shared
                     PersonalEmail = personalDataState.Email,
                     Phone = personalDataState.Phone,
                     Cellphone = personalDataState.Cellphone,
-                    UserId = "01c6e8f5-dc49-4a6b-abdd-4ba2b5955bf9"
+                    UserId = userId
                 }
             };
 

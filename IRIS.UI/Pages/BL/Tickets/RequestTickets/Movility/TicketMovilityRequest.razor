@@ -48,7 +48,7 @@
     @* Tipos de Movilidad *@
     <TabBlazor.TabOrder>
         <Header>
-            <StatusDot BackgroundColor="@((!isCompleted2 ? TablerColor.Blue : TablerColor.Green))" />
+            <StatusDot BackgroundColor="@((!isCompletedMovilityType ? TablerColor.Blue : TablerColor.Green))" />
             <Icon class="icon" IconType="@TablerIcons.Map_pin" Size="24" /> Tipos de Movilidad
         </Header>
         <ChildContent>
@@ -61,7 +61,7 @@
     @* Justificación *@
     <TabBlazor.TabOrder>
         <Header>
-            <StatusDot BackgroundColor="@((!isCompleted2 ? TablerColor.Blue : TablerColor.Green))" Animate />
+            <StatusDot BackgroundColor="@((!isCompletedJustification ? TablerColor.Blue : TablerColor.Green))" Animate />
             <Icon class="icon" IconType="@TablerIcons.Ballpen" Size="24" /> Justificación
         </Header>
         <ChildContent>
@@ -74,7 +74,7 @@
     @* Requerimientos*@
     <TabBlazor.TabOrder>
         <Header>
-            <StatusDot BackgroundColor="@((!isCompleted3 ? TablerColor.Blue : TablerColor.Green))" Animate />
+            <StatusDot BackgroundColor="@((!isCompletedRequirementsMovility ? TablerColor.Blue : TablerColor.Green))" Animate />
             <Icon class="icon" IconType="@TablerIcons.Baseline_density_small" Size="24" /> Requerimientos
         </Header>
         <ChildContent>

@@ -7,6 +7,7 @@ using TabBlazor.Services;
 using TabBlazor;
 using IRIS.UI.Interfaces;
 using IRIS.UI.Models.List;
+using DocumentFormat.OpenXml;
 
 namespace IRIS.UI.Pages.BL.Tickets.RequestTickets.Movility.Information
 {
@@ -16,12 +17,15 @@ namespace IRIS.UI.Pages.BL.Tickets.RequestTickets.Movility.Information
         [Inject] private IRepository Repository { get; set; } = null!;
         [Inject] public ToastService ToastService { get; set; }
 
+        public string SelectTicketRequirements { get; set; }
+
+        private EnumTicketRequirements _selectedRequirements;
+
         private DateTimeOffset selectedInitialDate = DateTimeOffset.Now.AddDays(14).Date;
         private DateTimeOffset selectedFinalDate = DateTimeOffset.Now.AddDays(14).Date;
 
-        private List<EnumRequirementsTypes> selectedRequirementTypes = new List<EnumRequirementsTypes>();
-        private List<EnumRequirementsTypes> enumRequirementsTypes = new List<EnumRequirementsTypes>();
-
+        private List<EnumTicketRequirements> selectedRequirementTypes = new List<EnumTicketRequirements>();
+        private List<EnumTicketRequirements> enumRequirementsTypes = new List<EnumTicketRequirements>();
 
 
         protected override void OnInitialized()
@@ -34,9 +38,9 @@ namespace IRIS.UI.Pages.BL.Tickets.RequestTickets.Movility.Information
                 ? new DateTimeOffset(MovilityRequestState.requirementsMovility.EndDateRequirement.ToDateTime(TimeOnly.MinValue))
                 : DateTimeOffset.Now;
 
-            enumRequirementsTypes = Enum.GetValues(typeof(EnumRequirementsTypes)).Cast<EnumRequirementsTypes>().ToList();
+            enumRequirementsTypes = Enum.GetValues(typeof(EnumTicketRequirements)).Cast<EnumTicketRequirements>().ToList();
         }
-        private string GetRequirementTypesDisplayName(EnumRequirementsTypes requirement)
+        private string GetRequirementTypesDisplayName(EnumTicketRequirements requirement)
         {
             return requirement.GetDisplayName();
         }
@@ -70,6 +74,11 @@ namespace IRIS.UI.Pages.BL.Tickets.RequestTickets.Movility.Information
 
             try
             {
+
+
+                string enumTicketRequirements = Enum.GetName(typeof(EnumTicketRequirements), selectedRequirementTypes);
+
+
                 MovilityRequestState.requirementsMovility.RequirementsTypesDisplayName = selectedRequirementTypes.Count > 0
                     ? string.Join(", ", selectedRequirementTypes.Select(GetRequirementTypesDisplayName))
                     : string.Empty;
@@ -101,9 +110,11 @@ namespace IRIS.UI.Pages.BL.Tickets.RequestTickets.Movility.Information
 
         }
 
-        public async Task<int> UpdateTicketRequirementsMovilityAsync(int? idTicket, RequirementsMovilityVM requirementsMovility, int requirementsMovilityId)
+        public async Task<int> UpdateTicketRequirementsMovilityAsync(int? idTicket, RequirementsMovilityVM requirementsMovility, int requirementsMovilityId, string userId)
         {
-            var updatedRequirementsMovility = CreateUpdatedRequirementsMovility(idTicket, requirementsMovility);
+
+
+            var updatedRequirementsMovility = CreateUpdatedRequirementsMovility(idTicket, requirementsMovility, userId);
 
             LogJsonPayload(updatedRequirementsMovility);
 
@@ -118,17 +129,20 @@ namespace IRIS.UI.Pages.BL.Tickets.RequestTickets.Movility.Information
             return await GetUpdatedEntityIdAsync(responseHttp) ?? 0;
         }
 
-        private RequirementsMovilitySaveVM CreateUpdatedRequirementsMovility(int? idTicket, RequirementsMovilityVM RequirementsMovility)
+        private RequirementsMovilitySaveVM CreateUpdatedRequirementsMovility(int? idTicket, RequirementsMovilityVM RequirementsMovility, string userId)
         {
+
+
+
             return new RequirementsMovilitySaveVM
             {
                 Id = idTicket.Value,
                 Status = TicketsStatus.Open,
                 StartDateRequirement = MovilityRequestState.requirementsMovility.StartDateRequirement,
                 EndDateRequirement = MovilityRequestState.requirementsMovility.EndDateRequirement,
-                // RequestedRequirements = selectedRequirementTypes,
+                TicketRequirements = selectedRequirementTypes,
                 Total = MovilityRequestState.requirementsMovility.Total,
-                UserId = "1001",
+                UserId = userId,
                 ManagerUserId = "1001"
             };
         }

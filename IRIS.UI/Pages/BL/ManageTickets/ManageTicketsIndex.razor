@@ -1,9 +1,9 @@
-﻿<h3>Tickets</h3>
-
+﻿
 @page "/managesTickets"
 @if (tickets is null)
 {
-    <Progress Color="TablerColor.Blue" Indeterminate />
+    <Loading></Loading>
+    @* <Progress Color="TablerColor.Blue" Indeterminate /> *@
 }
 else{
 
@@ -16,44 +16,53 @@ else{
            @bind-SelectedItems="selectedOrders" Selectable
            MultiSelect Hover Responsive>
         <HeaderTemplate>
-            <strong>tickets</strong>
+            <strong>Agrupar por</strong>
         </HeaderTemplate>
 
         <ChildContent>
-            <Column Item="TicketManageListVM" Property="e=>e.Id" Title="Nro Ticket" Sortable Searchable Groupable>
-                <EditorTemplate>
+            <Column Item="TicketManageListVM" Property="e => e.TicketStatusColor" Title="ANS" Sortable Searchable Groupable>
+                <Template>
+                    <Badge BackgroundColor="@context.TicketStatusColor" />
+                </Template>
+            </Column>
+            <Column Item="TicketManageListVM" Property="e=>e.Id" Title="Nro Solicitud" Sortable Searchable Groupable>
+@*                 <EditorTemplate>
                     <input type="text" class="form-control" @bind-value="@context.Id" />
-                </EditorTemplate>
+                </EditorTemplate> *@
+            </Column>
+            <Column Item="TicketManageListVM" Property="e=>e.DateCreated" Title="Fecha Solicitud" Sortable Searchable Groupable>
+@*                 <EditorTemplate>
+                    <input type="text" class="form-control" @bind-value="@context.DateCreated" />
+                </EditorTemplate> *@
             </Column>
             <Column Item="TicketManageListVM" Property="e=>e.FacultyName" Title="Facultad" Sortable Searchable Groupable>
-                <EditorTemplate>
+@*                 <EditorTemplate>
                     <input type="text" class="form-control" @bind-value="@context.FacultyName" />
-                </EditorTemplate>
+                </EditorTemplate> *@
             </Column>
             <Column Item="TicketManageListVM" Property="e=>e.Department" Title="Departmento" Sortable Searchable Groupable>
-                <EditorTemplate>
+@*                 <EditorTemplate>
                     <input type="text" class="form-control" @bind-value="@context.Department" />
-                </EditorTemplate>
+                </EditorTemplate> *@
             </Column>
             <Column Item="TicketManageListVM" Property="e=>e.RequestName" Title="Tipo de Solicitud" Sortable Searchable Groupable>
-                <EditorTemplate>
+@*                 <EditorTemplate>
                     <input type="text" class="form-control" @bind-value="@context.RequestName" />
-                </EditorTemplate>
+                </EditorTemplate> *@
             </Column>
             <Column Item="TicketManageListVM" Property="e=>e.FullName" Title="Solicitante" Sortable Searchable Groupable>
-                <EditorTemplate>
+@*                 <EditorTemplate>
                     <input type="text" class="form-control" @bind-value="@context.FullName" />
-                </EditorTemplate>
+                </EditorTemplate> *@
             </Column>
-@*             <Column Item="TicketManageListVM" Property="e=>e.FullName" Title="Gestor" Sortable Searchable Groupable>
-                <EditorTemplate>
-                    <input type="text" class="form-control" @bind-value="@context.FullName" />
-                </EditorTemplate>
-            </Column> *@
-@*             <Column Item="TicketManageListVM" Property="e => e.TicketStatus" Title="Estado" Sortable Searchable Groupable> *@
+            <Column Item="TicketManageListVM" Property="e=>e.ManagerName" Title="Gestor" Sortable Searchable Groupable>
+ @*                <EditorTemplate>
+                    <input type="text" class="form-control" @bind-value="@context.ManagerName" />
+                </EditorTemplate> *@
+            </Column>
+
                 <Column Item="TicketManageListVM" Property="e => e.TicketStatusDisplayName" Title="Estado" Sortable Searchable Groupable>
                     <Template>
-                        @* Muestra el Badge con el color correspondiente al estado *@
                         <Badge BackgroundColor="@context.GetTicketStatusColor()" Shape="BadgeShape.Pill">
                             @context.TicketStatusDisplayName
                         </Badge>

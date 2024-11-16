@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using DocumentFormat.OpenXml.Vml.Spreadsheet;
+using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 
 namespace IRIS.UI.Models
 {
@@ -12,7 +14,8 @@ namespace IRIS.UI.Models
         InProcess = 3,
         [Display(Name = "Resuelto")]
         Resolved = 4,
-        [Display(Name = "En Comite")]
-        Committee = 5
+        [Display(Name = "Cancelado")]
+        Cancelled = 5
     }
 }
+

@@ -1,4 +1,5 @@
 using ColorCode.Compilation.Languages;
+using DocumentFormat.OpenXml.Spreadsheet;
 using IRIS.Frontend.Repositories;
 using IRIS.UI.Interfaces;
 using IRIS.UI.Models;
@@ -11,11 +12,15 @@ using Microsoft.Extensions.Options;
 using System.ComponentModel.DataAnnotations;
 using System.Linq.Expressions;
 using System.Net;
+using System.Security.Claims;
 using System.Text.Json;
 using System.Web.Mvc;
 using TabBlazor;
 using TabBlazor.Components.Modals;
 using TabBlazor.Services;
+
+using Microsoft.AspNetCore.Components.Authorization;
+using IRIS.UI.AuthenticationProviders;
 
 namespace IRIS.UI.Pages.BL.Tickets.RequestTickets.Movility
 {
@@ -25,6 +30,9 @@ namespace IRIS.UI.Pages.BL.Tickets.RequestTickets.Movility
         [Inject] private IRepository Repository { get; set; } = null!;
         [Inject] public IModalService Modal { get; set; }
         [Inject] public ToastService ToastService { get; set; }
+
+        [Inject] public AuthenticationProviderJWT AuthenticationProviderJWT { get; set; }
+
 
 
         public PersonalDataVM personalData = new PersonalDataVM();
@@ -88,14 +96,8 @@ namespace IRIS.UI.Pages.BL.Tickets.RequestTickets.Movility
         private bool isCompleted2 = false;
         private bool isCompleted3 = false;
 
+        public string userId;
 
-        //protected override void OnInitialized()
-        //{
-
-        //    requirementsMovilityRef = new RequirementsMovilityTicket();
-
-
-        //}
         private async Task PreviousStepAsync()
         {
             tabsOrderRef.PreviousTab();
@@ -104,10 +106,16 @@ namespace IRIS.UI.Pages.BL.Tickets.RequestTickets.Movility
         private async Task NextStepAsync()
         {
 
+
+
+            userId = await AuthenticationProviderJWT.GetUserIdAsync();
+            
+
+
             //crear ticket
             if (idTicket == null)
             {
-                idTicket = await CreateTicketAsync();
+                idTicket = await CreateTicketAsync(userId);
                 if (idTicket.HasValue)
                 {
                     Console.WriteLine($"Ticket creado con Id: {idTicket.Value}");
@@ -120,23 +128,23 @@ namespace IRIS.UI.Pages.BL.Tickets.RequestTickets.Movility
                 switch (tabsOrderRef?.CurrentTabIndex)
                 {
                     case 0:
-                        await HandlePersonalDataTabAsync(idTicket, personalData);
+                        await HandlePersonalDataTabAsync(idTicket, personalData, userId);
                         break;
 
                     case 1:
-                        await HandleAcademyDataTabAsync(idTicket, academyData);
+                        await HandleAcademyDataTabAsync(idTicket, academyData, userId);
                         break;
 
                     case 2:
-                        await HandleMovilityTypeTabAsync(idTicket, movilityType);
+                        await HandleMovilityTypeTabAsync(idTicket, movilityType, userId);
                         break;
 
                     case 3:
-                        await HandleJustificationMovilityTabAsync(idTicket, justificationMovility);
+                        await HandleJustificationMovilityTabAsync(idTicket, justificationMovility, userId);
                         break;
                     case 4:
                        
-                        await HandleRequirementsTabAsync(idTicket, requirementsMovility);
+                        await HandleRequirementsTabAsync(idTicket, requirementsMovility, userId);
                         break;
 
                     default:
@@ -161,35 +169,40 @@ namespace IRIS.UI.Pages.BL.Tickets.RequestTickets.Movility
             });
         }
 
-        private async Task HandlePersonalDataTabAsync(int? idTicket, PersonalDataVM personalData)
+        private async Task HandlePersonalDataTabAsync(int? idTicket, PersonalDataVM personalData, string userId)
         {
             if (!await ValidateDataAsync(personalDataRef)) return;
 
-            personalDataId = await personalDataRef.UpdateTicketPersonalDataAsync(idTicket, personalData, personalDataId);
+            personalDataId = await personalDataRef.UpdateTicketPersonalDataAsync(idTicket, personalData, personalDataId, userId);
             if (personalDataId == 0)
             {
                 await ShowErrorToastAsync("Error Inesperado", "Tuvimos un error al intentar guardar tu solicitud. Intenta nuevamente");
+                return;
             }
+            isCompletedPersonalData = true;
         }
-        private async Task HandleAcademyDataTabAsync(int? idTicket, AcademyDataVM academyData)
+        private async Task HandleAcademyDataTabAsync(int? idTicket, AcademyDataVM academyData, string userId)
         {
             if (!await ValidateDataAsync(academyDataRef)) return;
 
-            academicDataId = await academyDataRef.UpdateTicketAcademyDataAsync(idTicket, academyData, academicDataId);
+            academicDataId = await academyDataRef.UpdateTicketAcademyDataAsync(idTicket, academyData, academicDataId, userId);
             if (academicDataId == 0)
             {
                 await ShowErrorToastAsync("Error Inesperado", "Tuvimos un error al intentar guardar tu solicitud. Intenta nuevamente");
+                return;
             }
-
+            isCompletedAcademyData = true;
         }
 
-        private async Task HandleMovilityTypeTabAsync(int? idTicket, MovilityTypeVM movilityType)
+        private async Task HandleMovilityTypeTabAsync(int? idTicket, MovilityTypeVM movilityType, string userId)
         {
             if (!await movilityTypeRef.ValidateDatesAsync(movilityType)) return;
 
             if (!await ValidateDataAsync(movilityTypeRef)) return;
 
-            movilityTypeId = await movilityTypeRef.UpdateTicketMovilityTypeAsync(idTicket, movilityType, movilityTypeId);
+            movilityTypeId = await movilityTypeRef.UpdateTicketMovilityTypeAsync(idTicket, movilityType, movilityTypeId, userId);
+
+            isCompletedMovilityType = true;
             //if (movilityTypeId == 0)
             //{
             //    await ShowErrorToastAsync("Error Inesperado", "Tuvimos un error al intentar guardar tu solicitud. Intenta nuevamente");
@@ -198,31 +211,34 @@ namespace IRIS.UI.Pages.BL.Tickets.RequestTickets.Movility
 
         }
 
-        private async Task HandleRequirementsTabAsync(int? idTicket, RequirementsMovilityVM requirementsMovility)
+        private async Task HandleRequirementsTabAsync(int? idTicket, RequirementsMovilityVM requirementsMovility, string userId)
         {
 
             if (!await requirementsMovilityRef.ValidateDatesAsync(requirementsMovility)) return;
 
             if (!await ValidateDataAsync(requirementsMovilityRef)) return;
 
-            requirementsMovilityId = await requirementsMovilityRef.UpdateTicketRequirementsMovilityAsync(idTicket, requirementsMovility, requirementsMovilityId);
+            requirementsMovilityId = await requirementsMovilityRef.UpdateTicketRequirementsMovilityAsync(idTicket, requirementsMovility, requirementsMovilityId, userId);
+
+            isCompletedRequirementsMovility = true;
             //if (requirementsMovilityId == 0)
             //{
             //    await ShowErrorToastAsync("Error Inesperado", "Tuvimos un error al intentar guardar tu solicitud. Intenta nuevamente");
             //}
         }
 
-        private async Task HandleJustificationMovilityTabAsync(int? idTicket, JustificationMovilityVM justificationMovility)
+        private async Task HandleJustificationMovilityTabAsync(int? idTicket, JustificationMovilityVM justificationMovility, string userId)
         {
             if (!await justificationMovilityRef.ValidateDatesAsync(justificationMovility)) return;
 
             if (!await ValidateDataAsync(justificationMovilityRef)) return;
 
-            justificationMovilityId = await justificationMovilityRef.UpdateTicketJustificationMovilityAsync(idTicket, justificationMovility, justificationMovilityId);
+            justificationMovilityId = await justificationMovilityRef.UpdateTicketJustificationMovilityAsync(idTicket, justificationMovility, justificationMovilityId, userId);
 
+            isCompletedJustification = true;
         }
 
-        private async Task<int?> CreateTicketAsync()
+        private async Task<int?> CreateTicketAsync(string userId)
         {
             object jsonResult;
 
@@ -232,7 +248,9 @@ namespace IRIS.UI.Pages.BL.Tickets.RequestTickets.Movility
                 Description = "Movilidad",
                 RequestTypeId = 1,
                 Status = TicketsStatus.Open,
-                UserId = "1001"
+                UserId = userId,
+                CreateDate = DateOnly.FromDateTime(DateTime.Now)
+
             };
 
 

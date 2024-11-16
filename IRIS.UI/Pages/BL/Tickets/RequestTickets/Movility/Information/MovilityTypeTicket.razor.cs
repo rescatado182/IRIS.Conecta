@@ -1,4 +1,5 @@
 using ApexCharts;
+using DocumentFormat.OpenXml.Spreadsheet;
 using IRIS.Frontend.Repositories;
 using IRIS.UI.Data;
 using IRIS.UI.Interfaces;
@@ -187,14 +188,11 @@ private DateTimeOffset selectedFinalDate;
                 Console.WriteLine(ex.Message);
                 return Task.FromResult<IEnumerable<ValidationResult>>(results);
             }
-
-
-
         }
 
-        public async Task<int> UpdateTicketMovilityTypeAsync(int? idTicket, MovilityTypeVM movilityType, int movilityTypeId)
+        public async Task<int> UpdateTicketMovilityTypeAsync(int? idTicket, MovilityTypeVM movilityType, int movilityTypeId, string userId)
         {
-            var updatedMovilityType = CreateUpdatedMovilityType(idTicket, movilityType);
+            var updatedMovilityType = CreateUpdatedMovilityType(idTicket, movilityType, userId);
 
             LogJsonPayload(updatedMovilityType);
 
@@ -209,7 +207,7 @@ private DateTimeOffset selectedFinalDate;
             return await GetUpdatedEntityIdAsync(responseHttp) ?? 0;
         }
 
-        private MovilityTypeSaveVM CreateUpdatedMovilityType(int? idTicket, MovilityTypeVM movilityType)
+        private MovilityTypeSaveVM CreateUpdatedMovilityType(int? idTicket, MovilityTypeVM movilityType, string userId)
         {
             return new MovilityTypeSaveVM
             {
@@ -229,7 +227,7 @@ private DateTimeOffset selectedFinalDate;
                 externalInstitution = MovilityRequestState.movilityType.externalInstitution.ToString(),
                 startDateMovility = MovilityRequestState.movilityType.StartDateMovility,
                 endDateMovility = MovilityRequestState.movilityType.EndDateMovility,
-                userId = "1001",
+                userId = userId,
                 managerUserId = "1001"
             };
         }

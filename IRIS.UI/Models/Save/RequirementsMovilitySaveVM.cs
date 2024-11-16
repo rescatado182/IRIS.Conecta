@@ -10,7 +10,7 @@
         public double Total { get; set; }
         public string UserId { get; set; }
         public string ManagerUserId { get; set; }
-
+        public List<EnumTicketRequirements> TicketRequirements { get; set; }
 
     }
 }

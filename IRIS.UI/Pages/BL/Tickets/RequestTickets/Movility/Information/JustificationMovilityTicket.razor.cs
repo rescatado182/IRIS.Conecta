@@ -8,6 +8,8 @@ using TabBlazor.Services;
 using IRIS.UI.Models.Save;
 using IRIS.UI.Interfaces;
 using TabBlazor;
+using DocumentFormat.OpenXml.Spreadsheet;
+using IRIS.UI.AuthenticationProviders;
 
 namespace IRIS.UI.Pages.BL.Tickets.RequestTickets.Movility.Information
 {
@@ -18,12 +20,13 @@ namespace IRIS.UI.Pages.BL.Tickets.RequestTickets.Movility.Information
         [Inject] public IModalService Modal { get; set; }
         [Inject] public ToastService ToastService { get; set; }
 
+
         private bool isChecked;
 
 
         private DateTimeOffset selectedDate = DateTimeOffset.Now.AddDays(14).Date;
 
-        private List<EnumRequirementsTypes> selectedRequirementTypes = new List<EnumRequirementsTypes>();
+        private List<EnumTicketRequirements> selectedRequirementTypes = new List<EnumTicketRequirements>();
 
         public async Task<bool> ValidateDatesAsync(JustificationMovilityVM justificationMovility)
         {
@@ -72,9 +75,9 @@ namespace IRIS.UI.Pages.BL.Tickets.RequestTickets.Movility.Information
         }
 
 
-        public async Task<int> UpdateTicketJustificationMovilityAsync(int? idTicket, JustificationMovilityVM justificationMovility, int justicationMovilityId)
+        public async Task<int> UpdateTicketJustificationMovilityAsync(int? idTicket, JustificationMovilityVM justificationMovility, int justicationMovilityId, string userId)
         {
-            var updatedJustificationMovility = CreateUpdatedJustificatioMovility(idTicket, justificationMovility);
+            var updatedJustificationMovility = CreateUpdatedJustificatioMovility(idTicket, justificationMovility, userId);
 
             LogJsonPayload(updatedJustificationMovility);
 
@@ -89,8 +92,9 @@ namespace IRIS.UI.Pages.BL.Tickets.RequestTickets.Movility.Information
             return await GetUpdatedEntityIdAsync(responseHttp) ?? 0;
         }
 
-        private JustificationMovilitySaveVM CreateUpdatedJustificatioMovility(int? idTicket, JustificationMovilityVM justificationMovility)
+        private JustificationMovilitySaveVM CreateUpdatedJustificatioMovility(int? idTicket, JustificationMovilityVM justificationMovility, string userId)
         {
+
             return new JustificationMovilitySaveVM
             {
                 Id = idTicket.Value,
@@ -101,7 +105,7 @@ namespace IRIS.UI.Pages.BL.Tickets.RequestTickets.Movility.Information
                 DeliveryDate = MovilityRequestState.justificationMovility.DeliveryDate,
                 RequestTypeId = 1,
                 Status = TicketsStatus.Open,
-                UserId = "1001",
+                UserId = userId,
                 ManagerUserId = "1001"
             };
 

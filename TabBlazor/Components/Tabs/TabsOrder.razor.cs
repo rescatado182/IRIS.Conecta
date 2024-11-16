@@ -7,7 +7,7 @@ namespace TabBlazor
         private List<ITab> Tabs { get; set; } = new List<ITab>();
         public int CurrentTabIndex { get; set; } = 0;
 
-        private int numberCurrentTab = 3;
+        private int numberCurrentTab = 4;
 
         public ITab ActiveTab { get; private set; }
 

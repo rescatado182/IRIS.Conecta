@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using IRIS.UI.Models;
+using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 
 namespace IRIS.UI
@@ -44,6 +45,16 @@ namespace IRIS.UI
                                  .SingleOrDefault();
             return attribute?.Name ?? enumValue.ToString(); // Devolver el nombre para mostrar
         }
+
+        public static string GetStatusDisplayName(string status)
+        {
+            if (Enum.TryParse(typeof(TicketsStatus), status, true, out var enumValue))
+            {
+                return ((TicketsStatus)enumValue).GetDisplayName();
+            }
+            return "Estado desconocido"; // Valor por defecto si no se puede convertir
+        }
+
 
         public class EnumItem<T>
         {

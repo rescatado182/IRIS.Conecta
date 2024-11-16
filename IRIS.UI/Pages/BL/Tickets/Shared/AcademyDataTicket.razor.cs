@@ -45,9 +45,9 @@ namespace IRIS.UI.Pages.BL.Tickets.Shared
             programs = SampleData.GetPrograms();
         }
 
-        public async Task<int> UpdateTicketAcademyDataAsync(int? idTicket, AcademyDataVM academyData, int academicDataId)
+        public async Task<int> UpdateTicketAcademyDataAsync(int? idTicket, AcademyDataVM academyData, int academicDataId, string userId)
         {
-            var updatedAcademicData = CreateUpdatedAcademicData(idTicket, academyData, academicDataId);
+            var updatedAcademicData = CreateUpdatedAcademicData(idTicket, academyData, academicDataId, userId);
 
             LogJsonPayload(updatedAcademicData);
 
@@ -64,7 +64,7 @@ namespace IRIS.UI.Pages.BL.Tickets.Shared
             return await GetUpdatedEntityIdAsync(responseHttp) ?? 0;
         }
 
-        private AcademyDataSaveVM CreateUpdatedAcademicData(int? idTicket, AcademyDataVM academyData, int academicDataId)
+        private AcademyDataSaveVM CreateUpdatedAcademicData(int? idTicket, AcademyDataVM academyData, int academicDataId, string userId)
         {
             return new AcademyDataSaveVM
             {
@@ -79,7 +79,7 @@ namespace IRIS.UI.Pages.BL.Tickets.Shared
                     AverageCredit = MovilityRequestState.academyData.AverageCredit,
                     EnrolledSemester = MovilityRequestState.academyData.EnrolledSemester,
                     IsInstitutionalGroup = MovilityRequestState.academyData.IsInstitutionalGroup,
-                    UserId = "1001"
+                    UserId = userId
                 }
             };
         }

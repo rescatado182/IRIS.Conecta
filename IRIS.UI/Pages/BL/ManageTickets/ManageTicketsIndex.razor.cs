@@ -23,6 +23,7 @@ namespace IRIS.UI.Pages.BL.ManageTickets
         [Inject] private IRepository Repository { get; set; } = null!;
 
         public List<TicketManageListVM>? tickets { get; set; }
+        public List<ManagersListVM> managers { get; set; } 
 
         private static List<TicketManageListVM> selectedOrders = new List<TicketManageListVM>();
 
@@ -36,23 +37,65 @@ namespace IRIS.UI.Pages.BL.ManageTickets
 
         private async Task<bool> ListAsync()
         {
-
-
             var responseHttp = await Repository.GetAsync<List<TicketManageListVM>>("/api/Tickets");
-        
+
             if (responseHttp.Error)
             {
                 var message = await responseHttp.GetErrorMessageAsync();
-
-
                 return false;
             }
 
             tickets = responseHttp.Response;
 
+            if (!await GetListManagersAsync())
+                return false;
+
+
+            foreach (var ticket in tickets)
+            {
+                var manager = managers.FirstOrDefault(m => m.Id == ticket.ManagerUserId);
+                if (manager != null)
+                {
+                    ticket.ManagerName = manager.FullName;
+                }
+            }
+
             return true;
         }
 
+        private async Task<bool> GetListManagersAsync()
+        {
+            var responseHttp = await Repository.GetAsync<List<ManagersListVM>>("/api/Users/GetManagers");
+
+            if (responseHttp.Error)
+            {
+                var message = await responseHttp.GetErrorMessageAsync();
+                return false;
+            }
+
+            managers = responseHttp.Response;
+
+            return true;
+        }
+
+        private string GetTicketStatusColor(TicketManageListVM ticket)
+        {
+            var daysDiff = (DateTime.Now - ticket.DateCreated).Days;
+
+            // Determine the color based on the difference in days
+            if (daysDiff <= 1)
+            {
+                return TablerColor.Green.ToString();
+            }
+            else if (daysDiff <= 3)
+            {
+                return TablerColor.Warning.ToString();
+            }
+            else
+            {
+                return TablerColor.Red.ToString();
+            }
+        }
 
         private async Task OnItemEdit(TicketManageListVM ticket)
         {

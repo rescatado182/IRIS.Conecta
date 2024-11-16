@@ -63,7 +63,7 @@ namespace IRIS.Conecta.Application.Features.Tickets.Commands.ChangeTicketStatus
                     Subject = "Novedad en Solicitud"
                 };
 
-                await _emailService.SendEmailAsync(email);
+             //   await _emailService.SendEmailAsync(email);
             }
             catch (Exception ex)
             {
