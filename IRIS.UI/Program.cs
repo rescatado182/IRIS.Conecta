@@ -26,7 +26,7 @@ namespace IRIS.UI
 
             builder.Services.AddHttpClient("GitHub", client => client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("TabBlazor", "1")));
 
-            builder.Services.AddSingleton(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7225/") });
+            builder.Services.AddSingleton(sp => new HttpClient { BaseAddress = new Uri("https://irisconectaitmapi.azurewebsites.net") });
 
             // Agregar servicios de autorización
             builder.Services.AddAuthorizationCore();
