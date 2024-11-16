@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace IRIS.UI.Pages.BL.Actions
 {
-    public partial class CreateComments
+    public partial class SendNotificator
     {
         [Parameter]
         public EventCallback<string> OnSubmit { get; set; }

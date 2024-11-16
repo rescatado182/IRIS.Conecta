@@ -3,19 +3,23 @@
 
     <div class="mb-3">
         <label>Estado Actual:</label>
-        <p>@CurrentStatusDisplayName</p>
+        <p>@CurrentStatusText</p>
     </div>
 
     <div class="mb-3">
         <label>Nuevo Estado:</label>
-        <ItemSelect TItem="TicketsStatus" TValue="TicketsStatus" Items="EnumHelper.GetList<TicketsStatus>()"
-                    @bind-SelectedValue="SelectedStatus" TextExpression="e => e.ToString()" ValueExpression="e => e">
-            <ListTemplate>
-                @context
-            </ListTemplate>
-        </ItemSelect>
+
+
+        <Select Items="enumTicketStatus"
+                @bind-SelectedValue="SelectedStatus"
+                TextExpression="e => e.DisplayName"
+                ValueExpression="e => e.Value"
+                ConvertExpression="e => e.Value"
+                NoSelectedText="Seleccione el nuevo estado" />
+
     </div>
 
     <Button BackgroundColor="TablerColor.Green" OnClick="OnSubmit">Guardar Cambios</Button>
+
     <br /> <br /> <br /> <br /> <br /> <br /> <br />
 </div>

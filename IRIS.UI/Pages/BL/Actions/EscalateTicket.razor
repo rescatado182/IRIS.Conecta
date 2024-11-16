@@ -1,0 +1,29 @@
+﻿@using IRIS.UI.Models.List
+@if (CurrentManager is not null)
+{
+<div class="offcanvas-body">
+        <div class="mb-3">
+            <label>Gestor Actual:</label>
+            <p>@CurrentManager</p>
+        </div>
+        <br />
+        <div class="mb-3">
+            <label>A quien quieres escalar la solicitud:</label>
+
+            <Typeahead TItem="ManagersListVM" TValue="ManagersListVM" SearchMethod="SearchManagers" SelectedValue="selectedManager" SelectedValueChanged="OnItemSelected"
+                       Debounce="1" MinimumLength=1 SearchPlaceholderText="Buscar Usuario..."
+                       ListWidth="100%"
+                       SelectedTextExpression="e => e.FullName" ShowOptionOnFocus="false">
+                <ListTemplate>
+                    @context.FullName
+                </ListTemplate>
+            </Typeahead>
+
+
+
+        </div>
+
+        <Button BackgroundColor="TablerColor.Green" OnClick="OnSubmitAsync">Guardar Cambios</Button>
+        <br /> <br /> <br /> <br /> <br /> <br /> <br />
+    </div>
+}

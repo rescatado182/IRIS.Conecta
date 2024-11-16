@@ -97,7 +97,7 @@ namespace IRIS.Conecta.Identity.Migrations
                         {
                             Id = "1000",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "4bcc0349-0929-4e11-9851-50957d68ad29",
+                            ConcurrencyStamp = "4c092a48-5810-478d-acd5-e724d511603b",
                             Email = "adminIrisConecta@correo.itm.edu.co",
                             EmailConfirmed = true,
                             FirstName = "System",
@@ -105,9 +105,9 @@ namespace IRIS.Conecta.Identity.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "adminIrisConecta@correo.itm.edu.co",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEN21kVyfjQQy5qwFNTdZE/XXtWraZw/Hc7JUA63ZksTMtLPJClhEfpyfIA02G0nDgA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEAKkh51BdtXCnHiQR5TSYpI7bHsbeeojk3rRrF/m4/PzVwaxH3smv20T6lTgtRhcXA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "d45a9e4f-94b7-404c-8f5e-16552fa3a765",
+                            SecurityStamp = "8d82ebba-eeb6-4b1a-8026-cefa33fac69c",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         },
@@ -115,7 +115,7 @@ namespace IRIS.Conecta.Identity.Migrations
                         {
                             Id = "1001",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "e09a4448-f591-4438-99c2-0e368086d5fb",
+                            ConcurrencyStamp = "ee1e1759-4428-48db-a22c-67437fade024",
                             Email = "userStudent@correo.itm.edu.co",
                             EmailConfirmed = true,
                             FirstName = "USER",
@@ -123,9 +123,9 @@ namespace IRIS.Conecta.Identity.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "USERSTUDENT@correo.itm.edu.co",
                             NormalizedUserName = "USERSTUDENT",
-                            PasswordHash = "AQAAAAIAAYagAAAAEB2MDEX02zXdMMKk9BYJ43/AMC/HQcrdRDvlWvY2BA05BHJ4dZQqGh7zofozVsO5vA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEAC9kVIM7Zu9+/ai57CFXC4buOcAPWmZIiSjoAu8VjoVcV7Iyf1Ca9vkdqpUzUdwmw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "e6a632a6-7eba-4b58-9bf1-d9bbf9d76d5d",
+                            SecurityStamp = "66d717ae-8b45-4548-b49d-627c09e720db",
                             TwoFactorEnabled = false,
                             UserName = "userStudent"
                         },
@@ -133,7 +133,7 @@ namespace IRIS.Conecta.Identity.Migrations
                         {
                             Id = "1002",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "6a226fa8-0317-4aec-a05c-3cdb2c48b5f0",
+                            ConcurrencyStamp = "39e3e1eb-c8e7-4884-97ec-6cedef2aefdd",
                             Email = "assistantIrisConecta@correo.itm.edu.co",
                             EmailConfirmed = true,
                             FirstName = "System",
@@ -141,9 +141,9 @@ namespace IRIS.Conecta.Identity.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "assistantIrisConecta@correo.itm.edu.co",
                             NormalizedUserName = "ASSISTANT",
-                            PasswordHash = "AQAAAAIAAYagAAAAEE8hWd4WQoVkwd7MCwMw8TQWUZo1BK71pL+tD3CGm8rFdynMKn0znGkRLLtzK79yuw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAECW1sIh9V68vZJqhjTN/kYolFtmFY7aHOqj5u9/x43fCyqpCP6vMDLkNs6NX9ZsCag==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "abdf8ce0-df31-40b5-a668-8a7602c47e79",
+                            SecurityStamp = "7d8ee43d-2e37-4ab9-a542-25bf60c3a5ec",
                             TwoFactorEnabled = false,
                             UserName = "userAssistant"
                         },
@@ -151,7 +151,7 @@ namespace IRIS.Conecta.Identity.Migrations
                         {
                             Id = "1003",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "885288fd-882e-4873-aa58-0e49197b5aa1",
+                            ConcurrencyStamp = "91d2cf99-169a-42e3-bdb9-0d288e32f5e8",
                             Email = "headofdepartment@correo.itm.edu.co",
                             EmailConfirmed = true,
                             FirstName = "HEAD OF",
@@ -159,9 +159,9 @@ namespace IRIS.Conecta.Identity.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "headofdepartment@correo.itm.edu.co",
                             NormalizedUserName = "HEADOFDEPARTMENT",
-                            PasswordHash = "AQAAAAIAAYagAAAAENSKT9dWKlf3vkDlPq5e63Q2VM29KVcYoPL4Q25FPrK+v6BHBL7n6vlK9Ur8mvvBBA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEDQ/YJqW8wO6ndvCIoyMtjPVSVqpKHIV6+HzPCDVnB1gw4Bu2GeXEQrBqV52N1Z4Ng==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "a21844ea-b4a2-4e36-856f-c402fd47ac3a",
+                            SecurityStamp = "db9fc272-604c-48dd-a256-b19f1802ebba",
                             TwoFactorEnabled = false,
                             UserName = "headofdepartment"
                         });

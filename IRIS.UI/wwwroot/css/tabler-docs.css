@@ -154,4 +154,17 @@ pre.highlight,
     margin-top: 2rem;
 }
 
-v
+.header {
+    border-bottom: 1px solid #e5e5e5;
+}
+
+    .header .dropdown-toggle {
+        color: #333;
+        background: none;
+        border: none;
+        font-weight: bold;
+    }
+
+    .header .dropdown-menu {
+        min-width: 150px;
+    }

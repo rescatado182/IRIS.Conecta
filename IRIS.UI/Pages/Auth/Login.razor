@@ -1,52 +1,44 @@
 ﻿@page "/login"
-
 @layout LoginLayout
 
 @using TabBlazor.Components.Modals
 @using Microsoft.AspNetCore.Components
 @using System.ComponentModel.DataAnnotations
 
-@* <div style="background-image: url('img/fondo_login.jpg'); background-size: cover; background-position: center; min-height: 100vh; display: flex; align-items: center; justify-content: center;"> *@
-<Card Size="CardSize.Large" BackgroundColor="TablerColor.Light">
-    <CardBody >
-        <!-- Componente de ResizeObserver -->
-        <ResizeObserver class="p-1 border mb-3" OnResized=ElementResized OnWidthResized=WidthResized OnHeightResized=HeightResized>
-            <h1>Bienvenido a nuestra aplicación</h1>
-            <p>Por favor inicia sesión para usar nuestra plataforma</p>
-            <br /><br /><br />
-            <Row>
-                <RowCol Xs=12 Md=6>
 
+    <Card Size="CardSize.Large" BackgroundColor="TablerColor.White" Class="shadow-lg" Style="border-radius: 12px; max-width: 500px; padding: 20px;">
+        <CardBody>
+            <!-- Logo y bienvenida -->
+            <div class="text-center">
+                <img src="img/Logoiris.png" alt="Logo IRIS Conecta" style="width: 200px; margin-bottom: 20px;" />
+                <h2>Bienvenido a IRIS Conecta</h2>
+@*                 <p>Inicia sesión para acceder a la plataforma</p> *@
+            </div>
 
-                    <TablerForm Model="@loginModel" OnValidSubmit="HandleLogin">
-                        <div class="mb-3">
-                            <label class="form-label">Correo Electrónico</label>
-                            <InputText class="form-control" @bind-Value="loginModel.email"></InputText>
-                            <TabValidationMessage For="(() => loginModel.email)"></TabValidationMessage>
-                        </div>
+            <!-- Formulario de inicio de sesión -->
+            <TablerForm Model="@loginModel" OnValidSubmit="HandleLogin">
+                <div class="mb-3">
+                    <label class="form-label">Correo Electrónico</label>
+                    <InputText class="form-control" @bind-Value="loginModel.email" placeholder="Ingresa tu correo" />
+                    <TabValidationMessage For="(() => loginModel.email)"></TabValidationMessage>
+                </div>
 
-                        <div class="mb-3">
-                            <label class="form-label">Contraseña</label>
-                            <InputText type="password" class="form-control" @bind-Value="loginModel.password"></InputText>
-                            <TabValidationMessage For="(() => loginModel.password)"></TabValidationMessage>
-                        </div>
+                <div class="mb-3">
+                    <label class="form-label">Contraseña</label>
+                    <InputText type="password" class="form-control" @bind-Value="loginModel.password" placeholder="Ingresa tu contraseña" />
+                    <TabValidationMessage For="(() => loginModel.password)"></TabValidationMessage>
+                </div>
 
-                        <div class="text-end mt-4">
-                            <TabBlazor.Button BackgroundColor="TablerColor.Primary" Type="ButtonType.Button" Text="Iniciar Sesión" OnClick="HandleCreateRequest" />
+                <!-- Enlace de "¿Olvidaste tu contraseña?" -->
+                <div class="text-end">
+                    <a href="/forgot-password" style="font-size: 0.9rem; color: #007bff; text-decoration: none;">
+                        ¿Olvidaste tu contraseña?
+                    </a>
+                </div>
 
-                        </div>
-                    </TablerForm>
-                </RowCol>
-
-                <RowCol Xs=12 Md=6>
-                    <img src="img/imagen-login.jpg" alt="Logo IRIS" style="width: auto; height:300px;" />
-                </RowCol>
-            </Row>
-        </ResizeObserver>
-
-
-
-    </CardBody>
-</Card>
-@* </div> *@
-
+                <div class="text-end mt-4">
+                    <TabBlazor.Button BackgroundColor="TablerColor.Primary" Type="ButtonType.Button" Text="Iniciar Sesión" OnClick="HandleCreateRequest" Icon="fa fa-sign-in" Class="px-4" />
+                </div>
+            </TablerForm>
+        </CardBody>
+    </Card>

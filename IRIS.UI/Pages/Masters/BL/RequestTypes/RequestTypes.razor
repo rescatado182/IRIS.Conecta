@@ -24,6 +24,12 @@ else
                 </EditorTemplate>
             </Column>
 
+            <Column Item="RequestTypeVM" Property="e=>e.Path" Title="Path del Servicio" Sortable Searchable Groupable>
+                <EditorTemplate>
+                    <input type="text" class="form-control" @bind-value="@context.Path" />
+                </EditorTemplate>
+            </Column>
+
             <Column Item="RequestTypeVM" Property="e=>e.Department.DepartmentName" Title="Departamento" Sortable Searchable Groupable>
                 <EditorTemplate>
                     <Select Items="departments" @bind-SelectedValue="selectedDepartment" TextExpression="e=> e.DepartmentName.ToString()" ValueExpression="e=> e.Id" Clearable />

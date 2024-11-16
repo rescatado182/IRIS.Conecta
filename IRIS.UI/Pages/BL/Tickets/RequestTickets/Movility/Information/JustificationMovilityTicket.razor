@@ -1,27 +1,36 @@
 ﻿<h3>Justificacion</h3>
-
+<TablerForm Model="@MovilityRequestState.justificationMovility">
 <DataGrid>
-    <Checkbox Label="¿La movilidad está dada en el marco de un convenio? Si/No" @bind-Value="isChecked" Switch />
+        <Checkbox Label="¿La movilidad está dada en el marco de un convenio? Si/No" @bind-Value="MovilityRequestState.justificationMovility.IsAgreement" Switch />
+        <ValidationMessage For="@(() => MovilityRequestState.justificationMovility.IsAgreement)" class="text-danger" />
 </DataGrid>
+
+
 <br />
 
 <DataGrid>
     <DataGridItem Title="Cite el convenio (S/A)">
-        <input type="text" class="form-control" />
+            <input type="text" class="form-control" @bind="MovilityRequestState.justificationMovility.AgreementName" />
+            <ValidationMessage For="@(() => MovilityRequestState.justificationMovility.AgreementName)" class="text-danger" />
     </DataGridItem>
 </DataGrid>
 <br />
+
+
 
 <DataGrid>
     <DataGridItem Title="Objetivo de la movilidad">
-        <textarea type="text" class="form-control"></textarea>
+        <textarea type="text" class="form-control" @bind="MovilityRequestState.justificationMovility.Description"></textarea>
+            <ValidationMessage For="@(() => MovilityRequestState.justificationMovility.Description)" class="text-danger" />
     </DataGridItem>
 </DataGrid>
 <br />
 
 <DataGrid>
+
     <DataGridItem Title="Productos a entregar en retribución">
-        <input type="text" class="form-control" />
+            <input type="text" class="form-control" @bind="MovilityRequestState.justificationMovility.Results" />
+            <ValidationMessage For="@(() => MovilityRequestState.justificationMovility.Results)" class="text-danger" />
     </DataGridItem>
 
     <DataGridItem Title="Fecha entrega compromisos">
@@ -30,7 +39,7 @@
 
 
 </DataGrid>
-
+</TablerForm>
 <br />
 <br />
 

@@ -1,0 +1,118 @@
+﻿@page "/profile"
+@using IRIS.UI.Models.List
+
+
+<Card Size="CardSize.Medium" class="w-50 mx-auto">
+    <CardHeader>
+        <h3>Información del Perfil</h3>
+    </CardHeader>
+            <CardBody>
+                <TablerForm Model="userProfile">
+                    <DataGrid>
+                        <DataGridItem Title="Nombres">
+                            <input type="text" class="form-control" @bind="userProfile.FirstName" />
+                            <ValidationMessage For="@(() => userProfile.FirstName)" class="text-danger" />
+                        </DataGridItem>
+                        <DataGridItem Title="Apellidos">
+                            <input type="text" class="form-control" @bind="userProfile.LastName" />
+                            <ValidationMessage For="@(() => userProfile.LastName)" class="text-danger" />
+                        </DataGridItem>
+                        <DataGridItem Title="Correo Electrónico">
+                            <input type="email" class="form-control" @bind="userProfile.Email" />
+                            <ValidationMessage For="@(() => userProfile.Email)" class="text-danger" />
+                        </DataGridItem>
+                        <DataGridItem Title="Número de Teléfono">
+                            <input type="tel" class="form-control" @bind="userProfile.PhoneNumber" />
+                            <ValidationMessage For="@(() => userProfile.PhoneNumber)" class="text-danger" />
+                        </DataGridItem>
+                        <DataGridItem Title="Número de Documento">
+                            <input type="text" class="form-control" @bind="userProfile.DocumentNumber" />
+                            <ValidationMessage For="@(() => userProfile.DocumentNumber)" class="text-danger" />
+                        </DataGridItem>
+                        <DataGridItem Title="Tipo Documento">
+                            <Select Items="enumDocumentType"
+                                    @bind-SelectedValue="userProfile.DocumentType"
+                                    TextExpression="e => Enum.GetName(typeof(EnumDocumentType), e)"
+                                    NoSelectedText="Seleccione un tipo de documento" />
+                            <ValidationMessage For="@(() => userProfile.DocumentType)" class="text-danger" />
+                        </DataGridItem>
+                        <DataGridItem Title="País de nacimiento">
+                            <Typeahead TItem="CountryVM" TValue="CountryVM" SearchMethod="SearchCountries"
+                                       SelectedValue="userProfile.BornCountry"
+                                       SelectedValueChanged="OnItemSelectedBornCountry"
+                                       Debounce="1" MinimumLength="1" SearchPlaceholderText="Buscar País..."
+                                       ListWidth="100%" SelectedTextExpression="e => e.Name" ShowOptionOnFocus="false">
+                                <ListTemplate Context="itemContext">
+                                    @itemContext.Name
+                                </ListTemplate>
+                            </Typeahead>
+                            <ValidationMessage For="@(() => userProfile.BornCountryId)" class="text-danger" />
+                        </DataGridItem>
+
+                        <DataGridItem Title="Departamento de nacimiento">
+                            <Typeahead TItem="StateVM" TValue="StateVM" SearchMethod="SearchSates" SelectedValue="userProfile.BornState" SelectedValueChanged="OnItemSelectedBornState"
+                                       Debounce="1" MinimumLength=1 SearchPlaceholderText="Buscar Departamento..."
+                                       ListWidth="100%" SelectedTextExpression="e => e.Name" ShowOptionOnFocus="false">
+                                <ListTemplate Context="itemContext">
+                                    @itemContext.Name
+                                </ListTemplate>
+                            </Typeahead>
+                            <ValidationMessage For="@(() => userProfile.BornStateId)" class="text-danger" />
+                        </DataGridItem>
+
+
+
+                        <DataGridItem Title="Ciudad de nacimiento">
+                            <Typeahead TItem="CityVM" TValue="CityVM" SearchMethod="SearchCities"
+                                       SelectedValue="userProfile.BornCity"
+                                       SelectedValueChanged="OnItemSelectedBornCity"
+                                       Debounce="1"
+                                       MinimumLength="1"
+                                       SearchPlaceholderText="Buscar ciudad..."
+                                       ListWidth="100%"
+                                       SelectedTextExpression="e => e.Name"
+                                       ShowOptionOnFocus="false">
+                                <ListTemplate Context="itemContext">
+                                    @itemContext.Name
+                                </ListTemplate>
+                            </Typeahead>
+                            <ValidationMessage For="@(() => userProfile.BornCityId)" class="text-danger" />
+                        </DataGridItem>
+
+
+                        <DataGridItem Title="Departamento de Residencia">
+                            <Typeahead TItem="StateVM" TValue="StateVM" SearchMethod="SearchSatesResidence" SelectedValue="userProfile.StateResidence" SelectedValueChanged="OnItemSelectedResidenceState"
+                                       Debounce="1" MinimumLength=1 SearchPlaceholderText="Buscar Departamento..."
+                                       ListWidth="100%"
+                                       SelectedTextExpression="e => e.Name" ShowOptionOnFocus="false">
+                                <ListTemplate Context="itemContext">
+                                    @itemContext.Name
+                                </ListTemplate>
+                            </Typeahead>
+                            <ValidationMessage For="@(() => userProfile.ResidenceStateId)" class="text-danger" />
+                        </DataGridItem>
+
+                        <DataGridItem Title="Ciudad de Residencia">
+                            <Typeahead TItem="CityVM" TValue="CityVM" SearchMethod="SearchCitiesResidence" SelectedValue="userProfile.CityResidence" SelectedValueChanged="OnItemSelectedResidenceCity"
+                                       Debounce="1" MinimumLength=1 SearchPlaceholderText="Buscar ciudad..."
+                                       ListWidth="100%"
+                                       SelectedTextExpression="e => e.Name" ShowOptionOnFocus="false">
+                                <ListTemplate Context="itemContext">
+                                    @itemContext.Name
+                                </ListTemplate>
+                            </Typeahead>
+                            <ValidationMessage For="@(() => userProfile.ResidenceCityId)" class="text-danger" />
+                        </DataGridItem>
+
+                        <DataGridItem Title="Dirección residencia">
+                            <input type="text" class="form-control" @bind="userProfile.AddressResidence" />
+                            <ValidationMessage For="@(() => userProfile.AddressResidence)" class="text-danger" />
+                        </DataGridItem>
+                    </DataGrid>
+                </TablerForm>
+
+        <div class="text-end mt-4">
+            <TabBlazor.Button BackgroundColor="TablerColor.Primary" Type="ButtonType.Button" Text="Actualizar Datos" OnClick="UpdateProfile" Icon="fa fa-sign-in" Class="px-4" />
+        </div>
+            </CardBody>
+</Card>
