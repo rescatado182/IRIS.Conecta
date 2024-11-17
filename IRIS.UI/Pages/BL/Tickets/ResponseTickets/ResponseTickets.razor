@@ -1,0 +1,48 @@
+﻿
+
+<Card Size="CardSize.Default">
+    <CardHeader>
+        <h3>Información del Ticket</h3>
+    </CardHeader>
+    <CardBody>
+        <DataGrid>
+
+            <DataGridItem Title="Nro Solicitud">
+                <Badge BackgroundColor="TablerColor.Green">@ticket.Id</Badge>
+            </DataGridItem>
+            <DataGridItem Title="Fecha Solictud">
+                <span style="color: darkgray;">@ticket.DateCreated</span>
+            </DataGridItem>
+            <DataGridItem Title="Usuario">
+                <Badge BackgroundColor="TablerColor.Green">@ticket.UserName</Badge>
+            </DataGridItem>
+            <DataGridItem Title="Gestor">
+                <Badge BackgroundColor="TablerColor.Green">@ticket.ManagerUserName</Badge>
+            </DataGridItem>
+            <DataGridItem Title="Estado">
+                <Badge BackgroundColor=@ticket.GetTicketStatusColor() Shape="BadgeShape.Pill">@statusText</Badge>
+            </DataGridItem>
+        </DataGrid>
+    </CardBody>
+</Card>
+<br />
+<br />
+<Card Size="CardSize.Default">
+    <CardHeader>
+        <h3>Respuesta</h3>
+    </CardHeader>
+    <CardBody>
+
+            <DataGrid>
+                <DataGridItem Title="Mensaje de Respuesta">
+                    <textarea type="text" class="form-control" @bind="respuesta.MessageResponse"></textarea>
+                    <ValidationMessage For="@(() => respuesta.MessageResponse)" class="text-danger" />
+                </DataGridItem>
+            </DataGrid>
+        <br />
+        <div class="d-flex justify-content-end">
+            <Button BackgroundColor="TablerColor.Green" OnClick="OnSubmit">Guardar Cambios</Button>
+        </div>
+
+    </CardBody>
+</Card>

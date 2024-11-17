@@ -1,0 +1,72 @@
+﻿@page "/ticket/search"
+
+@using IRIS.UI.Models.List
+@using TabBlazor.Components.Tables
+
+@if (tickets is null)
+{
+    <Loading></Loading>
+    @* <Progress Color="TablerColor.Blue" Indeterminate /> *@
+}
+else
+{
+
+    <Table Item="TicketManageListVM" Items="tickets" PageSize="10"
+           @bind-SelectedItems="selectedOrders" Selectable
+           MultiSelect Hover Responsive>
+        <HeaderTemplate>
+            <strong>Agrupar por</strong>
+        </HeaderTemplate>
+
+        <ChildContent>
+            <Column Item="TicketManageListVM" Property="e => e.TicketStatusColor" Title="ANS" Sortable Searchable Groupable>
+                <Template>
+                    <Badge BackgroundColor="@context.TicketStatusColor" />
+                </Template>
+            </Column>
+            <Column Item="TicketManageListVM" Property="e=>e.Id" Title="Nro Solicitud" Sortable Searchable Groupable>
+            </Column>
+            <Column Item="TicketManageListVM" Property="e=>e.DateCreated" Title="Fecha Solicitud" Sortable Searchable Groupable>
+            </Column>
+            <Column Item="TicketManageListVM" Property="e=>e.FacultyName" Title="Facultad" Sortable Searchable Groupable>
+            </Column>
+            <Column Item="TicketManageListVM" Property="e=>e.Department" Title="Departmento" Sortable Searchable Groupable>
+            </Column>
+            <Column Item="TicketManageListVM" Property="e=>e.RequestName" Title="Tipo de Solicitud" Sortable Searchable Groupable>
+            </Column>
+            <Column Item="TicketManageListVM" Property="e=>e.FullName" Title="Solicitante" Sortable Searchable Groupable>
+            </Column>
+            <Column Item="TicketManageListVM" Property="e=>e.ManagerName" Title="Gestor" Sortable Searchable Groupable>
+            </Column>
+
+            <Column Item="TicketManageListVM" Property="e => e.TicketStatusDisplayName" Title="Estado" Sortable Searchable Groupable>
+                <Template>
+                    <Badge BackgroundColor="@context.GetTicketStatusColor()" Shape="BadgeShape.Pill">
+                        @context.TicketStatusDisplayName
+                    </Badge>
+                </Template>
+            </Column>
+
+            <Column Item="TicketManageListVM" Title="Detalle">
+                <Template Context="ticket">
+
+                    <a href="/ticketDetailsSearch/@ticket.Id" target="_blank" class="btn btn-link">
+
+                        <Icon class="icon" IconType="@TablerIcons.Eye" />
+                    </a>
+
+                </Template>
+            </Column>
+        </ChildContent>
+
+    </Table>
+
+
+    <ul>
+        @foreach (var order in selectedOrders)
+        {
+            <li>@order.Id</li>
+        }
+    </ul>
+
+}

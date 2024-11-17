@@ -48,6 +48,8 @@ namespace IRIS.UI.Models.List
         [Required(ErrorMessage = "*{0} es obligatorio")]
         public bool IsInstitutionalGroup { get; set; }
 
+        public int TicketId { get; set; }
+
         [JsonIgnore]
         public virtual FacultyVM Faculties { get; set; }
 

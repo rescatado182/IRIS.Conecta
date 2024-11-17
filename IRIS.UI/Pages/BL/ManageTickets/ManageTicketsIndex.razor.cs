@@ -22,13 +22,14 @@ namespace IRIS.UI.Pages.BL.ManageTickets
 
         [Inject] private IRepository Repository { get; set; } = null!;
 
-        public List<TicketListVM>? tickets { get; set; }
+        public List<TicketManageListVM>? tickets { get; set; }
+        public List<ManagersListVM> managers { get; set; } 
 
-        private static List<TicketListVM> selectedOrders = new List<TicketListVM>();
+        private static List<TicketManageListVM> selectedOrders = new List<TicketManageListVM>();
+
 
         protected override async Task OnInitializedAsync()
         {
-
 
             await ListAsync();
 
@@ -36,35 +37,77 @@ namespace IRIS.UI.Pages.BL.ManageTickets
 
         private async Task<bool> ListAsync()
         {
+            var responseHttp = await Repository.GetAsync<List<TicketManageListVM>>("/api/Tickets");
 
-
-            // var responseHttp = await Repository.GetAsync<List<TicketListVM>>("/api/Tickets");
-            var responseHttp = await Repository.GetAsync<TicketListVM>("/api/Tickets/1117");
             if (responseHttp.Error)
             {
                 var message = await responseHttp.GetErrorMessageAsync();
-
-
                 return false;
             }
-            var singleTicket = responseHttp.Response;
-            tickets = new List<TicketListVM> { singleTicket };
 
-            //tickets = responseHttp.Response;
+            tickets = responseHttp.Response;
+
+            if (!await GetListManagersAsync())
+                return false;
+
+
+            foreach (var ticket in tickets)
+            {
+                var manager = managers.FirstOrDefault(m => m.Id == ticket.ManagerUserId);
+                if (manager != null)
+                {
+                    ticket.ManagerName = manager.FullName;
+                }
+            }
+
             return true;
         }
 
-        private async Task OnItemEdit(TicketListVM ticket)
+        private async Task<bool> GetListManagersAsync()
+        {
+            var responseHttp = await Repository.GetAsync<List<ManagersListVM>>("/api/Users/GetManagers");
+
+            if (responseHttp.Error)
+            {
+                var message = await responseHttp.GetErrorMessageAsync();
+                return false;
+            }
+
+            managers = responseHttp.Response;
+
+            return true;
+        }
+
+        private string GetTicketStatusColor(TicketManageListVM ticket)
+        {
+            var daysDiff = (DateTime.Now - ticket.DateCreated).Days;
+
+            // Determine the color based on the difference in days
+            if (daysDiff <= 1)
+            {
+                return TablerColor.Green.ToString();
+            }
+            else if (daysDiff <= 3)
+            {
+                return TablerColor.Warning.ToString();
+            }
+            else
+            {
+                return TablerColor.Red.ToString();
+            }
+        }
+
+        private async Task OnItemEdit(TicketManageListVM ticket)
         {
             await ShowDialog($"Edited order {ticket.Id}");
         }
 
-        private async Task OnItemAdd(TicketListVM ticket)
+        private async Task OnItemAdd(TicketManageListVM ticket)
         {
             await ShowDialog($"Added order {ticket.Id}");
         }
 
-        private async Task OnItemDelete(TicketListVM ticket)
+        private async Task OnItemDelete(TicketManageListVM ticket)
         {
             await ShowDialog($"Order deleted {ticket.Id}");
         }
@@ -80,15 +123,13 @@ namespace IRIS.UI.Pages.BL.ManageTickets
             });
         }
 
-        private Task<TicketListVM> AddItem()
+        private Task<TicketManageListVM> AddItem()
         {
-            return Task.FromResult(new TicketListVM
+            return Task.FromResult(new TicketManageListVM
             {
                 Id = 1, // o cualquier otro valor que desees asignar
-                Title = "Nuevo ticket",
-                Description = "Descripción del nuevo ticket",
                 Status = "Open", // Asigna el estado correspondiente
-                RequestTypeId = 1 // Asigna el ID del tipo de solicitud correspondiente
+
             });
         }
 

@@ -1,9 +1,7 @@
 ﻿@using TabBlazor
 
 
-<Navbar Background="NavbarBackground.Light" Direction="NavbarDirection.Vertical" NavLinkMatch="Microsoft.AspNetCore.Components.Routing.NavLinkMatch.All">
-
-
+<Navbar Background="NavbarBackground.Dark" Direction="NavbarDirection.Vertical" NavLinkMatch="Microsoft.AspNetCore.Components.Routing.NavLinkMatch.All">
     <a href="https://www.itm.edu.co" class="navbar-brand navbar-brand-autodark">
         <img src="logo/IrisLogo.png" alt="Tabler" class="navbar-brand-image me-2">
         <h2 class="text-secondary">IRIS CONECTA</h2>
@@ -44,14 +42,13 @@
                 <div class="dropdown-menu-columns">
                     <div class="dropdown-menu-column">
                         <NavbarMenuItem Text="Crear" Href="/ticket/selection" />
-                        <NavbarMenuItem Text="Consultar" Href="/createticket/movility" />
+                        <NavbarMenuItem Text="Consultar" Href="/ticket/search" />
                         <NavbarMenuItem Text="Bandeja" Href="/managesTickets" />
 
                     </div>
                 </div>
             </SubMenu>
         </NavbarMenuItem>
-        <NavbarMenuItem Text="Login" Href="/login" />
-        <NavbarMenuItem Text="Bandeja" Href="/managesTickets" />
+
     </NavbarMenu>
 </Navbar>

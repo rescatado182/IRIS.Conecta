@@ -4,6 +4,7 @@ namespace IRIS.UI.Models.Save
 {
     public class AcademyDataSaveVM
     {
+        public int id { get; set; }
         public AcademicDataDto academicDataDto { get; set; }
 
         public class AcademicDataDto

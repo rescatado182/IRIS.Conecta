@@ -1,4 +1,5 @@
-﻿using IRIS.UI.Helpers;
+﻿using DocumentFormat.OpenXml.Spreadsheet;
+using IRIS.UI.Helpers;
 using IRIS.UI.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -16,6 +17,20 @@ namespace IRIS.UI.AuthenticationProviders
         private readonly HttpClient _httpClient;
         private readonly string _tokenKey;
         private readonly AuthenticationState _anonimous;
+        public string UserId
+        {
+            get
+            {
+                var token = _jSRuntime.GetLocalStorage(_tokenKey).Result;
+                if (token is null)
+                {
+                    return string.Empty; // o algún valor predeterminado si no está autenticado
+                }
+
+                var claims = ParseClaimsFromJWT(token.ToString());
+                return GetUserIdFromClaims(claims);
+            }
+        }
 
         public AuthenticationProviderJWT(IJSRuntime jSRuntime, HttpClient httpClient)
         {
@@ -59,13 +74,35 @@ namespace IRIS.UI.AuthenticationProviders
             return nameClaim?.Value ?? "Usuario";
         }
 
+        private string GetUserIdFromClaims(IEnumerable<Claim> claims)
+        {
+            // Asume que tienes un claim con el nombre del usuario
+            var userIdClaim = claims.FirstOrDefault(c => c.Type == "uid");
+
+            return userIdClaim?.Value ?? "";
+        }
+
+        public async Task<string> GetUserIdAsync()
+        {
+            var token = await _jSRuntime.GetLocalStorage(_tokenKey);
+            if (token == null)
+            {
+                return string.Empty; // o algún valor predeterminado si no está autenticado
+            }
+
+            var claims = ParseClaimsFromJWT(token.ToString());
+            return GetUserIdFromClaims(claims);
+        }
+
         private AuthenticationState BuildAuthenticationState(string token)
         {
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", token);
             var claims = ParseClaimsFromJWT(token);
             var userName = GetUserNameFromClaims(claims);
+;
 
             claims = claims.Append(new Claim(ClaimTypes.Name, userName));
+
 
             // Guardamos el nombre de usuario en el estado
             var identity = new ClaimsIdentity(claims, "jwt"); 

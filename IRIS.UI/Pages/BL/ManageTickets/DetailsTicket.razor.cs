@@ -1,8 +1,11 @@
+using DocumentFormat.OpenXml.ExtendedProperties;
 using DocumentFormat.OpenXml.Spreadsheet;
+using DocumentFormat.OpenXml.Wordprocessing;
 using IRIS.Frontend.Repositories;
 using IRIS.UI.Models;
 using IRIS.UI.Models.List;
 using IRIS.UI.Pages.BL.Actions;
+using IRIS.UI.Pages.BL.Tickets.ResponseTickets;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Options;
 using TabBlazor;
@@ -17,11 +20,28 @@ namespace IRIS.UI.Pages.BL.ManageTickets
         [Inject] TablerService TablerService { get; set; }
         [Inject] private IRepository Repository { get; set; } = null!;
 
+        [Inject] private IModalService ModalService { get; set; } = null!;
+
         [Inject] IOffcanvasService offcanvasService { get; set; }
 
-        private TicketsStatus CurrentStatus = TicketsStatus.Open;
+        private string CurrentStatus;
 
-        public TicketListVM ticket { get; set; }
+        private bool IsActionPanelVisible { get; set; } = false;
+
+        private void ToggleActionPanel()
+        {
+            IsActionPanelVisible = !IsActionPanelVisible;
+        }
+
+        private string statusText { get; set; } = null!;
+
+        public List<ManagersListVM> managers { get; set; }
+        public GetTicketbyIdVM ticket { get; set; } = null!;
+
+        public PersonalDataDetailVM personalDataTicket { get; set; } = null!;
+
+        public AcademyDataDetailVM academicDataTicket { get; set; } = null!;
+
 
         [Parameter] public int ticketId { get; set; }
 
@@ -29,13 +49,17 @@ namespace IRIS.UI.Pages.BL.ManageTickets
         {
 
             await GetDetailTicket();
+            await GetListPersonalDataTicketAsync();
+            await GetListAcademicDataTicketAsync();
 
         }
 
-        private async Task<bool> GetDetailTicket()
+
+
+        public async Task<bool> GetDetailTicket()
         {
 
-            var responseHttp = await Repository.GetAsync<TicketListVM>($"/api/Tickets/{ticketId}");
+            var responseHttp = await Repository.GetAsync<GetTicketbyIdVM>($"/api/Tickets/{ticketId}");
             if (responseHttp.Error)
             {
                 var message = await responseHttp.GetErrorMessageAsync();
@@ -43,51 +67,198 @@ namespace IRIS.UI.Pages.BL.ManageTickets
 
                 return false;
             }
+
             ticket = responseHttp.Response;
+            statusText = ticket.StatusDisplayName;
+
+            if (!await GetListManagersAsync())
+                return false;
+            if (!await GetListUserNameAsync())
+                return false;
 
 
-            //tickets = responseHttp.Response;
             return true;
         }
 
+        private async Task<bool> GetListManagersAsync()
+        {
+            var responseHttp = await Repository.GetAsync<List<ManagersListVM>>("/api/Users/GetManagers");
+
+            if (responseHttp.Error)
+            {
+                var message = await responseHttp.GetErrorMessageAsync();
+                return false;
+            }
+
+            managers = responseHttp.Response;
+            var manager = managers.FirstOrDefault(m => m.Id == ticket.ManagerUserId);
+            if (manager != null)
+            {
+                ticket.ManagerUserName = manager.FullName;
+            }
+
+            return true;
+        }
+
+        private async Task<bool> GetListUserNameAsync()
+        {
+            var responseHttp = await Repository.GetAsync<GetUserByUserIdVM>($"/api/Users/GetUserByUserId/{ticket.UserId}");
+            if (responseHttp.Error)
+            {
+                var message = await responseHttp.GetErrorMessageAsync();
+                return false;
+            }
+
+            var user = responseHttp.Response;
+            ticket.UserName = user.FullName;
+            return true;
+        }
+
+        private async Task<bool> GetListPersonalDataTicketAsync()
+        {
+            var responseHttp = await Repository.GetAsync<PersonalDataDetailVM>($"/api/personaldata/{ticket.Id}");
+            if (responseHttp.Error || responseHttp.Response == null)
+            {
+                var message = await responseHttp.GetErrorMessageAsync();
+                return false;
+            }
+
+            personalDataTicket = responseHttp.Response;
+            return true;
+        }
+
+        private async Task<bool> GetListAcademicDataTicketAsync()
+        {
+            var responseHttp = await Repository.GetAsync<AcademyDataDetailVM>($"/api/academicdata/{ticket.Id}");
+
+
+            if (responseHttp.Error || responseHttp.Response == null)
+            {
+                var message = await responseHttp.GetErrorMessageAsync();
+                return false;
+            }
+
+            academicDataTicket = responseHttp.Response;
+            return true;
+        }
+
+
+
+
         private TabBlazor.OffcanvasOptions options = new()
         {
+            WrapperCssClass = "test-class",
             CloseOnEsc = true,
             CloseOnClickOutside = true,
             Position = TabBlazor.OffcanvasPosition.End
         };
 
-        private async Task OpenCommentOffcanvas()
+        private async Task RefreshTicketDetails()
+        {
+            await GetDetailTicket();
+        }
+
+        private async Task SendNotificationTicket()
         {
             // Define the component `CreateComments` and configure its properties
-            var component = new RenderComponent<CreateComments>()
+            var component = new RenderComponent<SendNotificator>()
                 .Set(e => e.OnSubmit, EventCallback.Factory.Create<string>(this, SubmitCommentAsync));
 
             // Open the Offcanvas with the comment form
             await offcanvasService.ShowAsync("Comentario para el Ticket", component, options);
         }
 
-        
+        public TablerColor GetTicketStatusColor()
+        {
+            return ticket.Status.ToLower() switch
+            {
+                "open" => TablerColor.Red,
+                "inprocess" => TablerColor.Purple,
+                "cancelled" => TablerColor.Orange,
+                "closed" => TablerColor.Green,
+                "resolved" => TablerColor.Yellow,
+                _ => TablerColor.Pink
+            };
+        }
 
-        private async Task OpenStatusOffcanvas()
+
+        private async Task EscalateTicket()
         {
             // Define the component `ChangeStatus` and configure its properties
+            var component = new RenderComponent<EscalateTicket>()
+                .Set(e => e.ticketId, ticketId)
+                .Set<string>(e => e.userId, ticket.UserId)
+                .Set<string>(e => e.CurrentStatus, ticket.Status)
+                .Set<string>(e => e.ManagerUserId, ticket.ManagerUserId)
+                .Set(e => e.OnClose, EventCallback.Factory.Create(this, RefreshTicketDetails));
+
+            var result = await ModalService.ShowAsync("Escalar la Solicitud", component, new ModalOptions { Size = ModalSize.Medium });
+
+
+        }
+
+        private async Task TrackingTicket()
+        {
+            // Define the component `ChangeStatus` and configure its properties
+            var component = new RenderComponent<ViewTrackingTicket>();
+            //.Set(e => e.ticketId, ticketId)
+            //.Set<string>(e => e.userId, ticket.UserId)
+            //.Set<string>(e => e.CurrentStatus, ticket.Status)
+            //.Set<string>(e => e.ManagerUserId, ticket.ManagerUserId)
+            //.Set(e => e.OnClose, EventCallback.Factory.Create(this, RefreshTicketDetails));
+
+            var result = await ModalService.ShowAsync("Tracking Solicitud", component, new ModalOptions { Size = ModalSize.Medium });
+
+
+        }
+
+        private async Task SimilarAnswer()
+        {
+            // Define the component `ChangeStatus` and configure its properties
+            var component = new RenderComponent<SimilarAnswerTicket>();
+            //.Set(e => e.ticketId, ticketId)
+            //.Set<string>(e => e.userId, ticket.UserId)
+            //.Set<string>(e => e.CurrentStatus, ticket.Status)
+            //.Set<string>(e => e.ManagerUserId, ticket.ManagerUserId)
+            //.Set(e => e.OnClose, EventCallback.Factory.Create(this, RefreshTicketDetails));
+
+            var result = await ModalService.ShowAsync("Tracking Solicitud", component, new ModalOptions { Size = ModalSize.Medium });
+
+
+        }
+
+        private async Task ChangeStatusTicket()
+        {
+
+
             var component = new RenderComponent<ChangeStatus>()
-                .Set(e => e.CurrentStatus, CurrentStatus)
-                .Set(e => e.OnStatusChanged, EventCallback.Factory.Create<TicketsStatus>(this, ChangeStatusAsync));
+                .Set<string>(e => e.CurrentStatus, ticket.Status)
+                .Set(e => e.ticketId, ticketId)
+                .Set<string>(e => e.userId, ticket.UserId)
+                .Set<string>(e => e.ManagerUserId, ticket.ManagerUserId)
+                .Set(e => e.OnClose, EventCallback.Factory.Create(this, RefreshTicketDetails));
 
-            // Open the Offcanvas with the status form
-            await offcanvasService.ShowAsync("Cambiar estado del Ticket", component, options);
+            var result = await ModalService.ShowAsync("Cambiar Estado de la Solicitud", component, new ModalOptions { Size = ModalSize.Medium });
+
+
+
+
         }
 
-        private void UpdateStatus(TicketsStatus newStatus)
+        private async Task ResponseTicket()
         {
-            CurrentStatus = newStatus;
-            // Aquí puedes agregar lógica para actualizar el estado en el backend o en la base de datos
-        }
-        private void ChangeStatusAsync()
-        {
-            throw new NotImplementedException();
+
+
+            var component = new RenderComponent<ResponseTickets>()
+                .Set(e => e.ticket, ticket)
+                .Set<string>(e => e.statusText, statusText)
+                .Set(e => e.OnClose, EventCallback.Factory.Create(this, RefreshTicketDetails));
+
+            var result = await ModalService.ShowAsync("Responder Solicitud", component, new ModalOptions { Size = ModalSize.Maximized });
+
+
+
+
         }
 
         private async Task SubmitCommentAsync(string comment)

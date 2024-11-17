@@ -1,9 +1,9 @@
-﻿<h3>Tickets</h3>
-
+﻿
 @page "/managesTickets"
 @if (tickets is null)
 {
-    <Progress Color="TablerColor.Blue" Indeterminate />
+    <Loading></Loading>
+    @* <Progress Color="TablerColor.Blue" Indeterminate /> *@
 }
 else{
 
@@ -12,30 +12,64 @@ else{
 @using TabBlazor.Components.Tables
 
 
-    <Table Item="TicketListVM" Items="tickets" PageSize="10"
+    <Table Item="TicketManageListVM" Items="tickets" PageSize="10"
            @bind-SelectedItems="selectedOrders" Selectable
            MultiSelect Hover Responsive>
         <HeaderTemplate>
-            <strong>tickets</strong>
+            <strong>Agrupar por</strong>
         </HeaderTemplate>
 
         <ChildContent>
-            <Column Item="TicketListVM" Property="e=>e.Id" Title="Id" Sortable Searchable Groupable>
-                <EditorTemplate>
+            <Column Item="TicketManageListVM" Property="e => e.TicketStatusColor" Title="ANS" Sortable Searchable Groupable>
+                <Template>
+                    <Badge BackgroundColor="@context.TicketStatusColor" />
+                </Template>
+            </Column>
+            <Column Item="TicketManageListVM" Property="e=>e.Id" Title="Nro Solicitud" Sortable Searchable Groupable>
+@*                 <EditorTemplate>
                     <input type="text" class="form-control" @bind-value="@context.Id" />
-                </EditorTemplate>
+                </EditorTemplate> *@
             </Column>
-            <Column Item="TicketListVM" Property="e=>e.RequestTypeId" Title="Tipo de Solicitud" Sortable Searchable Groupable>
-                <EditorTemplate>
-                    <input type="text" class="form-control" @bind-value="@context.RequestTypeId" />
-                </EditorTemplate>
+            <Column Item="TicketManageListVM" Property="e=>e.DateCreated" Title="Fecha Solicitud" Sortable Searchable Groupable>
+@*                 <EditorTemplate>
+                    <input type="text" class="form-control" @bind-value="@context.DateCreated" />
+                </EditorTemplate> *@
             </Column>
-            <Column Item="TicketListVM" Property="e=>e.Status" Title="Estado" Sortable Searchable Groupable>
-                <EditorTemplate>
-                    <Select Items="EnumHelper.GetList<TicketsStatus>()" @bind-SelectedValue="@context.Status" TextExpression="e=> e.ToString()" ValueExpression="e=> e" Clearable />
-                </EditorTemplate>
+            <Column Item="TicketManageListVM" Property="e=>e.FacultyName" Title="Facultad" Sortable Searchable Groupable>
+@*                 <EditorTemplate>
+                    <input type="text" class="form-control" @bind-value="@context.FacultyName" />
+                </EditorTemplate> *@
             </Column>
-            <Column Item="TicketListVM" Title="Detalle">
+            <Column Item="TicketManageListVM" Property="e=>e.Department" Title="Departmento" Sortable Searchable Groupable>
+@*                 <EditorTemplate>
+                    <input type="text" class="form-control" @bind-value="@context.Department" />
+                </EditorTemplate> *@
+            </Column>
+            <Column Item="TicketManageListVM" Property="e=>e.RequestName" Title="Tipo de Solicitud" Sortable Searchable Groupable>
+@*                 <EditorTemplate>
+                    <input type="text" class="form-control" @bind-value="@context.RequestName" />
+                </EditorTemplate> *@
+            </Column>
+            <Column Item="TicketManageListVM" Property="e=>e.FullName" Title="Solicitante" Sortable Searchable Groupable>
+@*                 <EditorTemplate>
+                    <input type="text" class="form-control" @bind-value="@context.FullName" />
+                </EditorTemplate> *@
+            </Column>
+            <Column Item="TicketManageListVM" Property="e=>e.ManagerName" Title="Gestor" Sortable Searchable Groupable>
+ @*                <EditorTemplate>
+                    <input type="text" class="form-control" @bind-value="@context.ManagerName" />
+                </EditorTemplate> *@
+            </Column>
+
+                <Column Item="TicketManageListVM" Property="e => e.TicketStatusDisplayName" Title="Estado" Sortable Searchable Groupable>
+                    <Template>
+                    <Status BackgroundColor="@context.GetTicketStatusColor()">
+                            @context.TicketStatusDisplayName
+                        </Status>
+                    </Template>
+                </Column>
+           
+            <Column Item="TicketManageListVM" Title="Detalle">
                 <Template Context="ticket">
 
                     <a href="/ticketDetails/@ticket.Id" target="_blank" class="btn btn-link">
@@ -53,7 +87,7 @@ else{
     <ul>
         @foreach (var order in selectedOrders)
         {
-            <li>@order.Id, @order.EventName</li>
+            <li>@order.Id</li>
         }
     </ul>
 

@@ -1,7 +1,10 @@
+using IRIS.Frontend.Repositories;
 using IRIS.UI.AuthenticationProviders;
+using IRIS.UI.Models.List;
 using IRIS.UI.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
+using System.Net.Sockets;
 using TabBlazor;
 
 namespace IRIS.UI.Shared
@@ -14,8 +17,13 @@ namespace IRIS.UI.Shared
 
         [Inject] private NavigationManager NavigationManager { get; set; } = null!;
 
+        [Inject] public AuthenticationProviderJWT AuthenticationProviderJWT { get; set; }
+
         [Inject] private ILoginService LoginService { get; set; } = null!;
         [CascadingParameter] private Task<AuthenticationState> AuthenticationStateTask { get; set; } = null!;
+        public string userId = string.Empty;
+
+        public GetUserByUserIdVM userData { get; set; } = null!;
 
         protected override async Task OnInitializedAsync()
         {
@@ -29,6 +37,23 @@ namespace IRIS.UI.Shared
                 Console.WriteLine(userName);
             }
 
+            userId = await AuthenticationProviderJWT.GetUserIdAsync();
+            await GetNameUser();
+        }
+
+
+        [Inject] private IRepository Repository { get; set; } = null!;
+
+        private async Task<bool> GetNameUser()
+        {
+            var responseHttp = await Repository.GetAsync<GetUserByUserIdVM>($"/api/Users/GetUserByUserId/{userId}");
+            if (responseHttp.Error)
+            {
+                var message = await responseHttp.GetErrorMessageAsync();
+                return false;
+            }
+            userData = responseHttp.Response;
+            return true;
         }
 
         private void ShowProfileMenu()

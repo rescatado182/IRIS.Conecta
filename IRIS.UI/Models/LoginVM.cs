@@ -6,10 +6,10 @@ namespace IRIS.UI.Models
     {
             public string id { get; set; }
 
-            [Required(ErrorMessage = "Correo electronico es requerido")]
+            [Required(ErrorMessage = "Ingresa tu correo electronico")]
             public string email { get; set; }
 
-            [Required(ErrorMessage = "Contraseña es requerido")]
+            [Required(ErrorMessage = "Ingresa tu contraseña")]
             public string? password { get; set; }
 
              public string token { get; set; }

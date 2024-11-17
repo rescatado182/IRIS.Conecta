@@ -2,7 +2,7 @@
 
 namespace IRIS.UI.Models
 {
-    public enum EnumRequirementsTypes
+    public enum EnumTicketRequirements
     {
         [Display(Name = "Transporte Aéreo")]
         AirTransport = 1, 

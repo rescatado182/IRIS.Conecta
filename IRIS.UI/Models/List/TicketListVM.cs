@@ -20,7 +20,7 @@
         public string ExternalInstitution { get; set; }
         public DateOnly StartDate { get; set; } // Cambia a DateTime si lo manejas así
         public DateOnly EndDate { get; set; } // Cambia a DateTime si lo manejas así
-        public string TicketRequirements { get; set; }
+       // public string TicketRequirements { get; set; }
         public decimal Total { get; set; } // Asumiendo que lo manejas como decimal
     }
 }
