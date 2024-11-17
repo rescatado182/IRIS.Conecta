@@ -14,10 +14,10 @@
                 <span style="color: darkgray;">@ticket.DateCreated</span>
             </DataGridItem>
             <DataGridItem Title="Usuario">
-                <Badge BackgroundColor="TablerColor.Green">@ticket.User</Badge>
+                <Badge BackgroundColor="TablerColor.Green">@ticket.UserName</Badge>
             </DataGridItem>
             <DataGridItem Title="Gestor">
-                <Badge BackgroundColor="TablerColor.Green">@ticket.ManagerUser</Badge>
+                <Badge BackgroundColor="TablerColor.Green">@ticket.ManagerUserName</Badge>
             </DataGridItem>
             <DataGridItem Title="Estado">
                 <Badge BackgroundColor=@ticket.GetTicketStatusColor() Shape="BadgeShape.Pill">@statusText</Badge>

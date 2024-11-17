@@ -1,16 +1,15 @@
-﻿
-@page "/managesTickets"
+﻿@page "/ticket/search"
+
+@using IRIS.UI.Models.List
+@using TabBlazor.Components.Tables
+
 @if (tickets is null)
 {
     <Loading></Loading>
     @* <Progress Color="TablerColor.Blue" Indeterminate /> *@
 }
-else{
-
-
-@using IRIS.UI.Models.List
-@using TabBlazor.Components.Tables
-
+else
+{
 
     <Table Item="TicketManageListVM" Items="tickets" PageSize="10"
            @bind-SelectedItems="selectedOrders" Selectable
@@ -26,53 +25,32 @@ else{
                 </Template>
             </Column>
             <Column Item="TicketManageListVM" Property="e=>e.Id" Title="Nro Solicitud" Sortable Searchable Groupable>
-@*                 <EditorTemplate>
-                    <input type="text" class="form-control" @bind-value="@context.Id" />
-                </EditorTemplate> *@
             </Column>
             <Column Item="TicketManageListVM" Property="e=>e.DateCreated" Title="Fecha Solicitud" Sortable Searchable Groupable>
-@*                 <EditorTemplate>
-                    <input type="text" class="form-control" @bind-value="@context.DateCreated" />
-                </EditorTemplate> *@
             </Column>
             <Column Item="TicketManageListVM" Property="e=>e.FacultyName" Title="Facultad" Sortable Searchable Groupable>
-@*                 <EditorTemplate>
-                    <input type="text" class="form-control" @bind-value="@context.FacultyName" />
-                </EditorTemplate> *@
             </Column>
             <Column Item="TicketManageListVM" Property="e=>e.Department" Title="Departmento" Sortable Searchable Groupable>
-@*                 <EditorTemplate>
-                    <input type="text" class="form-control" @bind-value="@context.Department" />
-                </EditorTemplate> *@
             </Column>
             <Column Item="TicketManageListVM" Property="e=>e.RequestName" Title="Tipo de Solicitud" Sortable Searchable Groupable>
-@*                 <EditorTemplate>
-                    <input type="text" class="form-control" @bind-value="@context.RequestName" />
-                </EditorTemplate> *@
             </Column>
             <Column Item="TicketManageListVM" Property="e=>e.FullName" Title="Solicitante" Sortable Searchable Groupable>
-@*                 <EditorTemplate>
-                    <input type="text" class="form-control" @bind-value="@context.FullName" />
-                </EditorTemplate> *@
             </Column>
             <Column Item="TicketManageListVM" Property="e=>e.ManagerName" Title="Gestor" Sortable Searchable Groupable>
- @*                <EditorTemplate>
-                    <input type="text" class="form-control" @bind-value="@context.ManagerName" />
-                </EditorTemplate> *@
             </Column>
 
-                <Column Item="TicketManageListVM" Property="e => e.TicketStatusDisplayName" Title="Estado" Sortable Searchable Groupable>
-                    <Template>
-                    <Status BackgroundColor="@context.GetTicketStatusColor()">
-                            @context.TicketStatusDisplayName
-                        </Status>
-                    </Template>
-                </Column>
-           
+            <Column Item="TicketManageListVM" Property="e => e.TicketStatusDisplayName" Title="Estado" Sortable Searchable Groupable>
+                <Template>
+                    <Badge BackgroundColor="@context.GetTicketStatusColor()" Shape="BadgeShape.Pill">
+                        @context.TicketStatusDisplayName
+                    </Badge>
+                </Template>
+            </Column>
+
             <Column Item="TicketManageListVM" Title="Detalle">
                 <Template Context="ticket">
 
-                    <a href="/ticketDetails/@ticket.Id" target="_blank" class="btn btn-link">
+                    <a href="/ticketDetailsSearch/@ticket.Id" target="_blank" class="btn btn-link">
 
                         <Icon class="icon" IconType="@TablerIcons.Eye" />
                     </a>

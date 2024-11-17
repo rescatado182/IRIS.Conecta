@@ -41,21 +41,42 @@
 
 <body>
     <div id="app">
-        @if (isImageLoaded)
-        {
-        <img src="logo/IrisLogoGris.png" alt="Image" class="image" />
-        }
-        else
-        {
-        <div class="loading-container">
-            <svg class="loading-progress">
-                <circle r="40%" cx="50%" cy="50%" />
-                <circle r="40%" cx="50%" cy="50%" />
-            </svg>
-            <div class="loading-progress-text">Loading...</div>
-        </div>
-        }
+        <img src="logo/loading2.gif" alt="Cargando..." class="loading-gif2" />
     </div>
+    <style>
+        /* Estilo específico para la imagen dentro de #app */
+        #app .loading-gif2 {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            background-color: rgba(255, 255, 255);
+            transform: translate(-50%, -50%); /* Centra la imagen */
+            width: 30%; /* Ajusta el tamaño según sea necesario */
+            height: auto; /* Mantiene la proporción de la imagen */
+            z-index: 9999; /* Asegura que esté al frente */
+        }
+    </style>
+
+    <!--<style>
+        .app {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .loading-gif2 {
+            width: 30%; /* Ajusta el tamaño según sea necesario */
+            height: auto;
+        }
+    </style>-->
+
 
 
     <script>

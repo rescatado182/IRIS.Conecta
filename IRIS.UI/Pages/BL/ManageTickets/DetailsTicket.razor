@@ -19,8 +19,10 @@ else{
                 <DropdownMenu>
                     <DropdownItem OnClick="ChangeStatusTicket">Cambiar Estado</DropdownItem>
                     <DropdownItem OnClick="SendNotificationTicket">Enviar Notificación</DropdownItem>
+                    <DropdownItem OnClick="TrackingTicket">Ver Tracking Solicitud</DropdownItem>
                     <DropdownItem OnClick="EscalateTicket">Escalar</DropdownItem>
                     <DropdownItem OnClick="ResponseTicket">Responder</DropdownItem>
+                    <DropdownItem OnClick="SimilarAnswer">Ver Respuestas Similares</DropdownItem>
                 </DropdownMenu>
             </DropdownTemplate>
 
@@ -46,16 +48,14 @@ else{
                         <span style="color: darkgray;">@ticket.DateCreated</span>
                     </DataGridItem>
                     <DataGridItem Title="Usuario">
-                        <Badge BackgroundColor="TablerColor.Green">@ticket.User</Badge>
+                    <Badge BackgroundColor="TablerColor.Green">@ticket.UserName</Badge>
                     </DataGridItem>
                     <DataGridItem Title="Gestor">
-                        <Badge BackgroundColor="TablerColor.Green">@ticket.ManagerUser</Badge>
+                        <Badge BackgroundColor="TablerColor.Green">@ticket.ManagerUserName</Badge>
                     </DataGridItem>
                     <DataGridItem Title="Estado">
-                        <Badge BackgroundColor=@ticket.GetTicketStatusColor() Shape="BadgeShape.Pill">@statusText</Badge>
+                    <Status BackgroundColor=@ticket.GetTicketStatusColor()>@statusText</Status>
                     </DataGridItem>
-
-
 
 
                 </DataGrid>
@@ -69,18 +69,18 @@ else{
             <CardBody>
                     <DataGrid>
 
-                        <DataGridItem Title="Nombre completo">@ticket.FullName</DataGridItem>
-                        <DataGridItem Title="Documento Identidad">@ticket.DocumentNumber</DataGridItem>
-                        <DataGridItem Title="Tipo Documento">@ticket.DocumentType</DataGridItem>
-                        <DataGridItem Title="País de nacimiento">@ticket.BornCountry</DataGridItem>
-                        <DataGridItem Title="Departamento de nacimiento">@ticket.BornState</DataGridItem>
-                        <DataGridItem Title="Ciudad de nacimiento">@ticket.BornCity</DataGridItem>
-                        <DataGridItem Title="Departamento de residencia">@ticket.ResidenceState</DataGridItem>
-                        <DataGridItem Title="Ciudad de residencia">@ticket.ResidenceCity</DataGridItem>
-                        <DataGridItem Title="Dirección residencia">@ticket.BornCity</DataGridItem>
-                        <DataGridItem Title="Correo personal">@ticket.Email</DataGridItem>
-                        <DataGridItem Title="Teléfono fijo">@ticket.Phone</DataGridItem>
-                        <DataGridItem Title="Teléfono celular">@ticket.Cellphone</DataGridItem>
+                <DataGridItem Title="Nombre completo">@personalDataTicket.FullName</DataGridItem>
+                <DataGridItem Title="Documento Identidad">@personalDataTicket.DocumentNumber</DataGridItem>
+                <DataGridItem Title="Tipo Documento">@personalDataTicket.DocumentType</DataGridItem>
+                <DataGridItem Title="País de nacimiento">@personalDataTicket.BornCityId</DataGridItem>
+                <DataGridItem Title="Departamento de nacimiento">@personalDataTicket.BornStateId</DataGridItem>
+                <DataGridItem Title="Ciudad de nacimiento">@personalDataTicket.BornCityId</DataGridItem>
+                <DataGridItem Title="Departamento de residencia">@personalDataTicket.ResidenceStateId</DataGridItem>
+                <DataGridItem Title="Ciudad de residencia">@personalDataTicket.ResidenceCityId</DataGridItem>
+                <DataGridItem Title="Dirección residencia">@personalDataTicket.AddressResidence</DataGridItem>
+                <DataGridItem Title="Correo personal">@personalDataTicket.PersonalEmail</DataGridItem>
+                <DataGridItem Title="Teléfono fijo">@personalDataTicket.Phone</DataGridItem>
+                <DataGridItem Title="Teléfono celular">@personalDataTicket.Cellphone</DataGridItem>
 
 
                     </DataGrid>
@@ -88,86 +88,76 @@ else{
         </Card>
         <br />
         <Card Size="CardSize.Default">
-            <CardHeader>
-                <h3></h3>
+                    <CardHeader>
+                <h3>Datos Acádemicos</h3>
             </CardHeader>
             <CardBody>
-                <DataGrid>
+                    <DataGrid>
 
-                    <DataGridItem Title="Title">
-                        @ticket.Title
-                    </DataGridItem>
 
-                    <DataGridItem Title="Event Name">
-                        @ticket.EventName
-                    </DataGridItem>
-                    <DataGridItem Title="Request Type">
-                        <Badge BackgroundColor="TablerColor.Indigo">@ticket.RequestTypeId</Badge>
-                    </DataGridItem>
+                <DataGridItem Title="Programa">@academicDataTicket.ProgramId</DataGridItem>
+                <DataGridItem Title="Proyecto de investigación (S/A)">@academicDataTicket.ResearchProject</DataGridItem>
+                <DataGridItem Title="Promedio crédito">@academicDataTicket.AverageCredit</DataGridItem>
+                 <DataGridItem Title="Tipo de formación">@academicDataTicket.ProgramType.ToString()</DataGridItem> 
+                <DataGridItem Title="G. de investigación/Semillero (S/A)">@academicDataTicket.ResearchGroup</DataGridItem>
+                <DataGridItem Title="¿Pertenece a algún grupo cultural o deportivo institucional?">@(academicDataTicket.IsInstitutionalGroup ? "Sí" : "No")</DataGridItem>
 
-                    <DataGridItem Title="Description">
-                        <span style="color: darkgray;">@ticket.Description</span>
-                    </DataGridItem>
 
-                    <DataGridItem Title="Country">
-                        <span>@ticket.Country</span>
-                    </DataGridItem>
-
-                    <DataGridItem Title="City">
-                        <span>@ticket.City</span>
-                    </DataGridItem>
-
-                    <DataGridItem Title="Phone">
-                        <span>@ticket.Phone</span>
-                    </DataGridItem>
-
-                    <DataGridItem Title="Contact Data">
-                        @ticket.ContactData
-                    </DataGridItem>
-
-                    <DataGridItem Title="External Institution">
-                        @ticket.ExternalInstitution
-                    </DataGridItem>
-
-    @*                 <DataGridItem Title="Start Date">
-                        <Badge BackgroundColor="TablerColor.Blue">@ticket.StartDate.ToString("yyyy-MM-dd")</Badge>
-                    </DataGridItem>
-
-                    <DataGridItem Title="End Date">
-                        <Badge BackgroundColor="TablerColor.Blue">@ticket.EndDate.ToString("yyyy-MM-dd")</Badge>
-                    </DataGridItem> *@
-
-                    <DataGridItem Title="Movility Type">
-                        <Status BackgroundColor="TablerColor.Yellow">
-                            @ticket.MovilityType
-                        </Status>
-                    </DataGridItem>
-
-    @*                 <DataGridItem Title="Requirements">
-                        <Badge BackgroundColor="TablerColor.Purple">@ticket.TicketRequirements</Badge>
-                    </DataGridItem> *@
-
-                    <DataGridItem Title="Total">
-                        <span style="font-weight: bold;">@ticket.Total</span>
-                    </DataGridItem>
-
-                </DataGrid>
+                    </DataGrid>
             </CardBody>
         </Card>
         <br />
-        <Card Size="CardSize.Default">
-            <CardHeader>
-                <h3>Información Personal</h3>
-            </CardHeader>
-            <CardBody>
-                <DataGrid>
-                    <DataGridItem Title="Nombre">
-                        Nombre Solicitante
-                    </DataGridItem>
-                </DataGrid>
-            </CardBody>
-        </Card>
-        <br />
+
+    <Card Size="CardSize.Default">
+        <CardHeader>
+            <h3>Tipo de Movilidad</h3>
+        </CardHeader>
+        <CardBody>
+            <DataGrid>
+
+                <DataGridItem Title="Tipo de Movilidad">
+                    <Badge BackgroundColor="TablerColor.Blue" BadgeType="BadgeType.Outline">@ticket.MovilityType</Badge>
+                </DataGridItem>
+                <DataGridItem Title="Institución de destino">@ticket.ExternalInstitution</DataGridItem>
+                <DataGridItem Title="Datos de contacto">@ticket.ContactData</DataGridItem>
+                <DataGridItem Title="País de destino">@ticket.Country</DataGridItem>
+                <DataGridItem Title="Ciudad de Destino">@ticket.City</DataGridItem>
+                <DataGridItem Title="Nombre de la actividad que origina la movilidad">@ticket.EventName</DataGridItem>
+                <DataGridItem Title="Título de la ponencia (S/A)">@ticket.Title</DataGridItem>
+                <DataGridItem Title="Fecha de inicio movilidad">@ticket.StartDateMovility</DataGridItem>
+                <DataGridItem Title="Fecha final movilidad">@ticket.EndDateMovility</DataGridItem>
+
+            </DataGrid>
+        </CardBody>
+    </Card>
+    <br />
+
+    <Card Size="CardSize.Default">
+        <CardHeader>
+            <h3>Justificación</h3>
+        </CardHeader>
+        <CardBody>
+            <DataGrid>
+
+                <DataGridItem Title="La movilidad está dada en el marco de un convenio">@(ticket.IsAgreement ? "Sí" : "No")</DataGridItem>
+                <DataGridItem Title="Convenio (S/A)">
+                    <Badge BackgroundColor="TablerColor.Green" BadgeType="BadgeType.Outline">@ticket.AgreementName</Badge>
+                </DataGridItem>
+                <DataGridItem Title="Objetivo de la movilidad">
+                    <Badge BackgroundColor="TablerColor.Orange" BadgeType="BadgeType.Outline">@ticket.Description</Badge>
+                </DataGridItem>
+                <DataGridItem Title="Productos a entregar en retribución">@ticket.Results</DataGridItem>
+                <DataGridItem Title="Fecha entrega compromisos">@ticket.DeliveryDate</DataGridItem>
+
+
+            </DataGrid>
+        </CardBody>
+    </Card>
+    <br />
+
+
+
+
 
 
 

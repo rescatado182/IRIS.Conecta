@@ -1,36 +1,23 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using IRIS.UI.Pages.BL.Tickets.Shared;
+using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using TabBlazor;
 
 namespace IRIS.UI.Models.List
 {
-    public class PersonalDataVM
+    public class PersonalDataDetailVM
     {
 
         public int Id { get; set; }
 
-        [Display(Name = "Nombre Completo")]
-        [Required(ErrorMessage = "*{0} es obligatorio")]
-        [MaxLength(100, ErrorMessage = "*{0} no puede tener más de {1} carácteres")]
         public string FullName { get; set; }
 
-        [Display(Name = "Numero Documento")]
-        [Required(ErrorMessage = "*{0} es obligatorio")]
-        [MaxLength(20, ErrorMessage = "*{0} no puede tener más de {1} carácteres")]
         public string DocumentNumber { get; set; }
 
-        [Display(Name = "Tipo de Documento")]
-        [Required(ErrorMessage = "*{0} es obligatorio")]
-        [EnumDataType(typeof(EnumDocumentType), ErrorMessage = "*Seleccione un {0} válido")]
-        public EnumDocumentType DocumentType { get; set; }
+        public string DocumentType { get; set; }
 
-        [Display(Name = "País de Nacimiento")]
-        [Required(ErrorMessage = "*Selecciona un {0} válido")]
-        [Range(1, int.MaxValue, ErrorMessage = "*Selecciona un {0} válido")]
         public int BornCountryId { get; set; }
 
-        [Display(Name = "Departamento de Nacimiento")]
-        [Required(ErrorMessage = "*Selecciona un {0} válido")]
-        [Range(1, int.MaxValue, ErrorMessage = "*Selecciona un {0} válido")]
         public int BornStateId { get; set; }
 
         [Display(Name = "Ciudad de Nacimiento")]
@@ -55,7 +42,8 @@ namespace IRIS.UI.Models.List
 
         [Display(Name = "Correo electronico")]
         [MaxLength(100, ErrorMessage = "*{0} debe tener máximo {1} caracteres")]
-        public string Email { get; set; }
+        public string PersonalEmail { get; set; }
+
 
         //[Display(Name = "Correo electronico ITM")]
         //[Required(ErrorMessage = "*{0} es obligatorio")]

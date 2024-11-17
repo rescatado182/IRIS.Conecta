@@ -13,35 +13,53 @@ namespace IRIS.UI.Models.List
 
         public string UserId { get; set; }
 
-        public string User { get; set; }
-
         public string ManagerUserId { get; set; }
 
-        public string ManagerUser { get; set; }
+
+        public string ManagerUserName { get; set; }
+
+        public string UserName { get; set; }
 
 
+        ////Datos Personas
+        //public string FullName { get; set; }
 
-        //Datos Personas
-        public string FullName { get; set; }
+        //public string DocumentNumber { get; set; }
 
-        public string DocumentNumber { get; set; }
+        //public string DocumentType { get; set; }
 
-        public string DocumentType { get; set; }
+        //public string BornCountry { get; set; }
 
-        public string BornCountry { get; set; }
+        //public string BornState { get; set; }
 
-        public string BornState { get; set; }
+        //public string BornCity { get; set; }
 
-        public string BornCity { get; set; }
-
-        public string ResidenceState { get; set; }
-        public string ResidenceCity { get; set; }
-        public string AddressResidence { get; set; }
-        public string Email { get; set; }
-        public string Phone { get; set; }
-        public string Cellphone { get; set; }
+        //public string ResidenceState { get; set; }
+        //public string ResidenceCity { get; set; }
+        //public string AddressResidence { get; set; }
+        //public string Email { get; set; }
+        //public string Phone { get; set; }
+        //public string Cellphone { get; set; }
 
 
+        ////Datos Academicos
+
+        //public string FacultyName { get; set; }
+
+        //public string ProgramName { get; set; }
+
+        //public string ResearchProject { get; set; }
+
+        //public string AverageCredit { get; set; }
+
+        //public string ProgramType { get; set; }
+
+        //public string ResearchGroup { get; set; }
+
+        //public string IsInstitutionalGroup { get; set; }
+
+
+        ////Tipo de Movilidad
 
 
 
