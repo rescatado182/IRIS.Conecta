@@ -19,8 +19,8 @@ namespace IRIS.Conecta.Application.MappingProfiles
             CreateMap<UpdateTicketByRequirementsCommand, Ticket>().ReverseMap();
             
             CreateMap<ChangeTicketStatusCommand, Ticket>();
-
             CreateMap<Ticket, TicketByIdDto>().ReverseMap();
+            CreateMap<Ticket, TicketBasicChangesDto>().ReverseMap();
             CreateMap<Ticket, TicketsListDto>();
         }
     }

@@ -47,13 +47,18 @@ namespace IRIS.Conecta.Application.Features.Tickets.Dtos
         public DateOnly StartDateRequirement { get; set; }
         public DateOnly EndDateRequirement { get; set; }
 
+        public DateTime DateCreated { get; set; }
+
+
+        public int PersonalDataId { get; set; }
+        public int AcademicDataId { get; set; }
         public string UserId { get; set; }
         public string ManagerUserId { get; set; }
 
         #endregion
 
         #region Requirements
-        public List<TicketRequirements> TicketRequirements { get; set; } = [];
+        public string TicketRequirements { get; set; }
         public double Total { get; set; }        
 
         #endregion

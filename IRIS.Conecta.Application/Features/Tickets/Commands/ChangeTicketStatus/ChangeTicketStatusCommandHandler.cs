@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using IRIS.Conecta.Application.Contracts.Identity;
 using IRIS.Conecta.Application.Contracts.Infrastructure;
 using IRIS.Conecta.Application.Contracts.Persistence.Tickets;
 using IRIS.Conecta.Application.Exceptions;
@@ -12,15 +13,16 @@ namespace IRIS.Conecta.Application.Features.Tickets.Commands.ChangeTicketStatus
     {
         private readonly IMapper _mapper;
         private readonly IEmailService _emailService;
+        private readonly IUserService _userService;
         private readonly ITicketsRepository _ticketsRepository;
 
-        public ChangeTicketStatusCommandHandler(IMapper mapper, IEmailService emailService, 
-            ITicketsRepository ticketsRepository
-        )
+        public ChangeTicketStatusCommandHandler(IMapper mapper, IEmailService emailService,
+            IUserService userService, ITicketsRepository ticketsRepository)
         {
-            _mapper = mapper;
-            _emailService = emailService;
-            _ticketsRepository = ticketsRepository;
+            _mapper             = mapper;
+            _emailService       = emailService;
+            _userService        = userService;
+            _ticketsRepository  = ticketsRepository;
         }
 
         public async Task<Unit> Handle(ChangeTicketStatusCommand request, CancellationToken cancellationToken)
@@ -46,7 +48,7 @@ namespace IRIS.Conecta.Application.Features.Tickets.Commands.ChangeTicketStatus
 
             await _ticketsRepository.UpdateAsync(ticket);
 
-            this.SendChangeTicketStatusEmail(ticket);
+            //this.SendChangeTicketStatusEmail(ticket);
 
             return Unit.Value;
         }
@@ -55,9 +57,12 @@ namespace IRIS.Conecta.Application.Features.Tickets.Commands.ChangeTicketStatus
         {
             try
             {
+                // Get user
+                var user = await _userService.GetUser(ticket.UserId);
+
                 var email = new Email
                 {
-                    To = string.Empty, // Get record from Application User - Student and Manager
+                    To = user.Email, // Get record from Application User - Student and Manager
                     Body = $"Tu Solicitud # {ticket.Id} ha cambiado a {ticket.Status}.\r\n " +
                     $"Por favor, mira los detalles adjuntos.",
                     Subject = "Novedad en Solicitud"

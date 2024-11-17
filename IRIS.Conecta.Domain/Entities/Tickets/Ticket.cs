@@ -62,7 +62,7 @@ namespace IRIS.Conecta.Domain.Entities.Tickets
         #endregion
 
         #region Requirements
-        public TicketRequirements? TicketRequirements { get; set; }
+        public string? TicketRequirements { get; set; }
 
         public double? Total { get; set; }
 

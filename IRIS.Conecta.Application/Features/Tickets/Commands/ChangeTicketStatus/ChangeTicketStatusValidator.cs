@@ -1,10 +1,5 @@
 ﻿using FluentValidation;
 using IRIS.Conecta.Domain.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace IRIS.Conecta.Application.Features.Tickets.Commands.ChangeTicketStatus
 {
