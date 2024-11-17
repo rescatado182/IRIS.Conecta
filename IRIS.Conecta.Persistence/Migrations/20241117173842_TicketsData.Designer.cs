@@ -4,6 +4,7 @@ using IRIS.Conecta.Persistence.DatabaseContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IRIS.Conecta.Persistence.Migrations
 {
     [DbContext(typeof(IRISConectaDatabaseContext))]
-    partial class IRISConectaDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20241117173842_TicketsData")]
+    partial class TicketsData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -832,8 +835,8 @@ namespace IRIS.Conecta.Persistence.Migrations
                         .HasColumnType("int")
                         .HasColumnName("Status");
 
-                    b.Property<string>("TicketRequirements")
-                        .HasColumnType("nvarchar(max)")
+                    b.Property<int?>("TicketRequirements")
+                        .HasColumnType("int")
                         .HasColumnName("TicketRequirements");
 
                     b.Property<string>("Title")
