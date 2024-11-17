@@ -140,7 +140,7 @@ namespace IRIS.UI.Pages.BL.Tickets.RequestTickets.Movility.Information
                 Status = TicketsStatus.Open,
                 StartDateRequirement = MovilityRequestState.requirementsMovility.StartDateRequirement,
                 EndDateRequirement = MovilityRequestState.requirementsMovility.EndDateRequirement,
-                TicketRequirements = selectedRequirementTypes,
+                TicketRequirements = string.Join(",", selectedRequirementTypes),
                 Total = MovilityRequestState.requirementsMovility.Total,
                 UserId = userId,
                 ManagerUserId = "1001"
