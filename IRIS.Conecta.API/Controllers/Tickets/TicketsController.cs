@@ -10,7 +10,7 @@ using IRIS.Conecta.Application.Features.Tickets.Queries.GetTicketsListByUserId;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace IRIS.Conecta.API.Controllers
+namespace IRIS.Conecta.API.Controllers.Tickets
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -26,14 +26,14 @@ namespace IRIS.Conecta.API.Controllers
         [HttpGet]
         public async Task<ActionResult<List<TicketsListDto>>> Get()
         {
-            var tickets = await this.mediator.Send( new GetTicketsListRequest() );
+            var tickets = await mediator.Send(new GetTicketsListRequest());
             return Ok(tickets);
         }
 
         [HttpGet("GetTicketsByUser/{userId}")]
         public async Task<ActionResult<List<TicketsListDto>>> GetTicketsByUser(string userId)
         {
-            var tickets = await this.mediator.Send(new GetTicketsListByUserIdRequest()
+            var tickets = await mediator.Send(new GetTicketsListByUserIdRequest()
             {
                 UserId = userId
             });
@@ -43,7 +43,7 @@ namespace IRIS.Conecta.API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<TicketByIdDto>> Get(int id)
         {
-            var ticket = await this.mediator.Send(new GetTicketByIdRequest { Id = id });
+            var ticket = await mediator.Send(new GetTicketByIdRequest { Id = id });
             return Ok(ticket);
         }
 
@@ -53,18 +53,18 @@ namespace IRIS.Conecta.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult> Post(CreateTicketCommand createTicketCommand)
         {
-            var response = await this.mediator.Send(createTicketCommand);
+            var response = await mediator.Send(createTicketCommand);
             return CreatedAtAction(nameof(Get), new { id = response });
         }
 
         [HttpPut("updateTicket")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]        
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(400)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]
         public async Task<ActionResult> Put(UpdateTicketCommand updateTicketCommand)
         {
-            await this.mediator.Send(updateTicketCommand);
+            await mediator.Send(updateTicketCommand);
             return NoContent();
         }
 
@@ -75,7 +75,7 @@ namespace IRIS.Conecta.API.Controllers
         [ProducesDefaultResponseType]
         public async Task<ActionResult> PutByMovility(UpdateTicketByMovilityCommand updateTicketByMovility)
         {
-            await this.mediator.Send(updateTicketByMovility);
+            await mediator.Send(updateTicketByMovility);
             return NoContent();
         }
 
@@ -86,7 +86,7 @@ namespace IRIS.Conecta.API.Controllers
         [ProducesDefaultResponseType]
         public async Task<ActionResult> PutByRequirements(UpdateTicketByRequirementsCommand updateTicketByRequirements)
         {
-            await this.mediator.Send(updateTicketByRequirements);
+            await mediator.Send(updateTicketByRequirements);
             return NoContent();
         }
 
@@ -98,7 +98,7 @@ namespace IRIS.Conecta.API.Controllers
         [ProducesDefaultResponseType]
         public async Task<ActionResult> ChangeTicketStatus(ChangeTicketStatusCommand changeTicketStatusCommand)
         {
-            await this.mediator.Send(changeTicketStatusCommand);
+            await mediator.Send(changeTicketStatusCommand);
             return NoContent();
         }
 

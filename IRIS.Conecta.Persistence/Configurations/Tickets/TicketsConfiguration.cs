@@ -3,7 +3,7 @@ using IRIS.Conecta.Domain.Entities.Tickets;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace IRIS.Conecta.Persistence.Configurations
+namespace IRIS.Conecta.Persistence.Configurations.Tickets
 {
     public class TicketsConfiguration : IEntityTypeConfiguration<Ticket>
     {
@@ -29,7 +29,7 @@ namespace IRIS.Conecta.Persistence.Configurations
                 .IsRequired();
 
             builder.Property(e => e.TicketRequirements)
-                .HasColumnName("TicketRequirements");                
+                .HasColumnName("TicketRequirements");
 
             builder.Property(e => e.Title)
                 .IsRequired()
@@ -66,11 +66,24 @@ namespace IRIS.Conecta.Persistence.Configurations
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Tickets_RequestTypes_RequestTypeId");
 
+            builder.HasMany(e => e.Notifications)
+                .WithOne(e => e.Ticket)
+                .HasForeignKey(e => e.TicketId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Departments_RequestTypes_Id")
+                .IsRequired();
+
             builder.HasOne(d => d.PersonalData).WithOne(p => p.Ticket)
                 .HasForeignKey<PersonalData>(d => d.TicketId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_PersonalData_Tickets_TicketId");
+
+            builder.HasOne(d => d.AcademicData).WithOne(p => p.Ticket)
+                .HasForeignKey<AcademicData>(d => d.TicketId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_AcademicData_Tickets_TicketId");
         }
     }
 }

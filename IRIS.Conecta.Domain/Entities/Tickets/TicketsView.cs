@@ -29,7 +29,7 @@ namespace IRIS.Conecta.Domain.Entities.Tickets
         // Objetivo de la solicitud
         public string? Description { get; set; }
         public bool? IsAgreement { get; set; } = false;
-        public string? Results { get; set; }
+        public string? Results { get; set; }        
         public DateOnly? DeliveryDate { get; set; }
 
         #endregion
@@ -63,7 +63,7 @@ namespace IRIS.Conecta.Domain.Entities.Tickets
         #endregion
 
         #region Requirements
-        public TicketRequirements? TicketRequirements { get; set; } = null;
+        public string? TicketRequirements { get; set; } = null;
 
         public double? Total { get; set; }
 
