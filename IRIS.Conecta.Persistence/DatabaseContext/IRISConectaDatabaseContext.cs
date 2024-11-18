@@ -24,8 +24,8 @@ namespace IRIS.Conecta.Persistence.DatabaseContext
         public DbSet<TemplateResponses> TemplateResponses { get; set; }
 
         public DbSet<Ticket> Tickets { get; set; }
-
         public DbSet<TicketsView> TicketsViews { get; set; }
+        public DbSet<Notifications> Notifications { get; set; }
 
         public DbSet<PersonalData> PersonalDatas { get; set; }
         public DbSet<AcademicData> AcademicDatas { get; set; }

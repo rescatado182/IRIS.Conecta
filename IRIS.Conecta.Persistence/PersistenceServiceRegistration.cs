@@ -27,6 +27,7 @@ namespace IRIS.Conecta.Persistence
 
             services.AddScoped<ITicketsRepository, TicketsRepository>();
             services.AddScoped<ITicketsViewRepository, TicketsViewsRepository>();
+            services.AddScoped<INotificationsRepository, NotificationsRepository>();
 
             services.AddScoped<IAcademicDataRepository, AcademicDataRepository>();
             services.AddScoped<IPersonalDataRepository, PersonalDataRepository>();            
