@@ -1,17 +1,63 @@
-﻿<h3>Estas son solicitudes que fueron respondidas anteriormente y que te pueden ayudar a atender esta solicitud más rápido!</h3>
+﻿@page "/similaranswer"
+
+<h3>Estas son solicitudes que fueron respondidas anteriormente y que te pueden ayudar a atender esta solicitud más rápido!</h3>
 <h4> Recuerda, solo son sugerencias...</h4>
 
-<Timeline Type="TimelineType.Simple">
-    <TimelineItem Time="2020-12-28" Title="We are the best" IconColor="TablerColor.Green" IconText="TV">
-        <p class="text-secondary">This is great!</p>
-    </TimelineItem>
 
-    <TimelineItem Time="2020-12-31" IconColor="TablerColor.Red" Title="Twitter">
-        <IconTemplate>
-            <Icon IconType="@TablerIcons.Brand_twitter" Size="16" />
-        </IconTemplate>
-        <ChildContent>
-            <p class="text-secondary">You’re getting more and more followers, keep it up!</p>
-        </ChildContent>
-    </TimelineItem>
-</Timeline>
+
+@* Formulario para capturar los datos *@
+<div>
+    <label>Consulta:</label>
+    <input @bind="rootRequest.Body.Query" placeholder="Escribe tu consulta" />
+
+    <label>Tipo de Solicitud:</label>
+    <input @bind="rootRequest.Body.Filtros.Tipo_solicitud" placeholder="Tipo de solicitud" />
+
+    <label>Top K:</label>
+    <input @bind="rootRequest.Body.Top_k" type="number" />
+
+    <button @onclick="SendData">Enviar</button>
+</div>
+
+@* @if (resultados != null && resultados.Any())
+{
+    @foreach (var item in resultados)
+    {
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">ID: @item.id</h5>
+                <p class="card-text"><strong>Solicitud:</strong> @item.Request</p>
+                <p class="card-text"><strong>Respuesta:</strong> @item.Answer</p>
+                <p class="card-text"><strong>Score:</strong> @item.score</p>
+            </div>
+        </div>
+    }
+}
+else
+{
+    <p>No hay resultados.</p>
+} *@
+
+@if (resultados != null && resultados.Any())
+{
+    <Timeline Type="TimelineType.Simple">
+        @foreach (var item in resultados)
+        {
+            <TimelineItem Time="@item.id" IconColor="TablerColor.Red" Title="Id">
+                <IconTemplate>
+                    <Icon IconType="@TablerIcons.Brand_twitter" Size="16" />
+                </IconTemplate>
+                <ChildContent>
+                    <p class="card-text"><strong>Solicitud:</strong> @item.Request</p>
+                    <p class="card-text"><strong>Respuesta:</strong> @item.Answer</p>
+                    <p class="card-text"><strong>Score:</strong> @item.score</p>
+                </ChildContent>
+            </TimelineItem>
+        }
+    </Timeline>
+}
+else
+{
+    <p>No hay resultados para mostrar.</p>
+}
+
