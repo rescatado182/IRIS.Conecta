@@ -27,7 +27,9 @@ namespace IRIS.UI.Models.List
 
     public class Filters
     {
-        public string Tipo_solicitud { get; set; }
+        public string tipo_solicitud { get; set; }
+
+        public string tipo_movilidad { get; set; }
     }
 
     public class ServiceResponse
@@ -47,8 +49,8 @@ namespace IRIS.UI.Models.List
         public string Id { get; set; }
         public string Solicitud { get; set; }
         public string Respuesta { get; set; }
-        public string TipoSolicitud { get; set; }
-        public string TipoMovilidad { get; set; }
+        public string tipo_solicitud { get; set; }
+        public string tipo_movilidad { get; set; }
         public string Programa { get; set; }
         public string Facultad { get; set; }
         public float Score { get; set; }

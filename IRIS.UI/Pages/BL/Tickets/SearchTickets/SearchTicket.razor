@@ -1,72 +1,85 @@
 ﻿@page "/ticket/search"
 
-@using IRIS.UI.Models.List
-@using TabBlazor.Components.Tables
+<h3>🔍 Buscar Respuestas Similares</h3>
+<p>Introduce un número de solicitud o pega texto relacionado con tu consulta para buscar respuestas similares.</p>
 
-@if (tickets is null)
+<Card>
+    <CardBody>
+
+   
+                <TablerForm>
+                <div class="mb-3">
+
+                <label class="form-label">Buscar Solicitud:</label>
+                <InputText class="form-control" @bind-Value="Query" Rows="4"/>
+        </div>
+
+                <Button BackgroundColor="TablerColor.Success" OnClick="GetTicketbyId">
+                    Buscar por Solicitud
+                </Button>
+                <Button BackgroundColor="TablerColor.Secondary" OnClick="SendData">
+                    Buscar en IA
+                </Button>
+
+        </TablerForm>
+    </CardBody>
+</Card>
+
+@if (resultados != null && resultados.Any())
+
+{
+    <Card>
+        <CardBody>
+            <div class="header-container">
+                <h3 class="main-title">🔍 Encuentra Respuestas Relevantes para tu Solicitud</h3>
+                <h4 class="sub-title">💡 Nuestra inteligencia artificial ha identificado solicitudes similares previamente resueltas.</h4>
+            </div>
+        </CardBody>
+    </Card>
+
+    <br />
+    <Timeline Type="TimelineType.Simple">
+        @foreach (var item in resultados)
+
+        {
+            <TimelineItem Time="" IconColor="TablerColor.Red" Title="@item.Programa">
+                <IconTemplate>
+                    <Icon IconType="@TablerIcons.Brand_twitter" Size="16" />
+                </IconTemplate>
+                <ChildContent>
+                    <p class="card-text">
+                        <Badge BackgroundColor="TablerColor.Green" Size=BadgeSize.Large BadgeType="BadgeType.Light">@item.tipo_movilidad</Badge>
+                    </p>
+                    <p class="card-text">
+                        <strong>
+                            <Badge BackgroundColor="TablerColor.Primary" BadgeType="BadgeType.Outline">Solicitud Realizada:</Badge>
+                        </strong> @item.Solicitud
+                    </p>
+                    <p class="card-text"><strong><Badge BackgroundColor="TablerColor.Primary" BadgeType="BadgeType.Outline">Respuesta de la Facultad:</Badge></strong> @item.Respuesta</p>
+                    <div class="text-end">
+                        <a href="@GenerateLink(item.Id)" target="_blank" class="btn btn-primary sm">
+                            Nro Solicitud: @item.Id
+                        </a>
+                    </div>
+                </ChildContent>
+            </TimelineItem>
+        }
+        </Timeline>
+}
+
+@* else if (resultados == null)
+
 {
     <Loading></Loading>
-    @* <Progress Color="TablerColor.Blue" Indeterminate /> *@
+    <div class="alert alert-info" role="alert">
+        Buscando resultados...
+    </div>
 }
-else
+
+else if (!resultados.Any())
+
 {
-
-    <Table Item="TicketManageListVM" Items="tickets" PageSize="10"
-           @bind-SelectedItems="selectedOrders" Selectable
-           MultiSelect Hover Responsive>
-        <HeaderTemplate>
-            <strong>Agrupar por</strong>
-        </HeaderTemplate>
-
-        <ChildContent>
-            <Column Item="TicketManageListVM" Property="e => e.TicketStatusColor" Title="ANS" Sortable Searchable Groupable>
-                <Template>
-                    <Badge BackgroundColor="@context.TicketStatusColor" />
-                </Template>
-            </Column>
-            <Column Item="TicketManageListVM" Property="e=>e.Id" Title="Nro Solicitud" Sortable Searchable Groupable>
-            </Column>
-            <Column Item="TicketManageListVM" Property="e=>e.DateCreated" Title="Fecha Solicitud" Sortable Searchable Groupable>
-            </Column>
-            <Column Item="TicketManageListVM" Property="e=>e.FacultyName" Title="Facultad" Sortable Searchable Groupable>
-            </Column>
-            <Column Item="TicketManageListVM" Property="e=>e.Department" Title="Departmento" Sortable Searchable Groupable>
-            </Column>
-            <Column Item="TicketManageListVM" Property="e=>e.RequestName" Title="Tipo de Solicitud" Sortable Searchable Groupable>
-            </Column>
-            <Column Item="TicketManageListVM" Property="e=>e.FullName" Title="Solicitante" Sortable Searchable Groupable>
-            </Column>
-            <Column Item="TicketManageListVM" Property="e=>e.ManagerName" Title="Gestor" Sortable Searchable Groupable>
-            </Column>
-
-            <Column Item="TicketManageListVM" Property="e => e.TicketStatusDisplayName" Title="Estado" Sortable Searchable Groupable>
-                <Template>
-                    <Badge BackgroundColor="@context.GetTicketStatusColor()" Shape="BadgeShape.Pill">
-                        @context.TicketStatusDisplayName
-                    </Badge>
-                </Template>
-            </Column>
-
-            <Column Item="TicketManageListVM" Title="Detalle">
-                <Template Context="ticket">
-
-                    <a href="/ticketDetailsSearch/@ticket.Id" target="_blank" class="btn btn-link">
-
-                        <Icon class="icon" IconType="@TablerIcons.Eye" />
-                    </a>
-
-                </Template>
-            </Column>
-        </ChildContent>
-
-    </Table>
-
-
-    <ul>
-        @foreach (var order in selectedOrders)
-        {
-            <li>@order.Id</li>
-        }
-    </ul>
-
-}
+    <div class="alert alert-warning" role="alert">
+        No se encontraron resultados para tu búsqueda.
+    </div>
+} *@

@@ -14,7 +14,7 @@ namespace IRIS.UI.Models
         [Display(Name = "Intercambio Nacional e Internacional")]
         NationalAndInternationalExchange = 3,
 
-        [Display(Name = "Pasantia de Investigación")]
+        [Display(Name = "Pasantía de Investigación")]
         ResearchInternship = 4,
 
         [Display(Name = "Ponencia")]

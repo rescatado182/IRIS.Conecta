@@ -1,4 +1,4 @@
-using ColorCode.Compilation.Languages;
+﻿using ColorCode.Compilation.Languages;
 using DocumentFormat.OpenXml.Spreadsheet;
 using IRIS.Frontend.Repositories;
 using IRIS.UI.Interfaces;
@@ -21,6 +21,7 @@ using TabBlazor.Services;
 
 using Microsoft.AspNetCore.Components.Authorization;
 using IRIS.UI.AuthenticationProviders;
+using IRIS.UI.Icons;
 
 namespace IRIS.UI.Pages.BL.Tickets.RequestTickets.Movility
 {
@@ -102,7 +103,23 @@ namespace IRIS.UI.Pages.BL.Tickets.RequestTickets.Movility
         {
             tabsOrderRef.PreviousTab();
         }
+        private async Task SaveTicket()
+        {
 
+            // Mensaje creativo para el modal
+            await Modal.ShowDialogAsync(new TabBlazor.Components.Modals.DialogOptions
+            {
+                MainText = $"🎉 ¡Solicitud Creada Exitosamente!",
+                SubText = $"Tu número de solicitud es <strong>{idTicket}</strong>. Te enviaremos toda la información detallada a tu correo electrónico. ¡Gracias por usar nuestra plataforma!",
+                IconType = TablerIcons.Check,
+                CancelText = "",
+                StatusColor = TablerColor.Success
+            });
+
+
+        
+    }
+        
         private async Task NextStepAsync()
         {
 

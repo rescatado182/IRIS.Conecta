@@ -169,3 +169,22 @@ button {
     }
 
 
+.navbar-brand:hover {
+    text-decoration: none;
+}
+
+.navbar-brand-image {
+    transition: transform 0.2s ease-in-out;
+}
+
+    .navbar-brand-image:hover {
+        transform: scale(1.1); /* Amplía ligeramente el logo */
+    }
+
+.navbar-brand h2 {
+    transition: color 0.2s ease-in-out;
+}
+
+    .navbar-brand h2:hover {
+        color: #0056a3; /* Azul más oscuro al pasar el mouse */
+    }

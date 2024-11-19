@@ -1,56 +1,47 @@
 ﻿@page "/similaranswer"
 
-<h3>Estas son solicitudes que fueron respondidas anteriormente y que te pueden ayudar a atender esta solicitud más rápido!</h3>
-<h4> Recuerda, solo son sugerencias...</h4>
 
-
-
-@* Formulario para capturar los datos *@
-<div>
-    <label>Consulta:</label>
-    <input @bind="rootRequest.Body.Query" placeholder="Escribe tu consulta" />
-
-    <label>Tipo de Solicitud:</label>
-    <input @bind="rootRequest.Body.Filtros.Tipo_solicitud" placeholder="Tipo de solicitud" />
-
-    <label>Top K:</label>
-    <input @bind="rootRequest.Body.Top_k" type="number" />
-
-    <button @onclick="SendData">Enviar</button>
-</div>
-
-@* @if (resultados != null && resultados.Any())
-{
-    @foreach (var item in resultados)
-    {
-        <div class="card mb-3">
-            <div class="card-body">
-                <h5 class="card-title">ID: @item.id</h5>
-                <p class="card-text"><strong>Solicitud:</strong> @item.Request</p>
-                <p class="card-text"><strong>Respuesta:</strong> @item.Answer</p>
-                <p class="card-text"><strong>Score:</strong> @item.score</p>
-            </div>
-        </div>
-    }
-}
-else
-{
-    <p>No hay resultados.</p>
-} *@
 
 @if (resultados != null && resultados.Any())
 {
+    <Card>
+        <CardBody>
+            <div class="header-container">
+                <h3 class="main-title">🔍 Encuentra Respuestas Relevantes para tu Solicitud</h3>
+                <h4 class="sub-title">💡 Nuestra inteligencia artificial ha identificado solicitudes similares previamente resueltas. Úsalas como inspiración para responder más rápido y con mayor precisión.</h4>
+            </div>
+        </CardBody>
+@*         <CardFooter>
+            <button class="btn btn-primary btn-sm">Aprender más sobre recomendaciones</button>
+    </CardFooter>*@
+    </Card> 
+
+
+    <br />
     <Timeline Type="TimelineType.Simple">
         @foreach (var item in resultados)
         {
-            <TimelineItem Time="@item.id" IconColor="TablerColor.Red" Title="Id">
+            <TimelineItem Time="" IconColor="TablerColor.Red" Title="@item.Programa">
                 <IconTemplate>
                     <Icon IconType="@TablerIcons.Brand_twitter" Size="16" />
                 </IconTemplate>
                 <ChildContent>
-                    <p class="card-text"><strong>Solicitud:</strong> @item.Request</p>
-                    <p class="card-text"><strong>Respuesta:</strong> @item.Answer</p>
-                    <p class="card-text"><strong>Score:</strong> @item.score</p>
+                    
+                        <p class="card-text">
+                        <Badge BackgroundColor="TablerColor.Green" Size=BadgeSize.Large BadgeType="BadgeType.Light">@item.tipo_movilidad</Badge>
+                        </p>
+                    
+
+                    <p class="card-text"><strong>
+                        <Badge BackgroundColor="TablerColor.Primary" BadgeType="BadgeType.Outline">Solicitud Realizada:</Badge></strong> @item.Solicitud</p>
+                    <p class="card-text"><strong><Badge BackgroundColor="TablerColor.Primary" BadgeType="BadgeType.Outline">Respuesta de la Facutad:</Badge></strong> @item.Respuesta</p>
+
+                    <div class="text-end">
+                        <a href="@GenerateLink(item.Id)" target="_blank" class="btn btn-primary sm">
+                            Nro Solicitud: @item.Id
+                        </a>
+                    </div>
+
                 </ChildContent>
             </TimelineItem>
         }
@@ -58,6 +49,16 @@ else
 }
 else
 {
-    <p>No hay resultados para mostrar.</p>
+    <Loading></Loading>
+    if (resultados.Count == 0)
+    {
+        <div class="alert alert-warning" role="alert">
+            Buscando resultados...
+        </div>
+    }
+    else
+    {
+    <Loading></Loading>
+    }
 }
 
