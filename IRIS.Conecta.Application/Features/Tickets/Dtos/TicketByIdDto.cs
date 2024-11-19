@@ -59,8 +59,15 @@ namespace IRIS.Conecta.Application.Features.Tickets.Dtos
 
         #region Requirements
         public string TicketRequirements { get; set; }
-        public double Total { get; set; }        
+        public double Total { get; set; }
 
         #endregion
+
+        public string RequestName { get; set; }
+        public string Department { get; set; }
+        public string FacultyName { get; set; }
+
+        public string FullName { get; set; }
+        public string ManagerUser { get; set; }
     }
 }

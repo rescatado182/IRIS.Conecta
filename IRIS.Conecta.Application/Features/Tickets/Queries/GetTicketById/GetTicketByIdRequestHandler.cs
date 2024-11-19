@@ -9,16 +9,17 @@ namespace IRIS.Conecta.Application.Features.Tickets.Queries.GetTicketById
     public class GetTicketByIdRequestHandler : IRequestHandler<GetTicketByIdRequest, TicketByIdDto>
     {
         private readonly IMapper mapper;
-        private readonly ITicketsRepository ticketsRepository;
+        private readonly ITicketsViewRepository ticketsViewRepository;
 
-        public GetTicketByIdRequestHandler(IMapper mapper, ITicketsRepository ticketsRepository)
+        public GetTicketByIdRequestHandler(IMapper mapper, 
+            ITicketsViewRepository ticketsViewRepository)
         {
             this.mapper = mapper;
-            this.ticketsRepository = ticketsRepository;
+            this.ticketsViewRepository = ticketsViewRepository;
         }
         public async Task<TicketByIdDto> Handle(GetTicketByIdRequest request, CancellationToken cancellationToken)
         {
-            var ticket = await this.ticketsRepository.GetByIdAsync(request.Id);
+            var ticket = await this.ticketsViewRepository.GetTicketById(request.Id);
 
             if (ticket == null) {
                 throw new NotFoundException(nameof(ticket), request.Id);

@@ -18,5 +18,12 @@ namespace IRIS.Conecta.Persistence.Repositories.Tickets
             return tickets;
         }
 
+        public async Task<TicketsView> GetTicketById(int ticketId)
+        {
+            return await _context.TicketsViews
+                .Where(x => x.Id == ticketId)
+                .FirstOrDefaultAsync();
+        }
+
     }
 }
