@@ -35,7 +35,7 @@ namespace IRIS.Conecta.Application.Features.Tickets.Commands.ChangeTicketStatus
             }
 
             // Validate
-            var validator = new ChangeTicketStatusValidator();
+            var validator = new ChangeTicketStatusValidator(_ticketsRepository);
             var validationResult = await validator.ValidateAsync(request, cancellationToken);
 
             if (!validationResult.IsValid) {

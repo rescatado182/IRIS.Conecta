@@ -8,6 +8,7 @@ namespace IRIS.Conecta.Application.Features.Notifications.Dtos
         public string Message { get; set; }
         public bool SendEmail { get; set; } = false;
         public int TicketId { get; set; }
-        public NotificationType NotificationType { get; set; }        
+        public NotificationType NotificationType { get; set; }             
+        public DateTime DateCreated { get; set; }
     }
 }
