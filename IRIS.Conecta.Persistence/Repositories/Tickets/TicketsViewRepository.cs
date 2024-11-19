@@ -2,40 +2,19 @@
 using IRIS.Conecta.Domain.Entities.Tickets;
 using IRIS.Conecta.Persistence.DatabaseContext;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Primitives;
-using System.Text;
 
 namespace IRIS.Conecta.Persistence.Repositories.Tickets
 {
 
-    public class TicketsViewsRepository : GenericRepository<TicketsView>, ITicketsViewRepository
+    public class TicketsViewsRepository(IRISConectaDatabaseContext context) :
+        GenericRepository<TicketsView>(context), ITicketsViewRepository
     {
-        StringBuilder sqlQuery;
-        public TicketsViewsRepository(IRISConectaDatabaseContext context) : base(context)
+        public async Task<List<TicketsView>> GetTicketsByUser(string userId)
         {
-            sqlQuery = new StringBuilder();
-        }        
+            var tickets = await _context.TicketsViews
+                .Where(x => x.UserId == userId)
+                .ToListAsync();
 
-        public async Task<List<TicketsView>> GetTicketsList()
-        {
-            sqlQuery.Append(
-                        "SELECT t.*, r.RequestName, d.Department, f.FacultyName, " +
-                        "CONCAT(u.FirstName, ' ', u.LastName) AS FullName, " +
-                            "(SELECT CONCAT(iu.FirstName, ' ', iu.LastName) " +
-                            "FROM [Identity.Users] iu WHERE iu.Id = t.ManagerUserId) AS ManagerFullName " +
-                        "FROM Tickets t " +
-                        "INNER JOIN RequestTypes r ON t.RequestTypeId = r.Id " +
-                        "INNER JOIN Departments d ON r.DepartmentId = d.Id " +
-                        "INNER JOIN Faculties f ON d.FacultyId = f.Id " +
-                        "INNER JOIN [Identity.Users] u ON t.UserId = u.Id " +
-                        "ORDER BY t.DateCreated;");
-
-            var tickets = await _context.TicketsViews.FromSqlRaw(
-                sqlQuery.ToString()
-            )
-            .AsNoTracking()
-            .ToListAsync();
-            
             return tickets;
         }
 

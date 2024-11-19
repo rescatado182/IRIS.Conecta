@@ -18,7 +18,7 @@ namespace IRIS.Conecta.Application.Features.Tickets.Queries.GetTicketsList
         }
         public async Task<List<TicketsListDto>> Handle(GetTicketsListRequest request, CancellationToken cancellationToken)
         {
-            var tickets = await this.ticketsViewRepository.GetTicketsList();
+            var tickets = await this.ticketsViewRepository.GetAsync();
 
             var data = this.mapper.Map<List<TicketsListDto>>(tickets);
 

@@ -18,10 +18,7 @@ namespace IRIS.Conecta.Application.Features.Notifications.Commands.CreateNotific
 
             RuleFor(p => p.NotificationType)
                 .IsInEnum()
-                .NotEmpty().WithMessage("{PropertyName} es requerido.");
-
-            RuleFor(p => p.SendEmail)
-                .NotEmpty().WithMessage("{PropertyName} es requerido.");
+                .NotEmpty().WithMessage("{PropertyName} es requerido.");            
 
             RuleFor(p => p.TicketId)
                 .GreaterThan(0)

@@ -20,8 +20,8 @@ namespace IRIS.Conecta.Persistence.Configurations.Tickets
 
             builder.Property(e => e.DeliveryDate).HasPrecision(0);
 
-            builder.Property(e => e.Id)
-                .HasColumnName("Id")
+            builder.Property(e => e.TicketId)
+                .HasColumnName("TicketId")
                 .IsRequired();
 
             builder.Property(e => e.UserId)

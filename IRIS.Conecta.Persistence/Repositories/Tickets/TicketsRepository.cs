@@ -11,15 +11,7 @@ namespace IRIS.Conecta.Persistence.Repositories.Tickets
         public TicketsRepository(IRISConectaDatabaseContext context) : base(context)
         {
         }
-
-        public async Task<List<Ticket>> GetTicketsByUser(string userId)
-        {
-            var tickets = await _context.Tickets
-                .Where(x => x.UserId == userId)
-                .ToListAsync();
-
-            return tickets;
-        }
+        
 
         public async Task ChangeTicketStatus(Ticket ticket, TicketsStatus status)
         {

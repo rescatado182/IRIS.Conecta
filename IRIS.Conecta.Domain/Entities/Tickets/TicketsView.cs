@@ -6,6 +6,7 @@ namespace IRIS.Conecta.Domain.Entities.Tickets
     public class TicketsView : BaseEntity
     {
         public int Id { get; set; }
+        public int TicketId { get; set; }
 
         // Título de la Ponencia (S/A)
         public required string Title { get; set; }

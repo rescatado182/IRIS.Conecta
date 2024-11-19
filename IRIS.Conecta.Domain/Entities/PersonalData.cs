@@ -39,10 +39,7 @@ public class PersonalData : BaseEntity
     public virtual City? BornCity { get; set; }
 
     [JsonIgnore]
-    public State? StateResidence { get; set; }
-
-    [JsonIgnore]
-    public City? CityResidence { get; set; }
+    public State? StateResidence { get; set; }    
 
     public virtual Ticket? Ticket { get; set; }
 

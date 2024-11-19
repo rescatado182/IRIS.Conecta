@@ -2,7 +2,9 @@
 {
     public enum NotificationType
     {
-        Comment = 1,
-        Transaction = 2
+        Notification = 1,
+        ChangeStatus = 2,
+        Escalate = 3,
+        Response = 4
     }
 }

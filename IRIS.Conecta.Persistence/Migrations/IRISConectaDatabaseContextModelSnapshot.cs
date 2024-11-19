@@ -182,7 +182,7 @@ namespace IRIS.Conecta.Persistence.Migrations
 
                     b.HasIndex("StateId");
 
-                    b.ToTable("Cities");
+                    b.ToTable("Cities", (string)null);
                 });
 
             modelBuilder.Entity("IRIS.Conecta.Domain.Entities.Masters.Country", b =>
@@ -326,7 +326,7 @@ namespace IRIS.Conecta.Persistence.Migrations
                     b.HasKey("Id")
                         .HasName("PK__Countrie__3213E83FA74F3AF0");
 
-                    b.ToTable("Countries");
+                    b.ToTable("Countries", (string)null);
                 });
 
             modelBuilder.Entity("IRIS.Conecta.Domain.Entities.Masters.Department", b =>
@@ -371,7 +371,7 @@ namespace IRIS.Conecta.Persistence.Migrations
                     b.HasIndex(new[] { "Id" }, "IX_Departments_Id")
                         .IsUnique();
 
-                    b.ToTable("Departments");
+                    b.ToTable("Departments", (string)null);
                 });
 
             modelBuilder.Entity("IRIS.Conecta.Domain.Entities.Masters.Faculty", b =>
@@ -406,7 +406,7 @@ namespace IRIS.Conecta.Persistence.Migrations
                     b.HasIndex(new[] { "FacultyName" }, "IX_Faculties_Name")
                         .IsUnique();
 
-                    b.ToTable("Faculties");
+                    b.ToTable("Faculties", (string)null);
                 });
 
             modelBuilder.Entity("IRIS.Conecta.Domain.Entities.Masters.Program", b =>
@@ -455,7 +455,7 @@ namespace IRIS.Conecta.Persistence.Migrations
 
                     b.HasIndex(new[] { "ProgramType" }, "IX_Programs_ProgramType");
 
-                    b.ToTable("Programs");
+                    b.ToTable("Programs", (string)null);
                 });
 
             modelBuilder.Entity("IRIS.Conecta.Domain.Entities.Masters.State", b =>
@@ -567,10 +567,7 @@ namespace IRIS.Conecta.Persistence.Migrations
                     b.Property<string>("Cellphone")
                         .IsRequired()
                         .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
-
-                    b.Property<int?>("CityResidenceId")
-                        .HasColumnType("int");
+                        .HasColumnType("nvarchar(15)");                    
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -629,8 +626,6 @@ namespace IRIS.Conecta.Persistence.Migrations
                     b.HasIndex("BornCountryId");
 
                     b.HasIndex("BornStateId");
-
-                    b.HasIndex("CityResidenceId");
 
                     b.HasIndex("ResidenceStateId");
 
@@ -733,7 +728,58 @@ namespace IRIS.Conecta.Persistence.Migrations
 
                     b.HasIndex(new[] { "RequestTypeId" }, "IX_TemplateResponses_RequestTypeId");
 
-                    b.ToTable("TemplateResponses");
+                    b.ToTable("TemplateResponses", (string)null);
+                });
+
+            modelBuilder.Entity("IRIS.Conecta.Domain.Entities.Tickets.Notifications", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DateModified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
+                    b.Property<int>("NotificationType")
+                        .HasColumnType("int")
+                        .HasColumnName("NotificationType");
+
+                    b.Property<bool>("SendEmail")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false)
+                        .HasColumnName("SendEmail");
+
+                    b.Property<int>("TicketId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id")
+                        .HasName("PK_Notifications");
+
+                    b.HasIndex(new[] { "Id" }, "IX_Notifications_Id")
+                        .IsUnique();
+
+                    b.HasIndex(new[] { "NotificationType" }, "IX_Notifications_NotificationType");
+
+                    b.HasIndex(new[] { "TicketId" }, "IX_Notifications_TicketId");
+
+                    b.ToTable("Notifications", (string)null);
                 });
 
             modelBuilder.Entity("IRIS.Conecta.Domain.Entities.Tickets.Ticket", b =>
@@ -833,7 +879,8 @@ namespace IRIS.Conecta.Persistence.Migrations
                         .HasColumnName("Status");
 
                     b.Property<string>("TicketRequirements")
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)")
                         .HasColumnName("TicketRequirements");
 
                     b.Property<string>("Title")
@@ -865,23 +912,21 @@ namespace IRIS.Conecta.Persistence.Migrations
 
             modelBuilder.Entity("IRIS.Conecta.Domain.Entities.Tickets.TicketsView", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
                     b.Property<string>("AgreementName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("AgreementName");
 
                     b.Property<string>("City")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("City");
 
                     b.Property<string>("ContactData")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("ContactData");
 
                     b.Property<string>("Country")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Country");
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -893,85 +938,111 @@ namespace IRIS.Conecta.Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<DateOnly?>("DeliveryDate")
+                        .HasPrecision(0)
                         .HasColumnType("date");
 
                     b.Property<string>("Department")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Department");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Description");
 
                     b.Property<DateOnly>("EndDateMovility")
+                        .HasPrecision(0)
                         .HasColumnType("date");
 
                     b.Property<DateOnly>("EndDateRequirement")
+                        .HasPrecision(0)
                         .HasColumnType("date");
 
                     b.Property<string>("EventName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("EventName");
 
                     b.Property<string>("ExternalInstitution")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("ExternalInstitution");
 
                     b.Property<string>("FacultyName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("FacultyName");
 
                     b.Property<string>("FullName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("FullName");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("int")
+                        .HasColumnName("Id");
 
                     b.Property<bool?>("IsAgreement")
-                        .HasColumnType("bit");
+                        .HasColumnType("bit")
+                        .HasColumnName("IsAgreement");
 
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ManagerFullName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("ManagerFullName");
 
                     b.Property<string>("ManagerUserId")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("ManagerUserId");
 
                     b.Property<string>("MovilityType")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("MovilityType");
 
                     b.Property<string>("Phone")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Phone");
 
                     b.Property<string>("RequestName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("RequestName");
 
                     b.Property<int>("RequestTypeId")
                         .HasColumnType("int");
 
                     b.Property<string>("Results")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Results");
 
                     b.Property<DateOnly>("StartDateMovility")
+                        .HasPrecision(0)
                         .HasColumnType("date");
 
                     b.Property<DateOnly>("StartDateRequirement")
+                        .HasPrecision(0)
                         .HasColumnType("date");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<int?>("TicketRequirements")
-                        .HasColumnType("int");
+                    b.Property<string>("TicketRequirements")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("TicketRequirements");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Title");
 
                     b.Property<double?>("Total")
-                        .HasColumnType("float");
+                        .HasColumnType("float")
+                        .HasColumnName("Total");
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("UserId");
 
-                    b.HasKey("Id");
+                    b.ToTable((string)null);
 
-                    b.ToTable("TicketsViews");
+                    b.ToView("TicketsView", (string)null);
                 });
 
             modelBuilder.Entity("IRIS.Conecta.Domain.Entities.AcademicData", b =>
@@ -1063,11 +1134,7 @@ namespace IRIS.Conecta.Persistence.Migrations
                         .WithMany()
                         .HasForeignKey("BornStateId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("IRIS.Conecta.Domain.Entities.Masters.City", "CityResidence")
-                        .WithMany()
-                        .HasForeignKey("CityResidenceId");
+                        .IsRequired();                    
 
                     b.HasOne("IRIS.Conecta.Domain.Entities.Masters.State", "StateResidence")
                         .WithMany("PersonalDatas")
@@ -1086,8 +1153,6 @@ namespace IRIS.Conecta.Persistence.Migrations
                     b.Navigation("BornCountry");
 
                     b.Navigation("BornState");
-
-                    b.Navigation("CityResidence");
 
                     b.Navigation("StateResidence");
 
@@ -1114,6 +1179,17 @@ namespace IRIS.Conecta.Persistence.Migrations
                         .HasConstraintName("FK_TemplateResponses_RequestsType_RequestTypeId");
 
                     b.Navigation("RequestType");
+                });
+
+            modelBuilder.Entity("IRIS.Conecta.Domain.Entities.Tickets.Notifications", b =>
+                {
+                    b.HasOne("IRIS.Conecta.Domain.Entities.Tickets.Ticket", "Ticket")
+                        .WithMany("Notifications")
+                        .HasForeignKey("TicketId")
+                        .IsRequired()
+                        .HasConstraintName("FK_Departments_RequestTypes_Id");
+
+                    b.Navigation("Ticket");
                 });
 
             modelBuilder.Entity("IRIS.Conecta.Domain.Entities.Tickets.Ticket", b =>
@@ -1171,6 +1247,8 @@ namespace IRIS.Conecta.Persistence.Migrations
                 {
                     b.Navigation("AcademicData")
                         .IsRequired();
+
+                    b.Navigation("Notifications");
 
                     b.Navigation("PersonalData")
                         .IsRequired();

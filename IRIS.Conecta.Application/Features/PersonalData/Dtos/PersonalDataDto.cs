@@ -9,10 +9,14 @@ namespace IRIS.Conecta.Application.Features.PersonalData.Dtos
         public DocumentType DocumentType { get; set; }
         public DateOnly BirthDate { get; set; }
         public int BornCountryId { get; set; }
+        public string Country_name { get; set; }
         public int BornStateId { get; set; }
         public int BornCityId { get; set; }
+        public string City { get; set; }
         public int ResidenceStateId { get; set; }
+        public string State_name { get; set; }
         public int ResidenceCityId { get; set; }
+        public string ResidenceCity { get; set; }
         public string AddressResidence { get; set; }
         public string PersonalEmail { get; set; }
         public string Phone { get; set; }
