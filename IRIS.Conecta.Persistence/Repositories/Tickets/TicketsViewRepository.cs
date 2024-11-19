@@ -12,7 +12,9 @@ namespace IRIS.Conecta.Persistence.Repositories.Tickets
         public async Task<List<TicketsView>> GetTicketsByUser(string userId)
         {
             var tickets = await _context.TicketsViews
-                .Where(x => x.UserId == userId)
+                .Where(x => x.UserId == userId
+                && x.PersonalDataId != 0
+                && x.AcademicDataId != 0)                
                 .ToListAsync();
 
             return tickets;
