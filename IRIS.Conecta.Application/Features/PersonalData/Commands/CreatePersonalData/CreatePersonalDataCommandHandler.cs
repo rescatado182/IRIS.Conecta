@@ -60,7 +60,8 @@ namespace IRIS.Conecta.Application.Features.PersonalData.Commands.CreatePersonal
                 Description     = ticket.Description,
                 Status          = ticket.Status,
                 RequestTypeId   = ticket.RequestTypeId,
-                PersonalDataId  = PersonalDataId
+                PersonalDataId  = PersonalDataId,
+                AcademicDataId  = ticket.AcademicDataId 
             };
 
             var data = _mapper.Map<Domain.Entities.Tickets.Ticket>(ticketNew);

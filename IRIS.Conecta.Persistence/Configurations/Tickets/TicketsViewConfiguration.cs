@@ -20,8 +20,8 @@ namespace IRIS.Conecta.Persistence.Configurations.Tickets
 
             builder.Property(e => e.DeliveryDate).HasPrecision(0);
 
-            builder.Property(e => e.TicketId)
-                .HasColumnName("TicketId")
+            builder.Property(e => e.Id)
+                .HasColumnName("Id")
                 .IsRequired();
 
             builder.Property(e => e.UserId)
@@ -46,7 +46,7 @@ namespace IRIS.Conecta.Persistence.Configurations.Tickets
             builder.Property(e => e.Phone).HasColumnName("Phone");
             builder.Property(e => e.ContactData).HasColumnName("ContactData");
             builder.Property(e => e.ExternalInstitution).HasColumnName("ExternalInstitution");
-            builder.Property(e => e.ManagerFullName).HasColumnName("ManagerFullName");
+            builder.Property(e => e.ManagerUser).HasColumnName("ManagerUser");
             builder.Property(e => e.TicketRequirements).HasColumnName("TicketRequirements");
             builder.Property(e => e.Total).HasColumnName("Total");
         }

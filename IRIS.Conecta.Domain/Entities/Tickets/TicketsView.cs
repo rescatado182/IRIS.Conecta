@@ -6,7 +6,6 @@ namespace IRIS.Conecta.Domain.Entities.Tickets
     public class TicketsView : BaseEntity
     {
         public int Id { get; set; }
-        public int TicketId { get; set; }
 
         // Título de la Ponencia (S/A)
         public required string Title { get; set; }
@@ -48,12 +47,13 @@ namespace IRIS.Conecta.Domain.Entities.Tickets
         public string? ContactData { get; set; }
 
         public string? ExternalInstitution { get; set; }
-
+        public int PersonalDataId { get; set; }
+        public int AcademicDataId { get; set; }
         public required string UserId { get; set; }
 
         public string? ManagerUserId { get; set; }
 
-        public string? ManagerFullName { get; set; }
+        public string? ManagerUser { get; set; }
 
         public DateOnly StartDateMovility { get; set; }
         public DateOnly EndDateMovility { get; set; }
