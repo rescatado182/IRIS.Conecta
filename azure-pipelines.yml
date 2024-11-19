@@ -12,7 +12,8 @@ pool:
 
 variables:
   buildConfiguration: 'Release'
-  proyecto: IRIS.Conecta.API/IRIS.Conecta.API.csproj
+  proyecto: IRIS.Conecta/IRIS.Conecta.API/IRIS.Conecta.API.csproj
+
 steps:
 - task: UseDotNet@2
   displayName: 'ASP.NET Core 8'
@@ -20,7 +21,7 @@ steps:
     packageType: 'sdk'
     version: '8.0.403'
     includePreviewVersions: true
-- script: dotnet build --configuration $(buildConfiguration) IRIS.Conecta.API/IRIS.Conecta.API.csproj
+- script: dotnet build --configuration $(buildConfiguration) IRIS.Conecta/IRIS.Conecta.API/IRIS.Conecta.API.csproj
   displayName: 'dotnet build $(buildConfiguration)'
 - task: CmdLine@2
   displayName: 'Installing EF Core CLI'
