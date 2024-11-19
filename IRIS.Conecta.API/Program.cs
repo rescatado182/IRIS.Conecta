@@ -49,17 +49,17 @@ var app = builder.Build();
 
 app.UseMiddleware<ExceptionMiddleware>();
 
-using (var scope = app.Services.CreateScope())
-{
-    var context = scope.ServiceProvider.GetRequiredService<IRISConectaDatabaseContext>();
-    context.Database.Migrate();
-}
+//using (var scope = app.Services.CreateScope())
+//{
+//    var context = scope.ServiceProvider.GetRequiredService<IRISConectaDatabaseContext>();
+//    context.Database.Migrate();
+//}
 
-using (var scope = app.Services.CreateScope())
-{
-    var context = scope.ServiceProvider.GetRequiredService<IRISConectaIdentityDbContext>();
-    context.Database.Migrate();
-}
+//using (var scope = app.Services.CreateScope())
+//{
+//    var context = scope.ServiceProvider.GetRequiredService<IRISConectaIdentityDbContext>();
+//    context.Database.Migrate();
+//}
 
 // Configure the HTTP request pipeline.
 //if (app.Environment.IsDevelopment())

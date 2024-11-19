@@ -42,7 +42,8 @@ namespace IRIS.UI.Pages.BL.Tickets.Shared
         {
             enumProgramType = Enum.GetValues(typeof(EnumProgramType)).Cast<EnumProgramType>().ToList();
             await ListAsyncFaculties();
-            programs = SampleData.GetPrograms();
+            await ListAsyncPrograms();
+
         }
 
         public async Task<int> UpdateTicketAcademyDataAsync(int? idTicket, AcademyDataVM academyData, int academicDataId, string userId)
@@ -177,6 +178,22 @@ namespace IRIS.UI.Pages.BL.Tickets.Shared
                 return false;
             }
             faculties = responseHttp.Response;
+            return true;
+        }
+
+        private async Task<bool> ListAsyncPrograms()
+        {
+
+
+            var responseHttp = await Repository.GetAsync<List<ProgramVM>>("/api/programs");
+            if (responseHttp.Error)
+            {
+                var message = await responseHttp.GetErrorMessageAsync();
+
+
+                return false;
+            }
+            programs = responseHttp.Response;
             return true;
         }
     }

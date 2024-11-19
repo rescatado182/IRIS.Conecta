@@ -82,29 +82,32 @@
         </ChildContent>
     </TabBlazor.TabOrder>
 
-    @* Adjuntar Documentos*@
-    <TabBlazor.TabOrder>
-        <Header>
-            <StatusDot BackgroundColor="@((!isCompleted3 ? TablerColor.Blue : TablerColor.Green))" Animate />
-            <Icon class="icon" IconType="@TablerIcons.File_upload" Size="24" /> Adjuntar Documentos
-        </Header>
-        <ChildContent>
-            <h3>Adjuntar Documentos</h3>
-            <AttachDocuments></AttachDocuments>
 
-        </ChildContent>
-    </TabBlazor.TabOrder>
 
 </TabBlazor.TabsOrder>
 
 <!-- Botón de navegación fuera de TabsOrder -->
 <div class="d-flex justify-content-end mt-3">
+    <!-- Botón Anterior -->
     <button class="btn btn-primary me-2" @onclick="PreviousStepAsync" disabled="@IsFirstTab">
         Anterior
     </button>
-    <button class="btn btn-primary" @onclick="NextStepAsync" disabled="@IsLastTab">
-        Siguiente
-    </button>
+
+    <!-- Botón Siguiente -->
+    @if (!IsLastTab)
+    {
+        <button class="btn btn-primary" @onclick="NextStepAsync">
+            Siguiente
+        </button>
+    }
+
+    <!-- Botón Guardar Solicitud -->
+    @if (IsLastTab)
+    {
+        <button class="btn btn-success" @onclick="SaveTicket">
+            Guardar Solicitud
+        </button>
+    }
 </div>
 
 
