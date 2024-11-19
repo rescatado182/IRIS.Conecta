@@ -13,11 +13,21 @@ namespace IRIS.UI.Pages.BL.Actions
         [Inject] IHttpClientFactory HttpClientFactory { get; set; }
         [Inject] private HttpClient HttpClient { get; set; }
 
+        [Parameter] public string tipo_movilidad { get; set; }
+
+
+        [Parameter]
+        public string Query { get; set; }
+
+        private string tipo_solicitud = "Movilidad";
+
         // Propiedades privadas
-        private List<SimilarAnswersVM> data;
-        private List<SimilarAnswersVM> resultados = new();
+
+        private List<Resultado> resultados = new();
         private string responseMessage;
         private ServiceResponse serviceResponse;
+
+        private string GenerateLink(string ticketId) => $"/ticketDetails/{ticketId}";
 
         // Inicialización del request
         private RootRequest rootRequest = new RootRequest
@@ -31,6 +41,10 @@ namespace IRIS.UI.Pages.BL.Actions
         };
 
         // Método para enviar datos al servicio
+
+        protected override async Task OnInitializedAsync() {
+           await  SendData();
+        }
         private async Task SendData()
         {
             try
@@ -39,6 +53,13 @@ namespace IRIS.UI.Pages.BL.Actions
                 var client = HttpClientFactory.CreateClient("ExternalApi");
 
                 string endpoint = "https://ww4onj5obf.execute-api.us-east-1.amazonaws.com/prod/search";
+
+                // Actualiza los filtros dinámicamente
+                rootRequest.Body.Query = Query;
+                rootRequest.Body.Filtros.tipo_solicitud = tipo_solicitud;
+                rootRequest.Body.Filtros.tipo_movilidad = tipo_movilidad;
+
+                Console.WriteLine(tipo_solicitud, tipo_movilidad);
 
                 // Enviar el JSON como POST
                 var response = await client.PostAsJsonAsync(endpoint, rootRequest);
@@ -49,14 +70,19 @@ namespace IRIS.UI.Pages.BL.Actions
 
                     if (jsonResponse?.Body?.Resultados != null)
                     {
-                        resultados = jsonResponse.Body.Resultados.Select(r => new SimilarAnswersVM
+                        resultados = jsonResponse.Body.Resultados.Select(r => new Resultado
                         {
-                            id = r.Id,
-                            Request = r.Solicitud,
-                            Answer = r.Respuesta,
-                            score = r.Score.ToString("F2")
+                            Id = r.Id,
+                            Solicitud = r.Solicitud,
+                            Respuesta = r.Respuesta,
+                            tipo_solicitud = r.tipo_solicitud,
+                            tipo_movilidad = r.tipo_movilidad,
+                            Facultad = r.Facultad,
+                            Programa = r.Programa
+
                         }).ToList();
                     }
+
                 }
                 else
                 {

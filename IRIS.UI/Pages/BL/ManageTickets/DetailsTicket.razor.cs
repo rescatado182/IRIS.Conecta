@@ -116,7 +116,7 @@ namespace IRIS.UI.Pages.BL.ManageTickets
 
         private async Task<bool> GetListPersonalDataTicketAsync()
         {
-            var responseHttp = await Repository.GetAsync<PersonalDataDetailVM>($"/api/personaldata/{ticket.Id}");
+            var responseHttp = await Repository.GetAsync<PersonalDataDetailVM>($"/api/personaldata/{ticket.personalDataId}");
             if (responseHttp.Error || responseHttp.Response == null)
             {
                 var message = await responseHttp.GetErrorMessageAsync();
@@ -129,7 +129,7 @@ namespace IRIS.UI.Pages.BL.ManageTickets
 
         private async Task<bool> GetListAcademicDataTicketAsync()
         {
-            var responseHttp = await Repository.GetAsync<AcademyDataDetailVM>($"/api/academicdata/{ticket.Id}");
+            var responseHttp = await Repository.GetAsync<AcademyDataDetailVM>($"/api/academicdata/{ticket.academicDataId}");
 
 
             if (responseHttp.Error || responseHttp.Response == null)
@@ -215,14 +215,12 @@ namespace IRIS.UI.Pages.BL.ManageTickets
         private async Task SimilarAnswer()
         {
             // Define the component `ChangeStatus` and configure its properties
-            var component = new RenderComponent<SimilarAnswerTicket>();
-            //.Set(e => e.ticketId, ticketId)
-            //.Set<string>(e => e.userId, ticket.UserId)
-            //.Set<string>(e => e.CurrentStatus, ticket.Status)
-            //.Set<string>(e => e.ManagerUserId, ticket.ManagerUserId)
-            //.Set(e => e.OnClose, EventCallback.Factory.Create(this, RefreshTicketDetails));
+            var component = new RenderComponent<SimilarAnswerTicket>()
+            .Set(e => e.tipo_movilidad, ticket.MovilityTypeDisplayName)
+            .Set(e => e.Query, ticket.Busqueda);
 
-            var result = await ModalService.ShowAsync("Tracking Solicitud", component, new ModalOptions { Size = ModalSize.Medium });
+
+            var result = await ModalService.ShowAsync("Solicitudes Similares", component, new ModalOptions { Size = ModalSize.XLarge });
 
 
         }

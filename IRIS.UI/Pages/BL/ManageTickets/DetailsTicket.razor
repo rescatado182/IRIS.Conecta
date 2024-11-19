@@ -22,15 +22,33 @@ else{
                     <DropdownItem OnClick="TrackingTicket">Ver Tracking Solicitud</DropdownItem>
                     <DropdownItem OnClick="EscalateTicket">Escalar</DropdownItem>
                     <DropdownItem OnClick="ResponseTicket">Responder</DropdownItem>
-                    <DropdownItem OnClick="SimilarAnswer">Ver Respuestas Similares</DropdownItem>
+                    <DropdownItem OnClick="SimilarAnswer">Ver Recomendaciones de Respuesta</DropdownItem>
                 </DropdownMenu>
             </DropdownTemplate>
 
         </Dropdown>
 
 
+            <Dropdown>
+                <ChildContent>
+                    <Button BackgroundColor="TablerColor.Yellow" Type="ButtonType.Button" Text="Acciones de la Solicitud" IsDropdown />
+                </ChildContent>
 
-    </ButtonList>
+                <DropdownTemplate>
+                    <DropdownMenu>
+
+                        <DropdownItem OnClick="SendNotificationTicket">Enviar Notificación</DropdownItem>
+                        <DropdownItem OnClick="ChangeStatusTicket">Cancelar Solicitud</DropdownItem>
+                        <DropdownItem OnClick="TrackingTicket">Ver Tracking Solicitud</DropdownItem>
+
+                    </DropdownMenu>
+                </DropdownTemplate>
+
+            </Dropdown>
+
+        </ButtonList>
+
+
     </div>
     <br />
 
@@ -45,7 +63,7 @@ else{
                         <Badge BackgroundColor="TablerColor.Green">@ticket.Id</Badge>
                     </DataGridItem>
                     <DataGridItem Title="Fecha Solictud">
-                        <span style="color: darkgray;">@ticket.DateCreated</span>
+                        <span style="color: darkgray;">@ticket.dateCreated</span>
                     </DataGridItem>
                     <DataGridItem Title="Usuario">
                     <Badge BackgroundColor="TablerColor.Green">@ticket.UserName</Badge>
@@ -116,7 +134,7 @@ else{
             <DataGrid>
 
                 <DataGridItem Title="Tipo de Movilidad">
-                    <Badge BackgroundColor="TablerColor.Blue" BadgeType="BadgeType.Outline">@ticket.MovilityType</Badge>
+                    <Badge BackgroundColor="TablerColor.Green" Size=BadgeSize.Large BadgeType="BadgeType.Light">@ticket.MovilityTypeDisplayName</Badge>
                 </DataGridItem>
                 <DataGridItem Title="Institución de destino">@ticket.ExternalInstitution</DataGridItem>
                 <DataGridItem Title="Datos de contacto">@ticket.ContactData</DataGridItem>

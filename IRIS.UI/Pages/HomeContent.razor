@@ -1,0 +1,59 @@
+﻿<h1>👋 ¡Bienvenida, @userData.FirstName!</h1>
+<p>Nos alegra verte de nuevo. Aquí tienes un resumen de tu día.</p>
+
+<div class="dashboard-summary">
+    <!-- Solicitudes Pendientes -->
+    <Card>
+        <CardBody>
+            <h3>📂 Solicitudes pendientes</h3>
+            <p>Tienes <strong>@tickets.Count solicitudes</strong> en tu bandeja de gestión.</p>
+            <Button BackgroundColor="TablerColor.Primary" Type="ButtonType.Link" LinkTo="/managesTickets" Text="Ver Bandeja" />
+        </CardBody>
+    </Card>
+
+    <Card>
+        <CardBody>
+            <h3>🔔 Notificaciones importantes</h3>
+            <p>📅 Recuerda: La fecha límite para presentar las solicitudes al comitè curricular es <strong>30 de noviembre de 2024</strong></p>
+            <p>✨ Nueva funcionalidad disponible:<strong>Busqueda de Solicitudes</strong> <a href="/newFeatures">Explora ahora</a></p>
+        </CardBody>
+    </Card>
+
+    <!-- Calendario -->
+    <Card>
+        <CardBody>
+            <h3>📅 Calendario</h3>
+            <p>🗓️ Próximos eventos:</p>
+            <ul>
+                <li>Reunión de equipo: 18 de noviembre de 2024 a las 3:00 PM</li>
+                <li>Plazo para actualizar solicitudes: 20 de noviembre de 2024</li>
+            </ul>
+        </CardBody>
+    </Card>
+
+    <!-- Accesos Rápidos -->
+    <Card>
+        <CardBody>
+            <h3>🚀 Accesos rápidos</h3>
+
+            <Button BackgroundColor="TablerColor.Success" Type="ButtonType.Link" LinkTo="/ticket/selection" Size="ButtonSize.Small" Text="Crear Solicitud" />
+            <Button BackgroundColor="TablerColor.Info" Type="ButtonType.Link" LinkTo="/ticket/search" Size="ButtonSize.Small" Text="Ver Busqueda de Solicitudes" />
+            <Button BackgroundColor="TablerColor.Warning" Type="ButtonType.Link" LinkTo="/help" Size="ButtonSize.Small" Text="Ayuda" />
+
+        </CardBody>
+    </Card>
+
+
+</div>
+
+<style>
+    .dashboard-summary {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1rem;
+    }
+    .quick-access {
+        display: flex;
+        gap: 0.5rem;
+    }
+</style>

@@ -9,7 +9,7 @@ namespace IRIS.UI.Models.List
 
         public string Status { get; set; }
 
-        public string DateCreated { get; set; }
+        public string dateCreated { get; set; }
 
         public string UserId { get; set; }
 
@@ -20,6 +20,9 @@ namespace IRIS.UI.Models.List
 
         public string UserName { get; set; }
 
+        public int personalDataId { get; set; }
+
+        public int academicDataId { get; set; }
 
         ////Datos Personas
         //public string FullName { get; set; }
@@ -109,9 +112,17 @@ namespace IRIS.UI.Models.List
 
         public DateTime EndDateRelease { get; set; }
 
+        // crear campo concatenado con los campos  AgreementName, EventName, Title, descrition
+
+        public string Busqueda
+        {
+            get { return AgreementName + " " + EventName + " " + Title + " " + Description; }
+        }
 
 
-        //public List<TicketRequirement> TicketRequirements { get; set; }
+
+
+            //public List<TicketRequirement> TicketRequirements { get; set; }
 
         public decimal Total { get; set; }
 
@@ -127,6 +138,18 @@ namespace IRIS.UI.Models.List
             }
         }
 
+
+        public string MovilityTypeDisplayName => GetDisplayNameForMovilityType(MovilityType);
+
+        // Función para obtener el DisplayName de TicketsStatus
+        private string GetDisplayNameForMovilityType(string status)
+        {
+            if (Enum.TryParse(status, out EnumMovilityType parsedStatus))
+            {
+                return parsedStatus.GetDisplayName();
+            }
+            return string.Empty; // Devuelve vacío si no se puede obtener el nombre
+        }
         public TablerColor GetTicketStatusColor()
         {
             return Status.ToLower() switch
