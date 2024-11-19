@@ -1,4 +1,4 @@
-﻿<Timeline Type="TimelineType.Default">
+﻿@* <Timeline Type="TimelineType.Default">
 
     <TimelineItem Time="2020-12-28" Title="Cambio de Estado" IconColor="TablerColor.Green" IconText="Estado">
         <IconTemplate>
@@ -51,4 +51,29 @@
             <p class="text-secondary">La solicitud ha sido escalada a Diego Leon - Jefe de Departamento</p>
         </ChildContent>
     </TimelineItem>
+</Timeline>
+ *@
+
+<Timeline Type="TimelineType.Default">
+    @if (Notifications != null && Notifications.Any())
+    {
+        @foreach (var notification in Notifications)
+        {
+            <TimelineItem Time="@notification.DateCreated.ToString("yyyy-MM-dd")"
+                          Title="@GetTitle(notification.NotificationTypeEnum)"
+                          IconColor="@GetIconColor(notification.NotificationTypeEnum)"
+                          IconText="@notification.NotificationTypeEnum.ToString()">
+                <IconTemplate>
+                    <Icon IconType="@GetIcon(notification.NotificationTypeEnum)" Size="16" />
+                </IconTemplate>
+                <ChildContent>
+                    <p class="text-secondary">@notification.Message</p>
+                </ChildContent>
+            </TimelineItem>
+        }
+    }
+    else
+    {
+        <p>No hay notificaciones disponibles.</p>
+    }
 </Timeline>

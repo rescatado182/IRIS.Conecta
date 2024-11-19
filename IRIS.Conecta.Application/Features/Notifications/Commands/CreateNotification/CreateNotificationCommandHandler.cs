@@ -45,9 +45,9 @@ namespace IRIS.Conecta.Application.Features.Notifications.Commands.CreateNotific
             // Saving data
             await _notificationsRepository.CreateAsync(notification);
 
-            if (notification.SendEmail) { 
-                this.SendNotificationEmailAsync(notification, notification.TicketId);
-            }
+            //if (notification.SendEmail) { 
+            //    this.SendNotificationEmailAsync(notification, notification.TicketId);
+            //}
 
             return notification.Id;
         }

@@ -35,7 +35,7 @@ namespace IRIS.UI.Pages.BL.Tickets.RequestTickets.Movility.Information
 
 
             //start date must be greater than today
-            if (justificationMovility.DeliveryDate < DateOnly.FromDateTime(DateTime.Now))
+            if (justificationMovility.DeliveryDate <= DateOnly.FromDateTime(DateTime.Now))
             {
                 await ToastService.AddToastAsync(new ToastModel { Title = "Fecha entrega compromisos", Message = "La Fecha entrega compromisos debe ser mayor a la fecha actual" });
                 return false;

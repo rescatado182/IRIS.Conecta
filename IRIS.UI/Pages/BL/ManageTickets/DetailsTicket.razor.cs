@@ -200,8 +200,8 @@ namespace IRIS.UI.Pages.BL.ManageTickets
         private async Task TrackingTicket()
         {
             // Define the component `ChangeStatus` and configure its properties
-            var component = new RenderComponent<ViewTrackingTicket>();
-            //.Set(e => e.ticketId, ticketId)
+            var component = new RenderComponent<ViewTrackingTicket>()
+            .Set(e => e.ticketId, ticketId);
             //.Set<string>(e => e.userId, ticket.UserId)
             //.Set<string>(e => e.CurrentStatus, ticket.Status)
             //.Set<string>(e => e.ManagerUserId, ticket.ManagerUserId)

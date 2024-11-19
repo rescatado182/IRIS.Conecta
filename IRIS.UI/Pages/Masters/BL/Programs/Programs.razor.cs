@@ -17,6 +17,9 @@ namespace IRIS.UI.Pages.Masters.BL.Programs
         public List<ProgramVM>? programs { get; set; }
         public List<DepartmentsVM>? departments { get; set; }
 
+        private EnumProgramType selectedProgramType;
+        private List<EnumProgramType> enumProgramType = new List<EnumProgramType>();
+
         DepartmentsVM selectedDepartment;
 
         private TableEditMode tableEditMode;
@@ -25,7 +28,7 @@ namespace IRIS.UI.Pages.Masters.BL.Programs
 
         protected override async Task OnInitializedAsync()
         {
-
+            enumProgramType = Enum.GetValues(typeof(EnumProgramType)).Cast<EnumProgramType>().ToList();
             await ListAsyncDepartments();
             await ListAsync();
 
@@ -44,23 +47,34 @@ namespace IRIS.UI.Pages.Masters.BL.Programs
 
                 return false;
             }
-            programs = responseHttp.Response;
+            var allprograms = responseHttp.Response;
+
+            programs = allprograms.Select(p => new ProgramVM
+            {
+                Id = p.Id,
+                ProgramName = p.ProgramName,
+                ProgramType = p.ProgramType,
+                DepartmentId = p.DepartmentId,
+                DepartmentName = departments.FirstOrDefault(d => d.Id == p.DepartmentId)?.DepartmentName ?? "Desconocido"
+            }).ToList();
+
             return true;
         }
 
         private async Task CreateAsync(ProgramVM program)
         {
 
-            //program.Department = (selectedDepartment = departments.FirstOrDefault(f => f.Id == program.DepartmentId)) != null ? selectedDepartment : program.Department;
+            program.DepartmentId = (selectedDepartment = departments.FirstOrDefault(f => f.Id == program.DepartmentId)) != null ? selectedDepartment.Id : program.DepartmentId;
+            program.ProgramType = selectedProgramType.ToString();
 
 
-            //var responseHttp = await Repository.PostAsync("/api/programs", program);
-            //if (responseHttp.Error)
-            //{
-            //    var message = await responseHttp.GetErrorMessageAsync();
+            var responseHttp = await Repository.PostAsync("/api/programs", program);
+            if (responseHttp.Error)
+            {
+                var message = await responseHttp.GetErrorMessageAsync();
+                await ShowDialog($"Error: {message}");
 
-
-            //}
+            }
 
             return;
 
@@ -96,39 +110,38 @@ namespace IRIS.UI.Pages.Masters.BL.Programs
         }
 
 
-        private Task<ProgramVM> AddItem()
-        {
-
-
-            return Task.FromResult(new ProgramVM
-            {
-                //Department = new DepartmentsVM
-                //{
-                //    DepartmentName = selectedDepartment != null ? selectedDepartment.DepartmentName : "New",
-                //    Id = selectedDepartment != null ? selectedDepartment.Id : 0 // O un valor que tenga sentido en tu contexto
-                //}
-            });
-        }
+        //private Task<ProgramVM> AddItem()
+        //{
+        //    return Task.FromResult(new ProgramVM
+        //    {
+        //        Department = new DepartmentsVM
+        //        {
+        //            DepartmentName = departments != null ? selectedDepartment.DepartmentName : "New",
+        //            Id = selectedDepartment != null ? selectedDepartment.Id : 0 // O un valor que tenga sentido en tu contexto
+        //        }
+        //    });
+        //}
 
         private async Task OnItemEdit(ProgramVM program)
         {
-        //    program.DepartmentId = selectedDepartment.Id;
-        //    await EditAsync(program);
-        //    await ShowDialog($"Item Editado: {program.RequestName}");
-        //    await ListAsync();
+            program.DepartmentId = selectedDepartment.Id;
+            await EditAsync(program);
+            await ShowDialog($"Item Editado: {program.ProgramName}");
+            await ListAsync();
         }
 
         private async Task OnItemAdd(ProgramVM program)
         {
-            //program.DepartmentId = selectedDepartment.Id;
-            //await CreateAsync(program);
-            //await ShowDialog($"Item Añadido: {program.RequestName}");
+            program.DepartmentId = selectedDepartment.Id;
+            await CreateAsync(program);
+            await ShowDialog($"Item Añadido: {program.ProgramName}");
+            await ListAsync();
         }
 
         private async Task OnItemDelete(ProgramVM program)
         {
-            //await DeleteAsync(program);
-            //await ShowDialog($"Item Eliminado: {program.RequestName}");
+            await DeleteAsync(program);
+            await ShowDialog($"Item Eliminado: {program.ProgramName}");
         }
 
         private async Task<bool> ListAsyncDepartments()
@@ -154,7 +167,7 @@ namespace IRIS.UI.Pages.Masters.BL.Programs
 
             if (options.IsAddInProgress)
             {
-                options.Title = "Agregar Nuevo Tipo de Solicitud";
+                options.Title = "Agregar Nuevo Programa";
             }
             else
             {

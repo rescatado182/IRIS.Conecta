@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using TabBlazor;
 
 namespace IRIS.UI.Models
 {
@@ -13,5 +14,12 @@ namespace IRIS.UI.Models
 
         public int DepartmentId { get; set; }
 
+        public string ProgramType { get; set; }
+
+        public EnumProgramType EnumProgramType { get; set; }
+
+        public string DepartmentName { get; set; } = null!;
+
+        public DepartmentsVM Department { get; set; } = null!;
     }
 }

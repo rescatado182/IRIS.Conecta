@@ -3,7 +3,7 @@
 
 @if (departments is null)
 {
-    <Progress Color="TablerColor.Blue" Indeterminate />
+    <Loading></Loading>
 }
 else
 {
@@ -31,12 +31,12 @@ else
                 </EditorTemplate>
             </Column>
 
-
+@* 
             @if (selectedFaculty != null)
             {
                 <div>@selectedFaculty.FacultyName [@selectedFaculty.Id]</div>
             }
-
+ *@
 
 
         </ChildContent>

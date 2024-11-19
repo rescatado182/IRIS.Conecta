@@ -2,11 +2,13 @@
 using IRIS.Frontend.Repositories;
 using IRIS.UI.Icons;
 using IRIS.UI.Models;
+using IRIS.UI.Models.Enums;
 using IRIS.UI.Models.List;
 using IRIS.UI.Models.Save;
 using IRIS.UI.Models.Update;
 using IRIS.UI.Pages.BL.ManageTickets;
 using IRIS.UI.Pages.BL.Tickets.RequestTickets.Movility;
+using IRIS.UI.Services;
 using Microsoft.AspNetCore.Components;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json;
@@ -22,6 +24,8 @@ namespace IRIS.UI.Pages.BL.Actions
         [Inject] TicketMovilityRequest MovilityRequestState { get; set; }
 
         [Inject] private IRepository Repository { get; set; } = null!;
+
+        [Inject] private INotificationService NotificationService { get; set; }
 
         [Inject] IModalService ModalService { get; set; }
 
@@ -98,9 +102,12 @@ namespace IRIS.UI.Pages.BL.Actions
                 // Llamada a la API para cambiar el estado
                 await ChangeStatusAsync(ticketId, userId, ManagerUserId);
 
+
                 CurrentStatusText = CurrentStatusDisplayNameText;
 
-                await ModalService.ShowDialogAsync(new DialogOptions
+                await SendNotification();
+
+            await ModalService.ShowDialogAsync(new DialogOptions
                 {
                     MainText = "Cambio de Estado",
                     SubText = $"Has cambiado el estado a {SelectedStatus.GetDisplayName()}!",
@@ -113,6 +120,28 @@ namespace IRIS.UI.Pages.BL.Actions
 
 
         }
+
+        private async Task SendNotification()
+        {
+            var notification = new NotificationVM
+            {
+                Message = $"Se cambió estado a {SelectedStatus.GetDisplayName()}",
+                SendEmail = false,
+                TicketId = ticketId,
+                NotificationType = NotificationType.ChangeStatus.ToString()
+            };
+
+            try
+            {
+                await NotificationService.SendNotificationAsync(notification);
+                Console.WriteLine("Notificación enviada exitosamente.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al enviar notificación: {ex.Message}");
+            }
+        }
+
 
         /// <summary>
         /// Crea el ViewModel para enviar al servidor.
