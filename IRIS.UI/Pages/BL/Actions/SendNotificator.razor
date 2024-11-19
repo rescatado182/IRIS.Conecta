@@ -1,11 +1,19 @@
 ﻿<div>
     <h3>Agregar Comentario</h3>
-    <div>
-        <textarea class="form-control" @bind="CommentText" placeholder="Escribe tu comentario aquí"></textarea>
+
+    <!-- Texto del comentario -->
+    <div class="mb-3">
+
+        <textarea type="text" class="form-control" @bind="CommentText" Rows="5" Style="width: 100%;"></textarea>
     </div>
-    <div class="form-check mt-3">
-        <input class="form-check-input" type="checkbox" @bind="SendByEmail" id="sendEmailCheckbox" />
-        <label class="form-check-label" for="sendEmailCheckbox">Enviar por correo</label>
+
+    <!-- Checkbox para enviar por correo -->
+    <div class="form-check mb-3">
+        <Checkbox TValue="bool" @bind-Value="SendByEmail">Enviar por correo</Checkbox>
     </div>
-    <button class="btn btn-primary mt-3" @onclick="HandleSubmit">Enviar Comentario</button>
+
+    <!-- Botón para enviar -->
+    <div class="mb-3">
+        <Button BackgroundColor="TablerColor.Blue" OnClick="OnSubmitAsync" Disabled="IsSubmitting">Enviar Comentario</Button>
+    </div>
 </div>
