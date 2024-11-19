@@ -36,24 +36,38 @@ namespace IRIS.UI.Pages.BL.Tickets.SearchTickets
         {
             IsActionPanelVisible = !IsActionPanelVisible;
         }
-
+        private int? SelectedTicketId { get; set; }
+        private bool IsTicketDetailsVisible { get; set; } = false;
         private string statusText { get; set; } = null!;
 
         public List<ManagersListVM> managers { get; set; }
         public GetTicketbyIdVM ticket { get; set; } = null!;
 
+        public GetTicketbyIdVM selectedOrders { get; set; } = null!;
+
+
         public PersonalDataDetailVM personalDataTicket { get; set; } = null!;
 
         public AcademyDataDetailVM academicDataTicket { get; set; } = null!;
 
-
         [Parameter] public string tipo_movilidad { get; set; }
-        [Parameter] public string Query { get; set; }
+
+
+        [Parameter]
+        public string Query { get; set; }
 
         private string tipo_solicitud = "Movilidad";
+
+        // Propiedades privadas
+
         private List<Resultado> resultados = new();
         private string responseMessage;
         private ServiceResponse serviceResponse;
+
+        private string GenerateLink(string ticketId) => $"/ticketDetails/{ticketId}";
+
+
+
 
         private RootRequest rootRequest = new RootRequest
         {
@@ -65,8 +79,9 @@ namespace IRIS.UI.Pages.BL.Tickets.SearchTickets
             }
         };
 
-        private async Task GetTicketbyId()
+        private async Task GetTicketByIdAsync()
         {
+
             var responseHttp = await Repository.GetAsync<GetTicketbyIdVM>($"/api/Tickets/{Query}");
             if (responseHttp.Error)
             {
@@ -76,6 +91,10 @@ namespace IRIS.UI.Pages.BL.Tickets.SearchTickets
 
             ticket = responseHttp.Response;
             statusText = ticket.StatusDisplayName;
+
+            await GetListPersonalDataTicketAsync();
+            await GetListAcademicDataTicketAsync();
+
 
             await GetListManagersAsync();
 
@@ -119,6 +138,35 @@ namespace IRIS.UI.Pages.BL.Tickets.SearchTickets
             return true;
         }
 
+        private async Task<bool> GetListPersonalDataTicketAsync()
+        {
+            var responseHttp = await Repository.GetAsync<PersonalDataDetailVM>($"/api/personaldata/{ticket.personalDataId}");
+            if (responseHttp.Error || responseHttp.Response == null)
+            {
+                var message = await responseHttp.GetErrorMessageAsync();
+                return false;
+            }
+
+            personalDataTicket = responseHttp.Response;
+            return true;
+        }
+
+        private async Task<bool> GetListAcademicDataTicketAsync()
+        {
+            var responseHttp = await Repository.GetAsync<AcademyDataDetailVM>($"/api/academicdata/{ticket.academicDataId}");
+
+
+            if (responseHttp.Error || responseHttp.Response == null)
+            {
+                var message = await responseHttp.GetErrorMessageAsync();
+                return false;
+            }
+
+            academicDataTicket = responseHttp.Response;
+            return true;
+        }
+
+
 
         private async Task SendData()
         {
@@ -161,6 +209,6 @@ namespace IRIS.UI.Pages.BL.Tickets.SearchTickets
             }
         }
 
-        private string GenerateLink(string ticketId) => $"/ticketDetails/{ticketId}";
+
     }
 }

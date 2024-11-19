@@ -162,10 +162,11 @@ namespace IRIS.UI.Pages.BL.ManageTickets
         {
             // Define the component `CreateComments` and configure its properties
             var component = new RenderComponent<SendNotificator>()
-                .Set(e => e.OnSubmit, EventCallback.Factory.Create<string>(this, SubmitCommentAsync));
+                .Set(e => e.ticketId, ticketId);
+
 
             // Open the Offcanvas with the comment form
-            await offcanvasService.ShowAsync("Comentario para el Ticket", component, options);
+            await ModalService.ShowAsync("Enviar Comentario", component, new ModalOptions { Size = ModalSize.Medium });
         }
 
         public TablerColor GetTicketStatusColor()

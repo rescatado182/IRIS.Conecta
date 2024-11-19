@@ -1,4 +1,5 @@
 ﻿@page "/ticket/search"
+@using IRIS.UI.Models.List
 
 <h3>🔍 Buscar Respuestas Similares</h3>
 <p>Introduce un número de solicitud o pega texto relacionado con tu consulta para buscar respuestas similares.</p>
@@ -7,23 +8,149 @@
     <CardBody>
 
    
-                <TablerForm>
+        <TablerForm>
                 <div class="mb-3">
+                    <label class="form-label">Buscar Solicitud:</label>
+                    <InputText class="form-control" @bind-Value="Query" Rows="4"/>
+                 </div>
 
-                <label class="form-label">Buscar Solicitud:</label>
-                <InputText class="form-control" @bind-Value="Query" Rows="4"/>
-        </div>
-
-                <Button BackgroundColor="TablerColor.Success" OnClick="GetTicketbyId">
+            <Button BackgroundColor="TablerColor.Success" OnClick="GetTicketByIdAsync">
                     Buscar por Solicitud
-                </Button>
-                <Button BackgroundColor="TablerColor.Secondary" OnClick="SendData">
+            </Button>
+            <Button BackgroundColor="TablerColor.Secondary" OnClick="SendData">
                     Buscar en IA
-                </Button>
+            </Button>
 
         </TablerForm>
     </CardBody>
 </Card>
+<br />
+
+@if(ticket is not null){
+
+    <Card Size="CardSize.Default">
+        <CardHeader>
+            <h3>Información del Ticket</h3>
+        </CardHeader>
+        <CardBody>
+            <DataGrid>
+
+                <DataGridItem Title="Nro Solicitud">
+                    <Badge BackgroundColor="TablerColor.Green">@ticket.Id</Badge>
+                </DataGridItem>
+                <DataGridItem Title="Fecha Solictud">
+                    <span style="color: darkgray;">@ticket.dateCreated</span>
+                </DataGridItem>
+                <DataGridItem Title="Usuario">
+                    <Badge BackgroundColor="TablerColor.Green">@ticket.UserName</Badge>
+                </DataGridItem>
+                <DataGridItem Title="Gestor">
+                    <Badge BackgroundColor="TablerColor.Green">@ticket.ManagerUserName</Badge>
+                </DataGridItem>
+                <DataGridItem Title="Estado">
+                    <Status BackgroundColor=@ticket.GetTicketStatusColor()>@statusText</Status>
+                </DataGridItem>
+
+
+            </DataGrid>
+        </CardBody>
+    </Card>
+    <br />
+<Card Size="CardSize.Default">
+    <CardHeader>
+        <h3>Datos Personales</h3>
+    </CardHeader>
+    <CardBody>
+        <DataGrid>
+
+            <DataGridItem Title="Nombre completo">@personalDataTicket.FullName</DataGridItem>
+            <DataGridItem Title="Documento Identidad">@personalDataTicket.DocumentNumber</DataGridItem>
+            <DataGridItem Title="Tipo Documento">@personalDataTicket.DocumentType</DataGridItem>
+            <DataGridItem Title="País de nacimiento">@personalDataTicket.BornCityId</DataGridItem>
+            <DataGridItem Title="Departamento de nacimiento">@personalDataTicket.BornStateId</DataGridItem>
+            <DataGridItem Title="Ciudad de nacimiento">@personalDataTicket.BornCityId</DataGridItem>
+            <DataGridItem Title="Departamento de residencia">@personalDataTicket.ResidenceStateId</DataGridItem>
+            <DataGridItem Title="Ciudad de residencia">@personalDataTicket.ResidenceCityId</DataGridItem>
+            <DataGridItem Title="Dirección residencia">@personalDataTicket.AddressResidence</DataGridItem>
+            <DataGridItem Title="Correo personal">@personalDataTicket.PersonalEmail</DataGridItem>
+            <DataGridItem Title="Teléfono fijo">@personalDataTicket.Phone</DataGridItem>
+            <DataGridItem Title="Teléfono celular">@personalDataTicket.Cellphone</DataGridItem>
+
+
+        </DataGrid>
+    </CardBody>
+</Card>
+<br />
+<Card Size="CardSize.Default">
+    <CardHeader>
+        <h3>Datos Acádemicos</h3>
+    </CardHeader>
+    <CardBody>
+        <DataGrid>
+
+
+            <DataGridItem Title="Programa">@academicDataTicket.ProgramId</DataGridItem>
+            <DataGridItem Title="Proyecto de investigación (S/A)">@academicDataTicket.ResearchProject</DataGridItem>
+            <DataGridItem Title="Promedio crédito">@academicDataTicket.AverageCredit</DataGridItem>
+            <DataGridItem Title="Tipo de formación">@academicDataTicket.ProgramType.ToString()</DataGridItem>
+            <DataGridItem Title="G. de investigación/Semillero (S/A)">@academicDataTicket.ResearchGroup</DataGridItem>
+            <DataGridItem Title="¿Pertenece a algún grupo cultural o deportivo institucional?">@(academicDataTicket.IsInstitutionalGroup ? "Sí" : "No")</DataGridItem>
+
+
+        </DataGrid>
+    </CardBody>
+</Card>
+<br />
+
+<Card Size="CardSize.Default">
+    <CardHeader>
+        <h3>Tipo de Movilidad</h3>
+    </CardHeader>
+    <CardBody>
+        <DataGrid>
+
+            <DataGridItem Title="Tipo de Movilidad">
+                <Badge BackgroundColor="TablerColor.Green" Size=BadgeSize.Large BadgeType="BadgeType.Light">@ticket.MovilityTypeDisplayName</Badge>
+            </DataGridItem>
+            <DataGridItem Title="Institución de destino">@ticket.ExternalInstitution</DataGridItem>
+            <DataGridItem Title="Datos de contacto">@ticket.ContactData</DataGridItem>
+            <DataGridItem Title="País de destino">@ticket.Country</DataGridItem>
+            <DataGridItem Title="Ciudad de Destino">@ticket.City</DataGridItem>
+            <DataGridItem Title="Nombre de la actividad que origina la movilidad">@ticket.EventName</DataGridItem>
+            <DataGridItem Title="Título de la ponencia (S/A)">@ticket.Title</DataGridItem>
+            <DataGridItem Title="Fecha de inicio movilidad">@ticket.StartDateMovility</DataGridItem>
+            <DataGridItem Title="Fecha final movilidad">@ticket.EndDateMovility</DataGridItem>
+
+        </DataGrid>
+    </CardBody>
+</Card>
+<br />
+
+<Card Size="CardSize.Default">
+    <CardHeader>
+        <h3>Justificación</h3>
+    </CardHeader>
+    <CardBody>
+        <DataGrid>
+
+            <DataGridItem Title="La movilidad está dada en el marco de un convenio">@(ticket.IsAgreement ? "Sí" : "No")</DataGridItem>
+            <DataGridItem Title="Convenio (S/A)">
+                <Badge BackgroundColor="TablerColor.Green" BadgeType="BadgeType.Outline">@ticket.AgreementName</Badge>
+            </DataGridItem>
+            <DataGridItem Title="Objetivo de la movilidad">
+                <Badge BackgroundColor="TablerColor.Orange" BadgeType="BadgeType.Outline">@ticket.Description</Badge>
+            </DataGridItem>
+            <DataGridItem Title="Productos a entregar en retribución">@ticket.Results</DataGridItem>
+            <DataGridItem Title="Fecha entrega compromisos">@ticket.DeliveryDate</DataGridItem>
+
+
+        </DataGrid>
+    </CardBody>
+</Card>
+<br />
+
+
+}
 
 @if (resultados != null && resultados.Any())
 
@@ -32,10 +159,11 @@
         <CardBody>
             <div class="header-container">
                 <h3 class="main-title">🔍 Encuentra Respuestas Relevantes para tu Solicitud</h3>
-                <h4 class="sub-title">💡 Nuestra inteligencia artificial ha identificado solicitudes similares previamente resueltas.</h4>
+                <h4 class="sub-title">💡 Nuestra inteligencia artificial ha identificado solicitudes similares previamente resueltas. Úsalas como inspiración para responder más rápido y con mayor precisión.</h4>
             </div>
         </CardBody>
     </Card>
+
 
     <br />
     <Timeline Type="TimelineType.Simple">
@@ -47,39 +175,48 @@
                     <Icon IconType="@TablerIcons.Brand_twitter" Size="16" />
                 </IconTemplate>
                 <ChildContent>
+
                     <p class="card-text">
                         <Badge BackgroundColor="TablerColor.Green" Size=BadgeSize.Large BadgeType="BadgeType.Light">@item.tipo_movilidad</Badge>
                     </p>
+
+
                     <p class="card-text">
                         <strong>
                             <Badge BackgroundColor="TablerColor.Primary" BadgeType="BadgeType.Outline">Solicitud Realizada:</Badge>
                         </strong> @item.Solicitud
                     </p>
-                    <p class="card-text"><strong><Badge BackgroundColor="TablerColor.Primary" BadgeType="BadgeType.Outline">Respuesta de la Facultad:</Badge></strong> @item.Respuesta</p>
+                    <p class="card-text"><strong><Badge BackgroundColor="TablerColor.Primary" BadgeType="BadgeType.Outline">Respuesta de la Facutad:</Badge></strong> @item.Respuesta</p>
+
                     <div class="text-end">
                         <a href="@GenerateLink(item.Id)" target="_blank" class="btn btn-primary sm">
                             Nro Solicitud: @item.Id
                         </a>
                     </div>
+
                 </ChildContent>
             </TimelineItem>
         }
         </Timeline>
 }
 
-@* else if (resultados == null)
+else
 
 {
-    <Loading></Loading>
-    <div class="alert alert-info" role="alert">
-        Buscando resultados...
-    </div>
+    ticket = null;
+
+    if (resultados.Count == 0)
+
+    {
+        <div class="alert alert-warning" role="alert">
+            Buscando resultados...
+        </div>
+    }
+
+    else
+
+    {
+        <Loading></Loading>
+    }
+
 }
-
-else if (!resultados.Any())
-
-{
-    <div class="alert alert-warning" role="alert">
-        No se encontraron resultados para tu búsqueda.
-    </div>
-} *@
