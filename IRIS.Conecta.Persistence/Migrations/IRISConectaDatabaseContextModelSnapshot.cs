@@ -567,10 +567,7 @@ namespace IRIS.Conecta.Persistence.Migrations
                     b.Property<string>("Cellphone")
                         .IsRequired()
                         .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
-
-                    b.Property<int?>("CityResidenceId")
-                        .HasColumnType("int");
+                        .HasColumnType("nvarchar(15)");                    
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -629,8 +626,6 @@ namespace IRIS.Conecta.Persistence.Migrations
                     b.HasIndex("BornCountryId");
 
                     b.HasIndex("BornStateId");
-
-                    b.HasIndex("CityResidenceId");
 
                     b.HasIndex("ResidenceStateId");
 
@@ -1139,11 +1134,7 @@ namespace IRIS.Conecta.Persistence.Migrations
                         .WithMany()
                         .HasForeignKey("BornStateId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("IRIS.Conecta.Domain.Entities.Masters.City", "CityResidence")
-                        .WithMany()
-                        .HasForeignKey("CityResidenceId");
+                        .IsRequired();                    
 
                     b.HasOne("IRIS.Conecta.Domain.Entities.Masters.State", "StateResidence")
                         .WithMany("PersonalDatas")
@@ -1162,8 +1153,6 @@ namespace IRIS.Conecta.Persistence.Migrations
                     b.Navigation("BornCountry");
 
                     b.Navigation("BornState");
-
-                    b.Navigation("CityResidence");
 
                     b.Navigation("StateResidence");
 

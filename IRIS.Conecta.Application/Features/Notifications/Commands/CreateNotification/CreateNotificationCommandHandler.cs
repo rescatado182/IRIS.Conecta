@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using IRIS.Conecta.Application.Contracts.Identity;
+using IRIS.Conecta.Application.Contracts.Infrastructure;
 using IRIS.Conecta.Application.Contracts.Persistence.Tickets;
 using IRIS.Conecta.Application.Exceptions;
 using IRIS.Conecta.Application.Models.Email;
@@ -10,16 +11,18 @@ namespace IRIS.Conecta.Application.Features.Notifications.Commands.CreateNotific
     public class CreateNotificationCommandHandler : IRequestHandler<CreateNotificationCommand, int>
     {
         private readonly IMapper _mapper;
+        private readonly IEmailService _emailService;
         private readonly INotificationsRepository _notificationsRepository;
         private readonly ITicketsRepository _ticketsRepository;
         private readonly IUserService _userService;
 
-        public CreateNotificationCommandHandler(IMapper mapper, 
+        public CreateNotificationCommandHandler(IMapper mapper, IEmailService emailService,
             INotificationsRepository notificationsRepository,
             ITicketsRepository ticketsRepository,
             IUserService userService)
         {
             _mapper         = mapper;
+            _emailService   = emailService;
             _userService    = userService;
 
             _notificationsRepository    = notificationsRepository;
@@ -42,10 +45,14 @@ namespace IRIS.Conecta.Application.Features.Notifications.Commands.CreateNotific
             // Saving data
             await _notificationsRepository.CreateAsync(notification);
 
+            if (notification.SendEmail) { 
+                this.SendNotificationEmailAsync(notification, notification.TicketId);
+            }
+
             return notification.Id;
         }
 
-        private async void SendChangeTicketStatusEmail(Domain.Entities.Tickets.Notifications notification, int ticketId)
+        private async void SendNotificationEmailAsync(Domain.Entities.Tickets.Notifications notification, int ticketId)
         {
             try
             {
@@ -64,7 +71,7 @@ namespace IRIS.Conecta.Application.Features.Notifications.Commands.CreateNotific
                     Subject = "Novedad en Solicitud"
                 };
 
-                //   await _emailService.SendEmailAsync(email);
+                await _emailService.SendEmailAsync(email);
             }
             catch (Exception ex)
             {

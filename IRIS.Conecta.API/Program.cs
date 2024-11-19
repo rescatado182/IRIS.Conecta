@@ -1,8 +1,11 @@
 using IRIS.Conecta.API.Middleware;
 using IRIS.Conecta.Application;
 using IRIS.Conecta.Identity;
+using IRIS.Conecta.Identity.DbContext;
 using IRIS.Conecta.Infrastructure;
 using IRIS.Conecta.Persistence;
+using IRIS.Conecta.Persistence.DatabaseContext;
+using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -46,10 +49,22 @@ var app = builder.Build();
 
 app.UseMiddleware<ExceptionMiddleware>();
 
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<IRISConectaDatabaseContext>();
+    context.Database.Migrate();
+}
+
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<IRISConectaIdentityDbContext>();
+    context.Database.Migrate();
+}
+
 // Configure the HTTP request pipeline.
 //if (app.Environment.IsDevelopment())
 //{
-    app.UseSwagger();
+app.UseSwagger();
     app.UseSwaggerUI();
 //}
 

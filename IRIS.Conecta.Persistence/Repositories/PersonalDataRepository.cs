@@ -20,7 +20,7 @@ namespace IRIS.Conecta.Persistence.Repositories
                         "SELECT p.*, ci.country_name, ci.country_code, ci.state_name, ci.name as city," +
                         "(SELECT s.name FROM states s WHERE s.id = p.ResidenceStateId) AS ResidenceState," +
                         "(SELECT ct.name FROM Cities ct WHERE ct.id = p.ResidenceCityId) AS ResidenceCity " +
-                        "FROM PersonalData p INNER JOIN Cities ci ON p.BornCityId = ci.id" +
+                        "FROM PersonalData p INNER JOIN Cities ci ON p.BornCityId = ci.id " +
                         "ORDER BY p.Id;");
 
             var data = await _context.PersonalDatas.FromSqlRaw(
@@ -38,11 +38,11 @@ namespace IRIS.Conecta.Persistence.Repositories
                         $"SELECT p.*, ci.country_name, ci.country_code, ci.state_name, ci.name as city," +
                         "(SELECT s.name FROM states s WHERE s.id = p.ResidenceStateId) AS ResidenceState," +
                         "(SELECT ct.name FROM Cities ct WHERE ct.id = p.ResidenceCityId) AS ResidenceCity " +
-                        "FROM PersonalData p INNER JOIN Cities ci ON p.BornCityId = ci.id" +
-                        "WHERE p.Id = @dataId ORDER BY p.Id;");
+                        "FROM PersonalData p INNER JOIN Cities ci ON p.BornCityId = ci.id " +
+                        "WHERE p.Id = " + id);
 
             var data = await _context.PersonalDatas.FromSqlRaw(
-                sqlQuery.ToString(), [new Microsoft.Data.SqlClient.SqlParameter("@dataId", id)] 
+                sqlQuery.ToString() 
             )
             .AsNoTracking()
             .FirstOrDefaultAsync();
