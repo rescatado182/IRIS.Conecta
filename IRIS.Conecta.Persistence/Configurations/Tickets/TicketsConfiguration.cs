@@ -29,6 +29,7 @@ namespace IRIS.Conecta.Persistence.Configurations.Tickets
                 .IsRequired();
 
             builder.Property(e => e.TicketRequirements)
+                .HasMaxLength(30)
                 .HasColumnName("TicketRequirements");
 
             builder.Property(e => e.Title)

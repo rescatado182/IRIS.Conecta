@@ -19,7 +19,7 @@ namespace IRIS.Conecta.Application.Features.PersonalData.Queries.GetPersonalData
         public async Task<List<PersonalDataListDto>> Handle(GetPersonalDataListRequest request, CancellationToken cancellationToken)
         {
             // Query DB
-            var personalData = await this.personalDataRepository.GetAsync();
+            var personalData = await this.personalDataRepository.GetPersonalDatasAsync();
 
             // mapping data
             var data = this.mapper.Map<List<PersonalDataListDto>>(personalData);

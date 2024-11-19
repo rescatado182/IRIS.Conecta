@@ -17,7 +17,7 @@ namespace IRIS.Conecta.Application.Features.PersonalData.Queries.GetPersonalData
         }
         public async Task<PersonalDataDto> Handle(GetPersonalDataByIdRequest request, CancellationToken cancellationToken)
         {
-            var personalData = await _personalDataRepository.GetByIdAsync(request.Id);
+            var personalData = await _personalDataRepository.GetPersonalDataByIdAsync(request.Id);
 
             return _mapper.Map<PersonalDataDto>(personalData);
         }

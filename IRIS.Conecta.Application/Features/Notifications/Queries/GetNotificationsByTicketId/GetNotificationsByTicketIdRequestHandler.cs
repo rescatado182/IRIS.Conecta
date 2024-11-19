@@ -12,10 +12,11 @@ namespace IRIS.Conecta.Application.Features.Notifications.Queries.GetNotificatio
         private readonly INotificationsRepository _notificationsRepository;
 
         public GetNotificationsByTicketIdRequestHandler(IMapper mapper, 
-            INotificationsRepository notificationsRepository)
+            INotificationsRepository notificationsRepository
+            )
         {
             _mapper = mapper;
-            _notificationsRepository = notificationsRepository;
+            _notificationsRepository = notificationsRepository;      
         }
 
         public async Task<List<NotificationsDto>> Handle(GetNotificationsByTicketIdRequest request, CancellationToken cancellationToken)
