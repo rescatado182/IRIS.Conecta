@@ -11,6 +11,7 @@ namespace IRIS.UI.Models
         [StringLength(100, ErrorMessage = "El nombre del programa no puede exceder los {0} caracteres")]
         public string ProgramName { get; set; } = null!;
 
-        public int FacultyId { get; set; }
+        public int DepartmentId { get; set; }
+
     }
 }

@@ -33,16 +33,15 @@ namespace IRIS.UI.Pages.BL.Tickets.Shared
 
         private List<ProgramVM> programs = new List<ProgramVM>();
 
-        
 
+        public List<DepartmentsVM>? departments { get; set; }
 
 
 
         protected override async Task OnInitializedAsync()
         {
             enumProgramType = Enum.GetValues(typeof(EnumProgramType)).Cast<EnumProgramType>().ToList();
-            await ListAsyncFaculties();
-            await ListAsyncPrograms();
+            await ListAsyncFaculties();           
 
         }
 
@@ -114,7 +113,7 @@ namespace IRIS.UI.Pages.BL.Tickets.Shared
         }
         private async Task<IEnumerable<ProgramVM>> SearchPrograms(string searchText)
         {
-            return programs.Where(s => s.FacultyId == MovilityRequestState.academyData.FacultyId && s.ProgramName.Contains(searchText, StringComparison.CurrentCultureIgnoreCase));
+            return programs.Where(s => s.ProgramName.Contains(searchText, StringComparison.CurrentCultureIgnoreCase));
         }
         private async Task OnItemSelected<T>(T selectedItem)
         {
@@ -122,6 +121,9 @@ namespace IRIS.UI.Pages.BL.Tickets.Shared
             {
                 MovilityRequestState.academyData.Faculties = faculty;
                 MovilityRequestState.academyData.FacultyId = faculty.Id;
+
+                await ListAsyncDepartments();
+                await ListAsyncPrograms();
             }
             if (selectedItem is ProgramVM program)
             {
@@ -132,22 +134,6 @@ namespace IRIS.UI.Pages.BL.Tickets.Shared
 
         }
 
-        //public IEnumerable<ValidationResult> ValidateAcademyDataAsync()
-        //{
-        //    var results = new List<ValidationResult>();
-        //    var validationContext = new ValidationContext(MovilityRequestState.personalData, null, null);
-        //    Validator.TryValidateObject(MovilityRequestState.personalData, validationContext, results, true);
-
-        //    if (MovilityRequestState.personalData is IValidatableObject validatableModel)
-        //        results.AddRange(validatableModel.Validate(validationContext));
-
-        //    foreach (var validationResult in results)
-        //    {
-        //        Console.WriteLine(validationResult.ErrorMessage);
-        //    }
-
-        //    return results;
-        //}
 
         public Task<IEnumerable<ValidationResult>> ValidateDataAsync()
         {
@@ -181,6 +167,23 @@ namespace IRIS.UI.Pages.BL.Tickets.Shared
             return true;
         }
 
+        private async Task<bool> ListAsyncDepartments()
+        {
+
+
+            var responseHttp = await Repository.GetAsync<List<DepartmentsVM>>($"/api/departments/");
+            if (responseHttp.Error)
+            {
+                var message = await responseHttp.GetErrorMessageAsync();
+
+
+                return false;
+            }
+            departments = responseHttp.Response.Where(d => d.FacultyId == MovilityRequestState.academyData.FacultyId).ToList();
+
+            return true;
+        }
+
         private async Task<bool> ListAsyncPrograms()
         {
 
@@ -193,7 +196,9 @@ namespace IRIS.UI.Pages.BL.Tickets.Shared
 
                 return false;
             }
-            programs = responseHttp.Response;
+            var programsALL = responseHttp.Response;
+            var departmentIds = departments.Select(d => d.Id).ToList();
+            programs = responseHttp.Response.Where(p => departmentIds.Contains(p.DepartmentId)).ToList();
             return true;
         }
     }

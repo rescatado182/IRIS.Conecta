@@ -55,6 +55,7 @@ namespace IRIS.UI.Models.List
 
         [Display(Name = "Correo electronico")]
         [MaxLength(100, ErrorMessage = "*{0} debe tener máximo {1} caracteres")]
+        [Required(ErrorMessage = "*{0} es obligatorio")]
         public string Email { get; set; }
 
         //[Display(Name = "Correo electronico ITM")]

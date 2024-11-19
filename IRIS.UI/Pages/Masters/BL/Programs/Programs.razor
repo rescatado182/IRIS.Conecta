@@ -1,0 +1,51 @@
+﻿@page "/programs"
+
+
+@if (programs is null)
+{
+    <Progress Color="TablerColor.Blue" Indeterminate />
+}
+else
+{
+
+@* 
+    <Table Item="RequestTypeVM" Items="programs" PageSize="10" AddItemFactory="AddItem" OnItemEdited="OnItemEdit"
+           OnBeforeEdit="BeforeEdit" OnItemAdded="OnItemAdd" OnItemDeleted="OnItemDelete"
+           ShowCheckboxes MultiSelect Hover Responsive EditMode=TableEditMode.Popup EditPopupMutator=EditPopupOptions>
+        <HeaderTemplate>
+            <strong>Departamentos</strong>
+        </HeaderTemplate>
+
+        <ChildContent>
+
+            <Column Item="RequestTypeVM" Property="e=>e.RequestName" Title="Nombre" Sortable Searchable Groupable>
+                <EditorTemplate>
+                    <input type="text" class="form-control" @bind-value="@context.RequestName" />
+                </EditorTemplate>
+            </Column>
+
+            <Column Item="RequestTypeVM" Property="e=>e.Path" Title="Path del Servicio" Sortable Searchable Groupable>
+                <EditorTemplate>
+                    <input type="text" class="form-control" @bind-value="@context.Path" />
+                </EditorTemplate>
+            </Column>
+
+            <Column Item="RequestTypeVM" Property="e=>e.Department.DepartmentName" Title="Departamento" Sortable Searchable Groupable>
+                <EditorTemplate>
+                    <Select Items="departments" @bind-SelectedValue="selectedDepartment" TextExpression="e=> e.DepartmentName.ToString()" ValueExpression="e=> e.Id" Clearable />
+                </EditorTemplate>
+            </Column>
+
+            <div class="mt-3 hidden">
+                @if (selectedDepartment != null)
+                {
+                    <div>@selectedDepartment.DepartmentName [@selectedDepartment.Id]</div>
+                }
+            </div>
+
+
+        </ChildContent>
+    </Table> *@
+
+
+}
