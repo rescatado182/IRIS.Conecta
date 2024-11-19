@@ -203,10 +203,6 @@ namespace IRIS.UI.Pages.BL.Tickets.RequestTickets.Movility
             movilityTypeId = await movilityTypeRef.UpdateTicketMovilityTypeAsync(idTicket, movilityType, movilityTypeId, userId);
 
             isCompletedMovilityType = true;
-            //if (movilityTypeId == 0)
-            //{
-            //    await ShowErrorToastAsync("Error Inesperado", "Tuvimos un error al intentar guardar tu solicitud. Intenta nuevamente");
-            //}
 
 
         }
@@ -221,10 +217,7 @@ namespace IRIS.UI.Pages.BL.Tickets.RequestTickets.Movility
             requirementsMovilityId = await requirementsMovilityRef.UpdateTicketRequirementsMovilityAsync(idTicket, requirementsMovility, requirementsMovilityId, userId);
 
             isCompletedRequirementsMovility = true;
-            //if (requirementsMovilityId == 0)
-            //{
-            //    await ShowErrorToastAsync("Error Inesperado", "Tuvimos un error al intentar guardar tu solicitud. Intenta nuevamente");
-            //}
+
         }
 
         private async Task HandleJustificationMovilityTabAsync(int? idTicket, JustificationMovilityVM justificationMovility, string userId)

@@ -36,7 +36,6 @@ namespace IRIS.UI
 
             builder.Services.AddHttpClient("GitHub", client => client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("TabBlazor", "1")));
 
-            builder.Services.AddSingleton(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7225/") });
 
             // Agregar servicios de autorización
             builder.Services.AddAuthorizationCore();
@@ -49,6 +48,13 @@ namespace IRIS.UI
             builder.Services.AddScoped<IRepository, Repository>();
             builder.Services.AddScoped<IModalService, ModalService>();
             builder.Services.AddSingleton<TicketMovilityRequest>();
+
+
+            builder.Services.AddSingleton(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7225/") });
+
+
+            builder.Services.AddScoped<SearchService>();
+
 
             builder.Services.AddDocs();
             builder.Services.AddTabler();
