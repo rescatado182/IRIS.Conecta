@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using TabBlazor;
 
 namespace IRIS.UI.Models
 {
@@ -11,6 +12,14 @@ namespace IRIS.UI.Models
         [StringLength(100, ErrorMessage = "El nombre del programa no puede exceder los {0} caracteres")]
         public string ProgramName { get; set; } = null!;
 
-        public int FacultyId { get; set; }
+        public int DepartmentId { get; set; }
+
+        public string ProgramType { get; set; }
+
+        public EnumProgramType EnumProgramType { get; set; }
+
+        public string DepartmentName { get; set; } = null!;
+
+        public DepartmentsVM Department { get; set; } = null!;
     }
 }

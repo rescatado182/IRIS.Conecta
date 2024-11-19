@@ -145,7 +145,7 @@ private DateTimeOffset selectedFinalDate;
             }
 
             //start date must be greater than today
-            if (movilityType.StartDateMovility < DateOnly.FromDateTime(DateTime.Now))
+            if (movilityType.StartDateMovility <= DateOnly.FromDateTime(DateTime.Now))
             {
                 await ToastService.AddToastAsync(new ToastModel { Title = "Fecha Inicio de Movilidad", Message = "La fecha de inicio de Movilidad debe ser mayor a la fecha actual" });
                 return false;

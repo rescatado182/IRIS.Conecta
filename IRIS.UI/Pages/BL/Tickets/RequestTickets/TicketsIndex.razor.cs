@@ -81,6 +81,9 @@ namespace IRIS.UI.Pages.BL.Tickets.RequestTickets
 
         private async Task HandleCreateRequest()
         {
+
+
+
             var redirectPath = selectedRequestType.Path;
            // var redirectPath = "/createticket/movility";
             if (!string.IsNullOrEmpty(redirectPath))

@@ -44,6 +44,7 @@ namespace IRIS.UI
 
             builder.Services.AddScoped<AuthenticationStateProvider, AuthenticationProviderJWT>();
             builder.Services.AddScoped<ILoginService, AuthenticationProviderJWT>();
+            builder.Services.AddScoped<INotificationService, NotificationService>();
 
             builder.Services.AddScoped<IRepository, Repository>();
             builder.Services.AddScoped<IModalService, ModalService>();

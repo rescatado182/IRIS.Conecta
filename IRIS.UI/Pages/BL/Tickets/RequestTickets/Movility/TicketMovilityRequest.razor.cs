@@ -32,6 +32,7 @@ namespace IRIS.UI.Pages.BL.Tickets.RequestTickets.Movility
         [Inject] public IModalService Modal { get; set; }
         [Inject] public ToastService ToastService { get; set; }
 
+        [Inject] private NavigationManager NavigationManager { get; set; } = null!;
         [Inject] public AuthenticationProviderJWT AuthenticationProviderJWT { get; set; }
 
 
@@ -109,16 +110,23 @@ namespace IRIS.UI.Pages.BL.Tickets.RequestTickets.Movility
             // Mensaje creativo para el modal
             await Modal.ShowDialogAsync(new TabBlazor.Components.Modals.DialogOptions
             {
-                MainText = $"🎉 ¡Solicitud Creada Exitosamente!",
-                SubText = $"Tu número de solicitud es <strong>{idTicket}</strong>. Te enviaremos toda la información detallada a tu correo electrónico. ¡Gracias por usar nuestra plataforma!",
+                MainText = $"¡Solcitud Creada: {idTicket}!",
+                SubText =  $"Te enviaremos toda la información detallada a tu correo electrónico registrado.",
                 IconType = TablerIcons.Check,
                 CancelText = "",
-                StatusColor = TablerColor.Success
+                StatusColor = TablerColor.Success,
+                
+
             });
 
 
-        
-    }
+
+            NavigationManager.NavigateTo("/");
+            
+
+
+
+        }
         
         private async Task NextStepAsync()
         {
@@ -146,22 +154,47 @@ namespace IRIS.UI.Pages.BL.Tickets.RequestTickets.Movility
                 {
                     case 0:
                         await HandlePersonalDataTabAsync(idTicket, personalData, userId);
+                        if (!isCompletedPersonalData)
+                        {
+                            Console.WriteLine("Los datos personales no están completos. No puedes avanzar al siguiente tab.");
+                            return;
+                        }
                         break;
 
                     case 1:
                         await HandleAcademyDataTabAsync(idTicket, academyData, userId);
+                        if (!isCompletedAcademyData)
+                        {
+                            Console.WriteLine("Los datos académicos no están completos. No puedes avanzar al siguiente tab.");
+                            return;
+                        }
                         break;
 
                     case 2:
                         await HandleMovilityTypeTabAsync(idTicket, movilityType, userId);
+                        if (!isCompletedMovilityType)
+                        {
+                            Console.WriteLine("El tipo de movilidad no está completo. No puedes avanzar al siguiente tab.");
+                            return;
+                        }
                         break;
 
                     case 3:
                         await HandleJustificationMovilityTabAsync(idTicket, justificationMovility, userId);
+                        if (!isCompletedJustification)
+                        {
+                            Console.WriteLine("La justificación de movilidad no está completa. No puedes avanzar al siguiente tab.");
+                            return;
+                        }
                         break;
                     case 4:
                        
                         await HandleRequirementsTabAsync(idTicket, requirementsMovility, userId);
+                        if (!isCompletedRequirementsMovility)
+                        {
+                            Console.WriteLine("Los requisitos de movilidad no están completos. No puedes avanzar al siguiente tab.");
+                            return;
+                        }
                         break;
 
                     default:
@@ -169,7 +202,19 @@ namespace IRIS.UI.Pages.BL.Tickets.RequestTickets.Movility
                         break;
                 }
 
-                tabsOrderRef.NextTab(); 
+                if ((tabsOrderRef.CurrentTabIndex == 0 && isCompletedPersonalData) ||
+                    (tabsOrderRef.CurrentTabIndex == 1 && isCompletedAcademyData) ||
+                    (tabsOrderRef.CurrentTabIndex == 2 && isCompletedMovilityType) ||
+                    (tabsOrderRef.CurrentTabIndex == 3 && isCompletedJustification) ||
+                    (tabsOrderRef.CurrentTabIndex == 4 && isCompletedRequirementsMovility))
+                {
+                    if (IsLastTab)
+                    {
+                        await SaveTicket();
+                    }
+                    else { tabsOrderRef.NextTab(); }
+
+                }
             }
             else
             {
@@ -213,7 +258,10 @@ namespace IRIS.UI.Pages.BL.Tickets.RequestTickets.Movility
 
         private async Task HandleMovilityTypeTabAsync(int? idTicket, MovilityTypeVM movilityType, string userId)
         {
-            if (!await movilityTypeRef.ValidateDatesAsync(movilityType)) return;
+            if (!await movilityTypeRef.ValidateDatesAsync(movilityType)) {
+                isCompletedMovilityType = false;
+                return;
+            } 
 
             if (!await ValidateDataAsync(movilityTypeRef)) return;
 
@@ -227,9 +275,17 @@ namespace IRIS.UI.Pages.BL.Tickets.RequestTickets.Movility
         private async Task HandleRequirementsTabAsync(int? idTicket, RequirementsMovilityVM requirementsMovility, string userId)
         {
 
-            if (!await requirementsMovilityRef.ValidateDatesAsync(requirementsMovility)) return;
+            if (!await requirementsMovilityRef.ValidateDatesAsync(requirementsMovility))
+            {
+                isCompletedRequirementsMovility = false;
+                return;
+            }
 
-            if (!await ValidateDataAsync(requirementsMovilityRef)) return;
+            if (!await ValidateDataAsync(requirementsMovilityRef))
+            {
+                isCompletedRequirementsMovility = false;
+                return;
+            }
 
             requirementsMovilityId = await requirementsMovilityRef.UpdateTicketRequirementsMovilityAsync(idTicket, requirementsMovility, requirementsMovilityId, userId);
 
@@ -239,9 +295,18 @@ namespace IRIS.UI.Pages.BL.Tickets.RequestTickets.Movility
 
         private async Task HandleJustificationMovilityTabAsync(int? idTicket, JustificationMovilityVM justificationMovility, string userId)
         {
-            if (!await justificationMovilityRef.ValidateDatesAsync(justificationMovility)) return;
+            if (!await justificationMovilityRef.ValidateDatesAsync(justificationMovility))
+            {
+                isCompletedJustification = false;
+                return;
+            }
 
-            if (!await ValidateDataAsync(justificationMovilityRef)) return;
+            if (!await ValidateDataAsync(justificationMovilityRef))
+            {
+                isCompletedJustification = false;
+                return;
+            }
+
 
             justificationMovilityId = await justificationMovilityRef.UpdateTicketJustificationMovilityAsync(idTicket, justificationMovility, justificationMovilityId, userId);
 

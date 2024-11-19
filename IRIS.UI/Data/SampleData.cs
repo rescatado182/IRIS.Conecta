@@ -52,16 +52,6 @@ namespace IRIS.UI.Data
         //};
         //}
 
-        public static List<ProgramVM> GetPrograms()
-        {
-            return new List<ProgramVM>
-        {
-            new ProgramVM { Id = 1, ProgramName = "Tecnologia en Sistemas de información", FacultyId = 1 },
-            new ProgramVM { Id = 2, ProgramName = "Ingenieria de Sistemas", FacultyId = 1 },
-            new ProgramVM { Id = 3, ProgramName = "Especialización en Ingenieria de Software", FacultyId = 1 },
-
-        };
-        }
 
 
 
