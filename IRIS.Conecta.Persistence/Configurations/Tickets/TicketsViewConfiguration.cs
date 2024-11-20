@@ -29,11 +29,11 @@ namespace IRIS.Conecta.Persistence.Configurations.Tickets
                 .IsRequired();
 
             builder.Property(e => e.City)
-                .IsRequired()
                 .HasMaxLength(255);
+
             builder.Property(e => e.ContactData).HasMaxLength(200);
+
             builder.Property(e => e.CountryName)
-                .IsRequired()
                 .HasMaxLength(255)
                 .HasColumnName("country_name");
 
