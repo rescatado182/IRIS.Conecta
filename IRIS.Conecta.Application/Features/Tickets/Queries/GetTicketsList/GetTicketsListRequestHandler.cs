@@ -8,17 +8,17 @@ namespace IRIS.Conecta.Application.Features.Tickets.Queries.GetTicketsList
     public class GetTicketsListRequestHandler : IRequestHandler<GetTicketsListRequest, List<TicketsListDto>>
     {
         private readonly IMapper mapper;
-        private readonly ITicketsViewRepository ticketsViewRepository;        
+        private readonly ITicketsRepository ticketsRepository;        
 
-        public GetTicketsListRequestHandler(IMapper mapper, ITicketsViewRepository ticketsViewRepository)
+        public GetTicketsListRequestHandler(IMapper mapper, ITicketsRepository ticketsRepository)
         {
             this.mapper = mapper;
-            this.ticketsViewRepository = ticketsViewRepository;
+            this.ticketsRepository = ticketsRepository;
             
         }
         public async Task<List<TicketsListDto>> Handle(GetTicketsListRequest request, CancellationToken cancellationToken)
         {
-            var tickets = await this.ticketsViewRepository.GetAsync();
+            var tickets = await this.ticketsRepository.GetAsync();
 
             var data = this.mapper.Map<List<TicketsListDto>>(tickets);
 
