@@ -40,7 +40,7 @@ namespace IRIS.Conecta.Domain.Entities.Tickets
         public string? MovilityType { get; set; }
 
         public string? Country { get; set; }
-        public string? country_name { get; set; }
+        public string? CountryName { get; set; }
         public string? City { get; set; }
 
         public string? Phone { get; set; }

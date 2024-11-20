@@ -20,7 +20,7 @@ namespace IRIS.Conecta.Application.Features.Tickets.Dtos
 
         public string MovilityType { get; set; }
         public string Country { get; set; }
-        public string country_name { get; set; }
+        public string CountryName { get; set; }
         public string City { get; set; }
 
         public required string UserId { get; set; }

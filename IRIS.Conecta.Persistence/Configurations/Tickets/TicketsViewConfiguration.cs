@@ -28,8 +28,16 @@ namespace IRIS.Conecta.Persistence.Configurations.Tickets
                 .HasColumnName("UserId")
                 .IsRequired();
 
-            builder.Property(e => e.ManagerUserId).HasColumnName("ManagerUserId");
+            builder.Property(e => e.City)
+                .IsRequired()
+                .HasMaxLength(255);
+            builder.Property(e => e.ContactData).HasMaxLength(200);
+            builder.Property(e => e.CountryName)
+                .IsRequired()
+                .HasMaxLength(255)
+                .HasColumnName("country_name");
 
+            builder.Property(e => e.ManagerUserId).HasColumnName("ManagerUserId");
             builder.Property(e => e.Title).HasColumnName("Title");
             builder.Property(e => e.EventName).HasColumnName("EventName");
             builder.Property(e => e.RequestName).HasColumnName("RequestName");
@@ -46,9 +54,12 @@ namespace IRIS.Conecta.Persistence.Configurations.Tickets
             builder.Property(e => e.Phone).HasColumnName("Phone");
             builder.Property(e => e.ContactData).HasColumnName("ContactData");
             builder.Property(e => e.ExternalInstitution).HasColumnName("ExternalInstitution");
-            builder.Property(e => e.ManagerUser).HasColumnName("ManagerUser");
-            builder.Property(e => e.TicketRequirements).HasColumnName("TicketRequirements");
+            builder.Property(e => e.ManagerUser).HasColumnName("ManagerUser");            
             builder.Property(e => e.Total).HasColumnName("Total");
+
+            builder.Property(e => e.TicketRequirements)
+                .HasColumnName("TicketRequirements")
+                .HasMaxLength(300);
         }
     }
 }
