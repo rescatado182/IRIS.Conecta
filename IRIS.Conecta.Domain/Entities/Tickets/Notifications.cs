@@ -9,6 +9,7 @@ namespace IRIS.Conecta.Domain.Entities.Tickets
         public string? Message { get; set; }
         public bool SendEmail { get; set; } = false;
         public int TicketId { get; set; }
+        public string? ManagerUserId { get; set; }
         public NotificationType NotificationType { get; set; }
         public virtual Ticket? Ticket { get; set; }
     }

@@ -6,11 +6,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace IRIS.Conecta.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class TicketsChanges : Migration
+    public partial class Tickets_Notifications_Changes : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
-        {            
+        { 
+
             migrationBuilder.CreateTable(
                 name: "Tickets",
                 columns: table => new
@@ -40,7 +41,7 @@ namespace IRIS.Conecta.Persistence.Migrations
                     EndDateMovility = table.Column<DateOnly>(type: "date", precision: 0, nullable: false),
                     StartDateRequirement = table.Column<DateOnly>(type: "date", precision: 0, nullable: false),
                     EndDateRequirement = table.Column<DateOnly>(type: "date", precision: 0, nullable: false),
-                    TicketRequirements = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
+                    TicketRequirements = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: true),
                     Total = table.Column<double>(type: "float", nullable: true),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -102,6 +103,7 @@ namespace IRIS.Conecta.Persistence.Migrations
                     Message = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
                     SendEmail = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
                     TicketId = table.Column<int>(type: "int", nullable: false),
+                    ManagerUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     NotificationType = table.Column<int>(type: "int", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -138,7 +140,7 @@ namespace IRIS.Conecta.Persistence.Migrations
                     Phone = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: true),
                     Cellphone = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false, defaultValue: "False"),
-                    TicketId = table.Column<int>(type: "int", nullable: false),                    
+                    TicketId = table.Column<int>(type: "int", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DateModified = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -146,7 +148,7 @@ namespace IRIS.Conecta.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PersonalData", x => x.Id);                    
+                    table.PrimaryKey("PK_PersonalData", x => x.Id);
                     table.ForeignKey(
                         name: "FK_PersonalData_Tickets_TicketId",
                         column: x => x.TicketId,
@@ -200,14 +202,18 @@ namespace IRIS.Conecta.Persistence.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_AcademicData_UserId",
                 table: "AcademicData",
-                column: "UserId");
-
+                column: "UserId");         
 
             migrationBuilder.CreateIndex(
                 name: "IX_Notifications_Id",
                 table: "Notifications",
                 column: "Id",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Notifications_ManagerUserId",
+                table: "Notifications",
+                column: "ManagerUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Notifications_NotificationType",
@@ -269,8 +275,8 @@ namespace IRIS.Conecta.Persistence.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_PersonalData_UserId",
                 table: "PersonalData",
-                column: "UserId");
-                     
+                column: "UserId");           
+
             migrationBuilder.CreateIndex(
                 name: "IX_Ticket_Id",
                 table: "Tickets",
@@ -295,7 +301,18 @@ namespace IRIS.Conecta.Persistence.Migrations
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
-        {            
+        {
+            migrationBuilder.DropTable(
+                name: "AcademicData");
+
+            migrationBuilder.DropTable(
+                name: "Notifications");
+
+            migrationBuilder.DropTable(
+                name: "PersonalData");
+            
+            migrationBuilder.DropTable(
+                name: "Tickets");          
         }
     }
 }

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IRIS.Conecta.Persistence.Migrations
 {
     [DbContext(typeof(IRISConectaDatabaseContext))]
-    [Migration("20241118232908_TicketsChanges")]
-    partial class TicketsChanges
+    [Migration("20241120021813_Tickets_Notifications_Changes")]
+    partial class Tickets_Notifications_Changes
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -570,7 +570,7 @@ namespace IRIS.Conecta.Persistence.Migrations
                     b.Property<string>("Cellphone")
                         .IsRequired()
                         .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");                    
+                        .HasColumnType("nvarchar(15)");
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -754,6 +754,9 @@ namespace IRIS.Conecta.Persistence.Migrations
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ManagerUserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("Message")
                         .IsRequired()
                         .HasMaxLength(300)
@@ -777,6 +780,8 @@ namespace IRIS.Conecta.Persistence.Migrations
 
                     b.HasIndex(new[] { "Id" }, "IX_Notifications_Id")
                         .IsUnique();
+
+                    b.HasIndex(new[] { "ManagerUserId" }, "IX_Notifications_ManagerUserId");
 
                     b.HasIndex(new[] { "NotificationType" }, "IX_Notifications_NotificationType");
 
@@ -882,8 +887,8 @@ namespace IRIS.Conecta.Persistence.Migrations
                         .HasColumnName("Status");
 
                     b.Property<string>("TicketRequirements")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)")
                         .HasColumnName("TicketRequirements");
 
                     b.Property<string>("Title")
@@ -915,21 +920,33 @@ namespace IRIS.Conecta.Persistence.Migrations
 
             modelBuilder.Entity("IRIS.Conecta.Domain.Entities.Tickets.TicketsView", b =>
                 {
+                    b.Property<int>("AcademicDataId")
+                        .HasColumnType("int");
+
                     b.Property<string>("AgreementName")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("AgreementName");
 
                     b.Property<string>("City")
-                        .HasColumnType("nvarchar(max)")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)")
                         .HasColumnName("City");
 
                     b.Property<string>("ContactData")
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("ContactData");
 
                     b.Property<string>("Country")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Country");
+
+                    b.Property<string>("CountryName")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)")
+                        .HasColumnName("country_name");
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -987,9 +1004,9 @@ namespace IRIS.Conecta.Persistence.Migrations
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ManagerFullName")
+                    b.Property<string>("ManagerUser")
                         .HasColumnType("nvarchar(max)")
-                        .HasColumnName("ManagerFullName");
+                        .HasColumnName("ManagerUser");
 
                     b.Property<string>("ManagerUserId")
                         .HasColumnType("nvarchar(max)")
@@ -998,6 +1015,9 @@ namespace IRIS.Conecta.Persistence.Migrations
                     b.Property<string>("MovilityType")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("MovilityType");
+
+                    b.Property<int>("PersonalDataId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Phone")
                         .HasColumnType("nvarchar(max)")
@@ -1026,7 +1046,8 @@ namespace IRIS.Conecta.Persistence.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("TicketRequirements")
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)")
                         .HasColumnName("TicketRequirements");
 
                     b.Property<string>("Title")
@@ -1138,7 +1159,6 @@ namespace IRIS.Conecta.Persistence.Migrations
                         .HasForeignKey("BornStateId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                    
 
                     b.HasOne("IRIS.Conecta.Domain.Entities.Masters.State", "StateResidence")
                         .WithMany("PersonalDatas")
