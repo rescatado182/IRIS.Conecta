@@ -1,8 +1,11 @@
 ﻿@page "/ticket/search"
 @using IRIS.UI.Models.List
 
-<h3>🔍 Buscar Respuestas Similares</h3>
-<p>Introduce un número de solicitud o pega texto relacionado con tu consulta para buscar respuestas similares.</p>
+<div class="page-header">Respuestas Similares</div>
+<div class="page-subheader">
+    Introduce un número de solicitud o digita texto relacionado con tu consulta para buscar respuestas similares
+</div>
+
 
 <Card>
     <CardBody>
@@ -189,7 +192,7 @@
                     <p class="card-text"><strong><Badge BackgroundColor="TablerColor.Primary" BadgeType="BadgeType.Outline">Respuesta de la Facutad:</Badge></strong> @item.Respuesta</p>
 
                     <div class="text-end">
-                        <a href="@GenerateLink(item.Id)" target="_blank" class="btn btn-primary sm">
+                        <a href="@GenerateLink("1")" target="_blank" class="btn btn-primary sm">
                             Nro Solicitud: @item.Id
                         </a>
                     </div>
@@ -205,18 +208,5 @@ else
 {
     ticket = null;
 
-    if (resultados.Count == 0)
-
-    {
-        <div class="alert alert-warning" role="alert">
-            Buscando resultados...
-        </div>
-    }
-
-    else
-
-    {
-        <Loading></Loading>
-    }
 
 }

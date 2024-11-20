@@ -20,7 +20,7 @@ namespace TabBlazor
 
         public void Dispose()
         {
-           ToastService.OnChanged -= OnToastChanged;
+            ToastService.OnChanged -= OnToastChanged;
         }
     }
 }

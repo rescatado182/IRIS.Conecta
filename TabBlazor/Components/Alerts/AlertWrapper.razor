@@ -1,0 +1,35 @@
+﻿
+@inherits TablerBaseComponent
+@if (IsVisible)
+{
+    <Alert BackgroundColor="TablerColor.Warning"
+           Title="Errores en el formulario"
+           Dismissible
+           Important
+           OnDismiss="CloseAlert">
+        <div class="d-flex align-items-start">
+
+            <div>
+                <p class="fw-bold mb-2">Por favor, corrige los errores siguientes:</p>
+                <ul class="mb-0 ps-3">
+                    @foreach (var message in Messages)
+                    {
+                        <li>@message</li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </Alert>
+}
+
+@code {
+    [Parameter] public List<string> Messages { get; set; } = new();
+    [Parameter] public EventCallback OnAlertClosed { get; set; }
+    [Parameter] public bool IsVisible { get; set; } = false;
+
+    private void CloseAlert()
+    {
+        IsVisible = false;
+        OnAlertClosed.InvokeAsync(); // Notifica al padre que el alert fue cerrado
+    }
+}

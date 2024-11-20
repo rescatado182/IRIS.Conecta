@@ -64,19 +64,19 @@ namespace IRIS.UI.Models.List
 
         //public string EmailInstitutional { get; set; }
 
-        [Display(Name = "Telefono")]
+        [Display(Name = "Teléfono Fijo")]
         [DataType(DataType.PhoneNumber)]
-        [Required(ErrorMessage = "*Selecciona un {0} válido")]
-        [MaxLength(10, ErrorMessage = "*{0} debe tener máximo {1} caracteres")]
-        [RegularExpression(@"\+?(\d{1,3})?[-.\s]?(\(\d{1,4}\)|\d{1,4})[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}")]
+        [Required(ErrorMessage = "*El {0} es requerido.")]
+        [MaxLength(10, ErrorMessage = "*El {0} debe tener máximo {1} caracteres.")]
+        [RegularExpression(@"^\d{7,10}$", ErrorMessage = "*El {0} debe contener entre 7 y 10 dígitos.")]
         public string Phone { get; set; }
 
 
         [Display(Name = "Celular")]
         [DataType(DataType.PhoneNumber)]
-        [Required(ErrorMessage = "*Selecciona un {0} válido")]
-        [MaxLength(15, ErrorMessage = "*{0} debe tener máximo {1} caracteres")]
-        [RegularExpression(@"\+?(\d{1,3})?[-.\s]?(\(\d{1,4}\)|\d{1,4})[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}")]
+        [Required(ErrorMessage = "*El {0} es requerido.")]
+        [MaxLength(10, ErrorMessage = "*El {0} debe tener máximo {1} caracteres.")]
+        [RegularExpression(@"^3\d{9}$", ErrorMessage = "*El {0} debe tener 10 dígitos y comenzar con '3'.")]
         public string Cellphone { get; set; }
 
         public int TicketId { get; set; }

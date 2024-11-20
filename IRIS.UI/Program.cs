@@ -37,6 +37,7 @@ namespace IRIS.UI
             builder.Services.AddHttpClient("GitHub", client => client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("TabBlazor", "1")));
 
 
+
             // Agregar servicios de autorización
             builder.Services.AddAuthorizationCore();
 

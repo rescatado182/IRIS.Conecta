@@ -1,0 +1,55 @@
+﻿@page "/users"
+
+@using IRIS.UI.Models.Save
+
+@if (users is null)
+{
+    <Loading></Loading>
+}
+else
+{
+    <Table Item="UserVM" Items="users" PageSize="10" AddItemFactory="AddItem" 
+           OnItemAdded="OnItemAdd" 
+           ShowCheckboxes MultiSelect Hover Responsive EditMode=TableEditMode.Popup EditPopupMutator=EditPopupOptions>
+        <HeaderTemplate>
+            <strong>Usuarios</strong>
+        </HeaderTemplate>
+
+        <ChildContent>
+            <Column Item="UserVM" Property="e=>e.FirstName" Title="Nombre" Sortable Searchable Groupable>
+                <EditorTemplate>
+                    <input type="text" class="form-control" @bind-value="@context.FirstName" />
+                    <ValidationMessage For="@(() => @context.FirstName)" class="text-danger" />
+                </EditorTemplate>
+            </Column>
+
+            <Column Item="UserVM" Property="e=>e.LastName" Title="Apellido" Sortable Searchable Groupable>
+                <EditorTemplate>
+                    <input type="text" class="form-control" @bind-value="@context.LastName" />
+                    <ValidationMessage For="@(() => @context.LastName)" class="text-danger" />
+                </EditorTemplate>
+            </Column>
+
+            <Column Item="UserVM" Property="e=>e.Email" Title="Correo Electrónico" Sortable Searchable Groupable>
+                <EditorTemplate>
+                    <input type="email" class="form-control" @bind-value="@context.Email" />
+                    <ValidationMessage For="@(() => @context.Email)" class="text-danger" />
+                </EditorTemplate>
+            </Column>
+
+            <Column Item="UserVM" Property="e=>e.UserName" Title="Nombre de Usuario" Sortable Searchable Groupable>
+                <EditorTemplate>
+                    <input type="text" class="form-control" @bind-value="@context.UserName" />
+                    <ValidationMessage For="@(() => @context.UserName)" class="text-danger" />
+                </EditorTemplate>
+            </Column>
+
+            <Column Item="UserVM" Property="e=>e.Password" Title="Contraseña" Sortable Searchable Groupable>
+                <EditorTemplate>
+                    <input type="password" class="form-control" @bind-value="@context.Password" />
+                    <ValidationMessage For="@(() => @context.Password)" class="text-danger" />
+                </EditorTemplate>
+            </Column>
+        </ChildContent>
+    </Table>
+}

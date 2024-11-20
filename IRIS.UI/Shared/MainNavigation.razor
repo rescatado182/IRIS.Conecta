@@ -1,7 +1,4 @@
-﻿@using TabBlazor
-
-
-<Navbar Background="NavbarBackground.Dark" Direction="NavbarDirection.Vertical" NavLinkMatch="Microsoft.AspNetCore.Components.Routing.NavLinkMatch.All">
+﻿<Navbar Background="NavbarBackground.Dark" Direction="NavbarDirection.Vertical" NavLinkMatch="Microsoft.AspNetCore.Components.Routing.NavLinkMatch.All">
     <a href="/" class="navbar-brand navbar-brand-autodark d-flex align-items-center">
         <img src="logo/IrisLogo.png" alt="Tabler" class="navbar-brand-image me-2" style="height: 40px;">
         <h2 class="text-secondary mb-0" style="font-weight: bold;">IRIS CONECTA</h2>
@@ -13,47 +10,94 @@
                 <Icon class="icon" IconType="@TablerIcons.Settings" />
             </MenuItemIcon>
             <SubMenu>
-
                 <div class="dropdown-menu-columns">
                     <div class="dropdown-menu-column">
-                        <NavbarMenuItem Text="Facultades" Href="/faculties" />
-                        <NavbarMenuItem Text="Departamentos" Href="/departments" />
-                        <NavbarMenuItem Text="Tipos de Solicitud" Href="/requesttypes" />
-                        <NavbarMenuItem Text="Programas" Href="/programs" />
+                        <NavbarMenuItem Text="Facultades" Href="/faculties">
+                            <MenuItemIcon>
+                                <Icon class="icon" IconType="@TablerIcons.Building" />
+                            </MenuItemIcon>
+                        </NavbarMenuItem>
+                        <NavbarMenuItem Text="Departamentos" Href="/departments">
+                            <MenuItemIcon>
+                                <Icon class="icon" IconType="@TablerIcons.Box" />
+                            </MenuItemIcon>
+                        </NavbarMenuItem>
+                        <NavbarMenuItem Text="Tipos de Solicitud" Href="/requesttypes">
+                            <MenuItemIcon>
+                                <Icon class="icon" IconType="@TablerIcons.Checks" />
+                            </MenuItemIcon>
+                        </NavbarMenuItem>
+                        <NavbarMenuItem Text="Programas" Href="/programs">
+                            <MenuItemIcon>
+                                <Icon class="icon" IconType="@TablerIcons.Book" />
+                            </MenuItemIcon>
+                        </NavbarMenuItem>
                         <NavbarMenuItem Text="Accesos">
                             <MenuItemIcon>
                                 <Icon class="icon" IconType="@TablerIcons.Lock_access" />
                             </MenuItemIcon>
                             <SubMenu>
-                                <NavbarMenuItem Text="Usuarios" Href="docs/forms/checkboxes" />
-                                <NavbarMenuItem Text="Permisos" Href="docs/forms/datepickers" />
-                                <NavbarMenuItem Text="Roles" Href="docs/forms/item-selects" />
-                                <NavbarMenuItem Text="Formularios" Href="docs/forms/selects" />
+                                <NavbarMenuItem Text="Usuarios" Href="/users">
+                                    <MenuItemIcon>
+                                        <Icon class="icon" IconType="@TablerIcons.User" />
+                                    </MenuItemIcon>
+                                </NavbarMenuItem>
+                                <NavbarMenuItem Text="Permisos" Href="/">
+                                    <MenuItemIcon>
+                                        <Icon class="icon" IconType="@TablerIcons.Shield" />
+                                    </MenuItemIcon>
+                                </NavbarMenuItem>
+                                <NavbarMenuItem Text="Roles" Href="/">
+                                    <MenuItemIcon>
+                                        <Icon class="icon" IconType="@TablerIcons.User_plus" />
+                                    </MenuItemIcon>
+                                </NavbarMenuItem>
                             </SubMenu>
                         </NavbarMenuItem>
-
                     </div>
-
                 </div>
             </SubMenu>
         </NavbarMenuItem>
+
         <NavbarMenuItem Text="Solicitudes">
             <MenuItemIcon>
                 <Icon class="icon" IconType="@TablerIcons.Puzzle" />
             </MenuItemIcon>
             <SubMenu>
-
                 <div class="dropdown-menu-columns">
                     <div class="dropdown-menu-column">
-                        <NavbarMenuItem Text="Crear" Href="/ticket/selection" />
-                        <NavbarMenuItem Text="Consultar" Href="/ticket/search" />
-                        <NavbarMenuItem Text="Bandeja de Gestión" Href="/managesTickets" />
-
-                        
+                        <NavbarMenuItem Text="Crear" Href="/ticket/selection">
+                            <MenuItemIcon>
+                                <Icon class="icon" IconType="@TablerIcons.Plus" />
+                            </MenuItemIcon>
+                        </NavbarMenuItem>
+                        <NavbarMenuItem Text="Consultar" Href="/ticket/search">
+                            <MenuItemIcon>
+                                <Icon class="icon" IconType="@TablerIcons.Search" />
+                            </MenuItemIcon>
+                        </NavbarMenuItem>
+                        <NavbarMenuItem Text="Bandeja de Gestión" Href="/managesTickets">
+                            <MenuItemIcon>
+                                <Icon class="icon" IconType="@TablerIcons.Folder" />
+                            </MenuItemIcon>
+                        </NavbarMenuItem>
                     </div>
                 </div>
             </SubMenu>
         </NavbarMenuItem>
 
+        <NavbarMenuItem Text="Gestión">
+            <MenuItemIcon>
+                <Icon class="icon" IconType="@TablerIcons.Mailbox" />
+            </MenuItemIcon>
+            <SubMenu>
+                        <NavbarMenuItem Text="Bandeja de Gestión" Href="/managesTickets">
+                            <MenuItemIcon>
+                                <Icon class="icon" IconType="@TablerIcons.Folder" />
+                            </MenuItemIcon>
+                        </NavbarMenuItem>
+
+            </SubMenu>
+        </NavbarMenuItem>
     </NavbarMenu>
 </Navbar>
