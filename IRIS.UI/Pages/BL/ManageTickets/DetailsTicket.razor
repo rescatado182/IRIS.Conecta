@@ -1,4 +1,8 @@
 ﻿@page "/ticketDetails/{ticketId:int}"
+
+<div class="page-header">Detalle de la Solicitud @ticketId</div>
+
+
 @if (ticket is null)
 {
     <Loading></Loading>
@@ -158,11 +162,9 @@ else{
             <DataGrid>
 
                 <DataGridItem Title="La movilidad está dada en el marco de un convenio">@(ticket.IsAgreement ? "Sí" : "No")</DataGridItem>
-                <DataGridItem Title="Convenio (S/A)">
-                    <Badge BackgroundColor="TablerColor.Green" BadgeType="BadgeType.Outline">@ticket.AgreementName</Badge>
+                <DataGridItem Title="Convenio (S/A)">@ticket.AgreementName
                 </DataGridItem>
-                <DataGridItem Title="Objetivo de la movilidad">
-                    <Badge BackgroundColor="TablerColor.Orange" BadgeType="BadgeType.Outline">@ticket.Description</Badge>
+                <DataGridItem Title="Objetivo de la movilidad">>@ticket.Description
                 </DataGridItem>
                 <DataGridItem Title="Productos a entregar en retribución">@ticket.Results</DataGridItem>
                 <DataGridItem Title="Fecha entrega compromisos">@ticket.DeliveryDate</DataGridItem>

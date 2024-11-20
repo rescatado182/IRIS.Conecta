@@ -1,26 +1,21 @@
-﻿
-using IRIS.Frontend.Repositories;
+﻿using IRIS.Frontend.Repositories;
+using IRIS.UI.AuthenticationProviders;
+using IRIS.UI.Icons;
 using IRIS.UI.Interfaces;
-using IRIS.UI.Models;
 using IRIS.UI.Models.List;
 using IRIS.UI.Models.Save;
 using IRIS.UI.Pages.BL.Tickets.RequestTickets.Movility.Information;
 using IRIS.UI.Pages.BL.Tickets.Shared;
 using Microsoft.AspNetCore.Components;
 using System.Text.Json;
-
-using TabBlazor;
-
 using TabBlazor.Services;
+using TabBlazor;
+using IRIS.UI.Models;
 
-using IRIS.UI.AuthenticationProviders;
-using IRIS.UI.Icons;
-
-namespace IRIS.UI.Pages.BL.Tickets.RequestTickets.Movility
+namespace IRIS.UI.Pages.BL.Tickets.RequestTickets.Homologation
 {
-    public partial class TicketMovilityRequest
+    public partial class TicketHomologationRequest
     {
-
         [Inject] private IRepository Repository { get; set; } = null!;
         [Inject] public IModalService Modal { get; set; }
         [Inject] public ToastService ToastService { get; set; }
@@ -28,7 +23,7 @@ namespace IRIS.UI.Pages.BL.Tickets.RequestTickets.Movility
         [Inject] private NavigationManager NavigationManager { get; set; } = null!;
         [Inject] public AuthenticationProviderJWT AuthenticationProviderJWT { get; set; }
 
-        private bool IsAlertVisible { get; set; } = false;
+        private List<string> AlertMessages { get; set; } = new();
 
         public PersonalDataVM personalData = new PersonalDataVM();
 
@@ -44,29 +39,12 @@ namespace IRIS.UI.Pages.BL.Tickets.RequestTickets.Movility
         public bool isCompletedAcademyData = false;
 
 
-        public MovilityTypeVM movilityType = new MovilityTypeVM();
-
-        private MovilityTypeTicket movilityTypeRef;
-
-        public bool isCompletedMovilityType = false;
-
-
-        
         public JustificationMovilityVM justificationMovility = new JustificationMovilityVM();
 
         private JustificationMovilityTicket justificationMovilityRef;
 
         public bool isCompletedJustification = false;
 
-
-        public RequirementsMovilityVM requirementsMovility = new RequirementsMovilityVM();
-
-        private RequirementsMovilityTicket requirementsMovilityRef;
-
-        public bool isCompletedRequirementsMovility = false;
-
-
-        private List<string> AlertMessages { get; set; } = new();
 
 
 
@@ -81,7 +59,7 @@ namespace IRIS.UI.Pages.BL.Tickets.RequestTickets.Movility
 
         private int? idTicket = null;
         private int personalDataId = 0;
-        private int academicDataId = 0; 
+        private int academicDataId = 0;
         private int movilityTypeId = 0;
         private int requirementsMovilityId = 0;
         private int justificationMovilityId = 0;
@@ -104,30 +82,30 @@ namespace IRIS.UI.Pages.BL.Tickets.RequestTickets.Movility
             await Modal.ShowDialogAsync(new TabBlazor.Components.Modals.DialogOptions
             {
                 MainText = $"¡Solcitud Creada: {idTicket}!",
-                SubText =  $"Te enviaremos toda la información detallada a tu correo electrónico registrado.",
+                SubText = $"Te enviaremos toda la información detallada a tu correo electrónico registrado.",
                 IconType = TablerIcons.Check,
                 CancelText = "",
                 StatusColor = TablerColor.Success,
-                
+
 
             });
 
 
 
             NavigationManager.NavigateTo("/");
-            
+
 
 
 
         }
-        
+
         private async Task NextStepAsync()
         {
 
 
 
             userId = await AuthenticationProviderJWT.GetUserIdAsync();
-            
+
 
 
             //crear ticket
@@ -164,15 +142,6 @@ namespace IRIS.UI.Pages.BL.Tickets.RequestTickets.Movility
                         break;
 
                     case 2:
-                        await HandleMovilityTypeTabAsync(idTicket, movilityType, userId);
-                        if (!isCompletedMovilityType)
-                        {
-                            Console.WriteLine("El tipo de movilidad no está completo. No puedes avanzar al siguiente tab.");
-                            return;
-                        }
-                        break;
-
-                    case 3:
                         await HandleJustificationMovilityTabAsync(idTicket, justificationMovility, userId);
                         if (!isCompletedJustification)
                         {
@@ -180,15 +149,7 @@ namespace IRIS.UI.Pages.BL.Tickets.RequestTickets.Movility
                             return;
                         }
                         break;
-                    case 4:
-                       
-                        await HandleRequirementsTabAsync(idTicket, requirementsMovility, userId);
-                        if (!isCompletedRequirementsMovility)
-                        {
-                            Console.WriteLine("Los requisitos de movilidad no están completos. No puedes avanzar al siguiente tab.");
-                            return;
-                        }
-                        break;
+
 
                     default:
                         Console.WriteLine("Invalid tab index");
@@ -197,9 +158,7 @@ namespace IRIS.UI.Pages.BL.Tickets.RequestTickets.Movility
 
                 if ((tabsOrderRef.CurrentTabIndex == 0 && isCompletedPersonalData) ||
                     (tabsOrderRef.CurrentTabIndex == 1 && isCompletedAcademyData) ||
-                    (tabsOrderRef.CurrentTabIndex == 2 && isCompletedMovilityType) ||
-                    (tabsOrderRef.CurrentTabIndex == 3 && isCompletedJustification) ||
-                    (tabsOrderRef.CurrentTabIndex == 4 && isCompletedRequirementsMovility))
+                    (tabsOrderRef.CurrentTabIndex == 2 && isCompletedJustification))
                 {
                     if (IsLastTab)
                     {
@@ -249,42 +208,6 @@ namespace IRIS.UI.Pages.BL.Tickets.RequestTickets.Movility
             isCompletedAcademyData = true;
         }
 
-        private async Task HandleMovilityTypeTabAsync(int? idTicket, MovilityTypeVM movilityType, string userId)
-        {
-            if (!await movilityTypeRef.ValidateDatesAsync(movilityType)) {
-                isCompletedMovilityType = false;
-                return;
-            } 
-
-            if (!await ValidateDataAsync(movilityTypeRef)) return;
-
-            movilityTypeId = await movilityTypeRef.UpdateTicketMovilityTypeAsync(idTicket, movilityType, movilityTypeId, userId);
-
-            isCompletedMovilityType = true;
-
-
-        }
-
-        private async Task HandleRequirementsTabAsync(int? idTicket, RequirementsMovilityVM requirementsMovility, string userId)
-        {
-
-            if (!await requirementsMovilityRef.ValidateDatesAsync(requirementsMovility))
-            {
-                isCompletedRequirementsMovility = false;
-                return;
-            }
-
-            if (!await ValidateDataAsync(requirementsMovilityRef))
-            {
-                isCompletedRequirementsMovility = false;
-                return;
-            }
-
-            requirementsMovilityId = await requirementsMovilityRef.UpdateTicketRequirementsMovilityAsync(idTicket, requirementsMovility, requirementsMovilityId, userId);
-
-            isCompletedRequirementsMovility = true;
-
-        }
 
         private async Task HandleJustificationMovilityTabAsync(int? idTicket, JustificationMovilityVM justificationMovility, string userId)
         {
@@ -312,9 +235,9 @@ namespace IRIS.UI.Pages.BL.Tickets.RequestTickets.Movility
 
             var ticket = new TicketSaveVM
             {
-                Title = "Movilidad",
-                Description = "Movilidad",
-                RequestTypeId = 1,
+                Title = "",
+                Description = "",
+                RequestTypeId = 2,
                 Status = TicketsStatus.Open,
                 UserId = userId,
                 CreateDate = DateOnly.FromDateTime(DateTime.Now)
@@ -367,51 +290,7 @@ namespace IRIS.UI.Pages.BL.Tickets.RequestTickets.Movility
 
             return true;
         }
-
-
-
-        private void SetAlertVisibility(bool isVisible, List<string>? messages = null)
-        {
-            if (isVisible && messages != null)
-            {
-                AlertMessages.Clear();
-                AlertMessages.AddRange(messages);
-            }
-            else
-            {
-                AlertMessages.Clear();
-            }
-
-            IsAlertVisible = isVisible;
-
-            // Forzar re-renderizado
-            StateHasChanged();
-        }
-
-
-
-        private void ShowAlert(List<string> messages)
-        {
-            AlertMessages.Clear();
-            AlertMessages.AddRange(messages);
-            IsAlertVisible = true;
-            StateHasChanged(); // Forzar re-renderizado
-        }
-
-        private void CloseAlert()
-        {
-            IsAlertVisible = false;
-            StateHasChanged(); // Forzar re-renderizado
-        }
-
-        private void HandleAlertClosed()
-        {
-            // Lógica adicional al cerrar el alert manualmente, si es necesario
-            Console.WriteLine("El usuario cerró el alert.");
-        }
-
-
-
-
     }
+
 }
+

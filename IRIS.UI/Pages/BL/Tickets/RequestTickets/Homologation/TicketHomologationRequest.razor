@@ -1,22 +1,32 @@
-﻿@page "/createticket/movility"
+﻿@page "/createticket/homologation"
 
-@using TabBlazor.Components.Alerts
 @using TabBlazor.Services
 
 
-<div class="page-header">Solicitud de Movilidad</div>
+<div class="page-header">Solicitud de Homologación</div>
 <div class="page-subheader">
-    ¡Estás a punto de crear una solicitud de movilidad! Completa todos los campos requeridos del formulario para garantizar que tu solicitud sea procesada sin inconvenientes. Proveer información precisa nos ayudará a agilizar el proceso y ofrecerte un mejor servicio. Antes de continuar, asegúrate de haber revisado los requisitos y procedimientos aplicables para tu solicitud.
+    Estás a punto de crear una solicitud de homologación. Para asegurarte de que tu solicitud sea procesada correctamente,
+    completa todos los datos necesarios en el formulario. Esto nos ayudará a brindarte un mejor servicio y facilitar tu proceso.
 </div>
 
 <br />
-
-<Alert BackgroundColor="TablerColor.White" Title="¡Consulta la guía antes de iniciar!" Dismissible Important>
-        Revisa los <strong>requisitos y procedimientos</strong> necesarios para tu solicitud de movilidad
-        en el siguiente enlace: <a href="https://www.itm.edu.co/internacionalizacion/movilidad/#tipos" target="_blank" class="text-primary">Guía de Movilidad</a>.
-</Alert>
-
-
+@if (AlertMessages.Any())
+{
+    <Alert BackgroundColor="TablerColor.Warning" Title="Errores en el formulario" Dismissible Important>
+        <div class="d-flex align-items-start">
+            <div>
+                <p class="fw-bold mb-2">Por favor, corrige los errores siguientes:</p>
+                <br />
+                <ul class="mb-0 ps-3">
+                    @foreach (var message in AlertMessages)
+                    {
+                        <li class="text-white">@message</li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </Alert>
+}
 
 <TabBlazor.TabsOrder @ref="tabsOrderRef" KeepAlive="true">
 
@@ -27,7 +37,7 @@
             <Icon class="icon" IconType="@TablerIcons.User" Size="24" /> Datos Personales
         </Header>
         <ChildContent>
-            <IRIS.UI.Pages.BL.Tickets.Shared.PersonalDataTicket @ref="personalDataRef"/>
+            <IRIS.UI.Pages.BL.Tickets.Shared.PersonalDataTicket @ref="personalDataRef" />
         </ChildContent>
     </TabBlazor.TabOrder>
 
@@ -44,19 +54,6 @@
         </ChildContent>
     </TabBlazor.TabOrder>
 
-    @* Tipos de Movilidad *@
-    <TabBlazor.TabOrder>
-        <Header>
-            <StatusDot BackgroundColor="@((!isCompletedMovilityType ? TablerColor.Blue : TablerColor.Green))" />
-            <Icon class="icon" IconType="@TablerIcons.Map_pin" Size="24" /> Tipos de Movilidad
-        </Header>
-        <ChildContent>
-            <MovilityTypeTicket @ref="movilityTypeRef">
-             </MovilityTypeTicket>
-           
-        </ChildContent>
-    </TabBlazor.TabOrder>
-
     @* Justificación *@
     <TabBlazor.TabOrder>
         <Header>
@@ -67,17 +64,6 @@
             <JustificationMovilityTicket @ref="justificationMovilityRef">
             </JustificationMovilityTicket>
 
-        </ChildContent>
-    </TabBlazor.TabOrder>
-
-    @* Requerimientos*@
-    <TabBlazor.TabOrder>
-        <Header>
-            <StatusDot BackgroundColor="@((!isCompletedRequirementsMovility ? TablerColor.Blue : TablerColor.Green))" Animate />
-            <Icon class="icon" IconType="@TablerIcons.Baseline_density_small" Size="24" /> Requerimientos
-        </Header>
-        <ChildContent>
-            <RequirementsMovilityTicket @ref="requirementsMovilityRef" />
         </ChildContent>
     </TabBlazor.TabOrder>
 
@@ -110,5 +96,5 @@
 </div>
 
 
-    
+
 

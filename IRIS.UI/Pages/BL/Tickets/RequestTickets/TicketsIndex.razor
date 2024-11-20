@@ -6,71 +6,64 @@
 }
 else
 {
-    <Card Size="CardSize.Default" StatusTop="TablerColor.Primary">
-        <CardHeader>
-            <h3>Crea tu Nueva Solicitud</h3>
-        </CardHeader>
-        <CardBody>
-             Por favor, selecciona los siguientes campos para definir el tipo de solicitud que deseas crear:
-            <br /><br />
-            <strong>Facultad:</strong>  Elige la facultad a la que pertenece tu solicitud.<br />
-            <strong>Departamento:</strong>  Selecciona el departamento responsable de gestionar tu solicitud.<br />
-            <strong>Tipo de Solicitud:</strong> Escoge el tipo de solicitud que deseas iniciar.<br />
-            <br /><br />
-            <em>Asegúrate de elegir cuidadosamente cada opción para que tu solicitud sea gestionada por el área adecuada.</em>
-
-        </CardBody>
-    </Card>
-    <div style="margin-top: 20px;"></div>
-
-    <div class="mb-2">
-        Selecciona una Facultad: @selectedFaculty?.FacultyName
+    <div class="page-header">Inicia tu Nueva Solicitud</div>
+    <div class="page-subheader">
+        Configura tu solicitud paso a paso seleccionando las opciones necesarias. Una vez completada, podrás crear tu solicitud fácilmente.
     </div>
 
-    <Typeahead SearchMethod="SearchFaculties" @bind-SelectedValue="selectedFaculty"
-               Debounce="1" MinimumLength=1 SearchPlaceholderText="Buscando facultad..."
-               ListWidth="100%"
-               SelectedTextExpression="e => e.FacultyName" ShowOptionOnFocus="true">
-        <ListTemplate>
-            @context.FacultyName
-        </ListTemplate>
-    </Typeahead>
-
-    @if (selectedFaculty != null)
-    {
-        <div class="mb-2">
-            Selecciona un Departamento: @selectedDepartment?.DepartmentName
+    <div class="form-section">
+        <div class="form-instructions">
+            <h5 class="instructions-header">¿Qué necesitas seleccionar?</h5>
+            <ul class="instructions-list">
+                <li><strong>Facultad:</strong> Selecciona la facultad correspondiente.</li>
+                <li><strong>Departamento:</strong> Elige el departamento responsable de atender tu solicitud.</li>
+                <li><strong>Tipo de Solicitud:</strong> Escoge el tipo de solicitud que deseas crear.</li>
+            </ul>
         </div>
 
-        <Typeahead SearchMethod="SearchDepartments" @bind-SelectedValue="selectedDepartment"
-                   Debounce="1" MinimumLength=1 SearchPlaceholderText="Buscando departamento..."
-                   ListWidth="100%"
-                   SelectedTextExpression="e => e.DepartmentName" ShowOptionOnFocus="true">
-            <ListTemplate>
-                @context.DepartmentName
-            </ListTemplate>
-        </Typeahead>
-    }
+        <div class="form-fields">
+            <div class="field-group">
+                <label class="field-label">Facultad</label>
+                <Typeahead SearchMethod="SearchFaculties" @bind-SelectedValue="selectedFaculty"
+                           Debounce="1" MinimumLength=1 SearchPlaceholderText="Selecciona una Facultad"
+                           ListWidth="100%" SelectedTextExpression="e => e.FacultyName" ShowOptionOnFocus="true">
+                    <ListTemplate>
+                        @context.FacultyName
+                    </ListTemplate>
+                </Typeahead>
+            </div>
 
-    @if (selectedDepartment != null)
-    {
-        <div class="mb-2">
-            Selecciona un Tipo de Solicitud: @selectedRequestType?.RequestName
+            @if (selectedFaculty != null)
+            {
+                <div class="field-group">
+                    <label class="field-label">Departamento</label>
+                    <Typeahead SearchMethod="SearchDepartments" @bind-SelectedValue="selectedDepartment"
+                               Debounce="1" MinimumLength=1 SearchPlaceholderText="Selecciona un Departamento"
+                               ListWidth="100%" SelectedTextExpression="e => e.DepartmentName" ShowOptionOnFocus="true">
+                        <ListTemplate>
+                            @context.DepartmentName
+                        </ListTemplate>
+                    </Typeahead>
+                </div>
+            }
+
+            @if (selectedDepartment != null)
+            {
+                <div class="field-group">
+                    <label class="field-label">Tipo de Solicitud</label>
+                    <Typeahead SearchMethod="SearchRequestTypes" @bind-SelectedValue="selectedRequestType"
+                               Debounce="1" MinimumLength=1 SearchPlaceholderText="Selecciona un Tipo de Solicitud"
+                               ListWidth="100%" SelectedTextExpression="e => e.RequestName" ShowOptionOnFocus="true">
+                        <ListTemplate>
+                            @context.RequestName
+                        </ListTemplate>
+                    </Typeahead>
+                </div>
+            }
         </div>
 
-        <Typeahead SearchMethod="SearchRequestTypes" @bind-SelectedValue="selectedRequestType"
-                   Debounce="1" MinimumLength=1 SearchPlaceholderText="Buscando Tipo de Solicitud..."
-                   ListWidth="100%"
-                   SelectedTextExpression="e => e.RequestName" ShowOptionOnFocus="true">
-            <ListTemplate>
-                @context.RequestName
-            </ListTemplate>
-        </Typeahead>
-    }
-
-    <div class="text-end mt-4">
-        <TabBlazor.Button BackgroundColor="TablerColor.Primary" Type="ButtonType.Button" Text="Crear Solicitud" Disabled="@IsButtonDisabled" OnClick="HandleCreateRequest" />
-
+        <div class="text-end mt-4">
+            <TabBlazor.Button BackgroundColor="TablerColor.Primary" Type="ButtonType.Button" Text="Crear Solicitud" Disabled="@IsButtonDisabled" OnClick="HandleCreateRequest" />
+        </div>
     </div>
-
 }
