@@ -12,6 +12,8 @@ namespace IRIS.UI.Models.Save
 
         public string NotificationType { get; set; }
 
+        public string ManagerUserId { get; set; }
+
         public string NotificationTypeName => GetDisplayName(NotificationType);
 
         // Propiedad para obtener el valor del enum NotificationType

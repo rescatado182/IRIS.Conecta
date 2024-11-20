@@ -24,8 +24,20 @@ namespace IRIS.UI.Pages.Auth
         private ContentRect containerSize;
         private string widthMessage;
         private string heightMessage;
+        private bool isFormValid = true;
+        private EditContext editContext;
+        protected override void OnInitialized()
+        {
+            // Inicializar el EditContext y enlazar el evento OnFieldChanged
+            editContext = new EditContext(loginModel);
+            editContext.OnFieldChanged += ValidateForm;
+            ValidateForm(null, null); // Validar el formulario al inicio
+        }
 
-
+        private void ValidateForm(object? sender, FieldChangedEventArgs? e)
+        {
+            isFormValid = editContext.Validate(); // Valida el formulario completo
+        }
         private async Task HandleLogin(EditContext context)
         {
             // Lógica básica de autenticación
@@ -80,7 +92,19 @@ namespace IRIS.UI.Pages.Auth
             {
                 var token = jsonDocument.RootElement.GetProperty("token").ToString();
                 await LoginService.LoginAsync(token);
-                NavigationManager.NavigateTo("/");
+                if (string.IsNullOrEmpty(token))
+                {
+                    await ModalService.ShowDialogAsync(new DialogOptions
+                    {
+                        MainText = "Inicio de Sesión Fallido",
+                        SubText = "Usuario o contraseña incorrectos."
+                    });
+                }
+                else
+                {
+                    await LoginService.LoginAsync(token);
+                    NavigationManager.NavigateTo("/");
+                }
             }
 
         }

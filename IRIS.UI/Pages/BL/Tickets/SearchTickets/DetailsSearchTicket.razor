@@ -1,6 +1,6 @@
 ﻿
 @page "/ticketDetailsSearch/{ticketId:int}"
-@if (ticket is null)
+@if (isLoading)
 {
     <Loading></Loading>
 }

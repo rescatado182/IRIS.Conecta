@@ -26,10 +26,12 @@ namespace IRIS.UI.Pages.BL.ManageTickets
         public List<ManagersListVM> managers { get; set; } 
 
         private static List<TicketManageListVM> selectedOrders = new List<TicketManageListVM>();
+        private bool isLoading = false;
 
 
         protected override async Task OnInitializedAsync()
         {
+            isLoading = true;
 
             await ListAsync();
 
@@ -42,10 +44,12 @@ namespace IRIS.UI.Pages.BL.ManageTickets
             if (responseHttp.Error)
             {
                 var message = await responseHttp.GetErrorMessageAsync();
+                isLoading = false;
                 return false;
             }
 
             tickets = responseHttp.Response;
+
 
             if (!await GetListManagersAsync())
                 return false;

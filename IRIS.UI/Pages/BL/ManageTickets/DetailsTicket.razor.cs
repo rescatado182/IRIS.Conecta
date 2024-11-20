@@ -7,6 +7,7 @@ using IRIS.UI.Models.List;
 using IRIS.UI.Pages.BL.Actions;
 using IRIS.UI.Pages.BL.Tickets.ResponseTickets;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using Microsoft.Extensions.Options;
 using TabBlazor;
 using TabBlazor.Services;
@@ -160,14 +161,21 @@ namespace IRIS.UI.Pages.BL.ManageTickets
 
         private async Task SendNotificationTicket()
         {
-            // Define the component `CreateComments` and configure its properties
             var component = new RenderComponent<SendNotificator>()
-                .Set(e => e.ticketId, ticketId);
+                .Set<string>(e => e.userId, ticket.UserId)
+                .Set(e => e.ticketId, ticketId)
+                .Set<EventCallback>(e => e.OnClose, EventCallback.Factory.Create(this, CloseAllModalsAsync));
 
-
-            // Open the Offcanvas with the comment form
             await ModalService.ShowAsync("Enviar Comentario", component, new ModalOptions { Size = ModalSize.Medium });
         }
+
+        private async Task CloseAllModalsAsync()
+        {
+            
+            ModalService.Close();
+            await GetDetailTicket();
+        }
+
 
         public TablerColor GetTicketStatusColor()
         {
@@ -185,20 +193,21 @@ namespace IRIS.UI.Pages.BL.ManageTickets
 
         private async Task EscalateTicket()
         {
-            // Define the component `ChangeStatus` and configure its properties
             var component = new RenderComponent<EscalateTicket>()
                 .Set(e => e.ticketId, ticketId)
                 .Set<string>(e => e.userId, ticket.UserId)
                 .Set<string>(e => e.CurrentStatus, ticket.Status)
                 .Set<string>(e => e.ManagerUserId, ticket.ManagerUserId)
-                .Set(e => e.OnClose, EventCallback.Factory.Create(this, RefreshTicketDetails));
+                .Set(e => e.OnClose, EventCallback.Factory.Create(this, CloseAllModalsAsync));
 
-            var result = await ModalService.ShowAsync("Escalar la Solicitud", component, new ModalOptions { Size = ModalSize.Medium });
-
-
+            await ModalService.ShowAsync("Escalar la Solicitud", component, new ModalOptions { Size = ModalSize.Medium });
         }
 
-        private async Task TrackingTicket()
+
+
+    
+
+    private async Task TrackingTicket()
         {
             // Define the component `ChangeStatus` and configure its properties
             var component = new RenderComponent<ViewTrackingTicket>()
@@ -235,7 +244,8 @@ namespace IRIS.UI.Pages.BL.ManageTickets
                 .Set(e => e.ticketId, ticketId)
                 .Set<string>(e => e.userId, ticket.UserId)
                 .Set<string>(e => e.ManagerUserId, ticket.ManagerUserId)
-                .Set(e => e.OnClose, EventCallback.Factory.Create(this, RefreshTicketDetails));
+                .Set(e => e.OnClose, EventCallback.Factory.Create(this, CloseAllModalsAsync));
+
 
             var result = await ModalService.ShowAsync("Cambiar Estado de la Solicitud", component, new ModalOptions { Size = ModalSize.Medium });
 
@@ -251,7 +261,7 @@ namespace IRIS.UI.Pages.BL.ManageTickets
             var component = new RenderComponent<ResponseTickets>()
                 .Set(e => e.ticket, ticket)
                 .Set<string>(e => e.statusText, statusText)
-                .Set(e => e.OnClose, EventCallback.Factory.Create(this, RefreshTicketDetails));
+                .Set(e => e.OnClose, EventCallback.Factory.Create(this, CloseAllModalsAsync));
 
             var result = await ModalService.ShowAsync("Responder Solicitud", component, new ModalOptions { Size = ModalSize.Maximized });
 

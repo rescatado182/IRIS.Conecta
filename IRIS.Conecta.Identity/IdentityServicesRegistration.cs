@@ -6,6 +6,7 @@ using IRIS.Conecta.Identity.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -17,11 +18,19 @@ namespace IRIS.Conecta.Identity
     {
         public static IServiceCollection AddIdentityServices(this IServiceCollection services, IConfiguration configuration)
         {
+
             services.Configure<JwtSettings>(configuration.GetSection("JwtSettings"));
 
-            services.AddDbContext<IRISConectaIdentityDbContext>(options => {
+            //services.AddDbContext<IRISConectaIdentityDbContext>(options => {
+            //    options.UseSqlServer(configuration.GetConnectionString("IRISDatabaseConnectionString"));
+            //});
+            services.AddDbContext<IRISConectaIdentityDbContext>(options =>
+            {
                 options.UseSqlServer(configuration.GetConnectionString("IRISDatabaseConnectionString"));
+                options.ConfigureWarnings(warnings =>
+                  warnings.Ignore(CoreEventId.NavigationBaseIncludeIgnored));
             });
+
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<IRISConectaIdentityDbContext>().AddDefaultTokenProviders();

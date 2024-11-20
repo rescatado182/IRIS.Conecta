@@ -4,15 +4,16 @@ using IRIS.Conecta.Identity.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using System.Threading;
 
 namespace IRIS.Conecta.Identity.DbContext
 {
     public class IRISConectaIdentityDbContext : IdentityDbContext<ApplicationUser>
     {
-        public IRISConectaIdentityDbContext(DbContextOptions<IRISConectaIdentityDbContext> options) 
-            : base(options) 
-        {            
+        public IRISConectaIdentityDbContext(DbContextOptions<IRISConectaIdentityDbContext> options)
+            : base(options)
+        {
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -52,6 +53,7 @@ namespace IRIS.Conecta.Identity.DbContext
             builder.ApplyConfigurationsFromAssembly(typeof(IRISConectaIdentityDbContext).Assembly);
 
         }
+
 
     }
 }

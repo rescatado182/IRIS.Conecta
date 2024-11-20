@@ -29,16 +29,14 @@ namespace IRIS.UI
                 .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler()) // Establece el handler base
                 .AddHttpMessageHandler(() => new JsonOptionsHandler(new JsonSerializerOptions
                 {
-                    Converters = { new DateOnlyJsonConverter() } // Agregar el convertidor personalizado
+                    Converters = { new DateOnlyJsonConverter() }
                 }));
 
-            //builder.Services.AddHttpClient("Local", client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress));
+
 
             builder.Services.AddHttpClient("GitHub", client => client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("TabBlazor", "1")));
 
 
-
-            // Agregar servicios de autorización
             builder.Services.AddAuthorizationCore();
 
             builder.Services.AddScoped<AuthenticationProviderJWT>();
@@ -52,8 +50,11 @@ namespace IRIS.UI
             builder.Services.AddSingleton<TicketMovilityRequest>();
 
 
-            builder.Services.AddSingleton(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7225/") });
-
+            #if DEBUG 
+                        builder.Services.AddSingleton(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7225/") });
+            #else
+                        builder.Services.AddSingleton(sp => new HttpClient { BaseAddress = new Uri("https://irisconectaapi.azurewebsites.net/") });
+            #endif       
 
             builder.Services.AddScoped<SearchService>();
 

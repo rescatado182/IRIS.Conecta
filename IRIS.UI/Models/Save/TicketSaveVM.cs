@@ -9,7 +9,9 @@
         public int RequestTypeId { get; set; }
         public string UserId { get; set; }
 
-        public DateOnly CreateDate { get; set; }
+        public string ManagerUserId { get; set; }
+
+        public DateTime DateCreated { get; set; }
 
 
     }
