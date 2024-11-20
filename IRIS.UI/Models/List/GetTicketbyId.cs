@@ -9,8 +9,6 @@ namespace IRIS.UI.Models.List
 
         public string Status { get; set; }
 
-        public string dateCreated { get; set; }
-
         public string UserId { get; set; }
 
         public string ManagerUserId { get; set; }
@@ -111,6 +109,7 @@ namespace IRIS.UI.Models.List
         public DateTime StartDateRelease { get; set; }
 
         public DateTime EndDateRelease { get; set; }
+        public DateTime DateCreated { get; set; }
 
         // crear campo concatenado con los campos  AgreementName, EventName, Title, descrition
 

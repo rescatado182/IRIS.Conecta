@@ -8,6 +8,7 @@ namespace IRIS.Conecta.Application.Features.Notifications.Commands.CreateNotific
         public string Message { get; set; }
         public bool SendEmail { get; set; } = false;
         public int TicketId { get; set; }
+        public string ManagerUserId { get; set; }
         public NotificationType NotificationType { get; set; }        
     }
 }

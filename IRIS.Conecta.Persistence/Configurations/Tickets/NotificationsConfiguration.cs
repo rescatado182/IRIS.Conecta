@@ -16,9 +16,13 @@ namespace IRIS.Conecta.Persistence.Configurations.Tickets
 
             builder.HasIndex(e => e.Id, "IX_Notifications_Id").IsUnique();
 
+            builder.HasIndex(e => e.ManagerUserId, "IX_Notifications_ManagerUserId");
+
             builder.HasIndex(e => e.NotificationType, "IX_Notifications_NotificationType");
 
             builder.Property(e => e.Id);
+            builder.Property(e => e.ManagerUserId);
+
             builder.Property(e => e.SendEmail)
                 .HasDefaultValue(false);
 
@@ -28,7 +32,6 @@ namespace IRIS.Conecta.Persistence.Configurations.Tickets
 
             builder.Property(e => e.SendEmail)
                 .HasColumnName("SendEmail");
-
 
             builder.Property(e => e.Message)
                 .IsRequired()
