@@ -62,9 +62,10 @@ namespace IRIS.UI.Pages.BL.ManageTickets
                 if (manager != null)
                 {
                     ticket.ManagerName = manager.FullName;
+                    
                 }
             }
-
+            isLoading = false;
             return true;
         }
 

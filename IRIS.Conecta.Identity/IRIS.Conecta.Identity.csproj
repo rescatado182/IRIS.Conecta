@@ -23,4 +23,8 @@
     <ProjectReference Include="..\IRIS.Conecta.Application\IRIS.Conecta.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>

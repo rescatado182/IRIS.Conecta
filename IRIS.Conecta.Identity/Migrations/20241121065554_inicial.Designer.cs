@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IRIS.Conecta.Identity.Migrations
 {
     [DbContext(typeof(IRISConectaIdentityDbContext))]
-    [Migration("20241120064012_datossemilla")]
-    partial class datossemilla
+    [Migration("20241121065554_inicial")]
+    partial class inicial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -94,80 +94,6 @@ namespace IRIS.Conecta.Identity.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("Identity.Users", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "1000",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "401b0498-2faa-42fd-aeb0-15f79a7b5793",
-                            Email = "adminIrisConecta@correo.itm.edu.co",
-                            EmailConfirmed = true,
-                            FirstName = "System",
-                            LastName = "Admin",
-                            LockoutEnabled = false,
-                            NormalizedEmail = "adminIrisConecta@correo.itm.edu.co",
-                            NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEDWTPYx6eysttKmDvBNvVKQDp4A8WyHKltIwsCh8u9gllJJHp8fb2P+Q5/QkeiU5hQ==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "7a6dcf1c-a247-42f8-8426-6dd2078db28e",
-                            TwoFactorEnabled = false,
-                            UserName = "admin"
-                        },
-                        new
-                        {
-                            Id = "1001",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "ad5d9991-bf73-4be7-b07c-991d47382481",
-                            Email = "userStudent@correo.itm.edu.co",
-                            EmailConfirmed = true,
-                            FirstName = "USER",
-                            LastName = "Student",
-                            LockoutEnabled = false,
-                            NormalizedEmail = "USERSTUDENT@correo.itm.edu.co",
-                            NormalizedUserName = "USERSTUDENT",
-                            PasswordHash = "AQAAAAIAAYagAAAAEB9PWX8lpJV3NFIlDSvsS+nO4qE6kp2Hdn0WZrRaGf3R28JWUACUYNgxiGtlm+b05g==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "9e138e6f-7c99-47a4-b81d-a5f8cd444660",
-                            TwoFactorEnabled = false,
-                            UserName = "userStudent"
-                        },
-                        new
-                        {
-                            Id = "1002",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "eccc3acb-5a04-4f80-b098-1b802d1adf15",
-                            Email = "assistantIrisConecta@correo.itm.edu.co",
-                            EmailConfirmed = true,
-                            FirstName = "System",
-                            LastName = "Assistant",
-                            LockoutEnabled = false,
-                            NormalizedEmail = "assistantIrisConecta@correo.itm.edu.co",
-                            NormalizedUserName = "ASSISTANT",
-                            PasswordHash = "AQAAAAIAAYagAAAAEEyeajKrsB8oS06rozRlNWhm3MVeRHQldLPMy9UhmNjXQC+wdir5hEEj+oW3lht/aw==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "75054623-e40d-4f48-bfe2-0ccacba97674",
-                            TwoFactorEnabled = false,
-                            UserName = "userAssistant"
-                        },
-                        new
-                        {
-                            Id = "1003",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "a40a0ff5-97a6-41dc-b3dc-c27c7ca03530",
-                            Email = "headofdepartment@correo.itm.edu.co",
-                            EmailConfirmed = true,
-                            FirstName = "HEAD OF",
-                            LastName = "DEPARTMENT",
-                            LockoutEnabled = false,
-                            NormalizedEmail = "headofdepartment@correo.itm.edu.co",
-                            NormalizedUserName = "HEADOFDEPARTMENT",
-                            PasswordHash = "AQAAAAIAAYagAAAAEOtxBdaSMTuLozIyu2KpVMX0FIlYI6KKpNMFsFvgMZ3mQq+f19QWh3pziho8sA0bKg==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "556f9eb6-f5df-4362-8a45-6bcd50a3e378",
-                            TwoFactorEnabled = false,
-                            UserName = "headofdepartment"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -308,28 +234,6 @@ namespace IRIS.Conecta.Identity.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("Identity.UserRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = "1000",
-                            RoleId = "1"
-                        },
-                        new
-                        {
-                            UserId = "1001",
-                            RoleId = "3"
-                        },
-                        new
-                        {
-                            UserId = "1002",
-                            RoleId = "2"
-                        },
-                        new
-                        {
-                            UserId = "1003",
-                            RoleId = "4"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
