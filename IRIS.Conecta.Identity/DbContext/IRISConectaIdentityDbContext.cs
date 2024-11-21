@@ -4,6 +4,7 @@ using IRIS.Conecta.Identity.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using System.Threading;
 
 namespace IRIS.Conecta.Identity.DbContext
@@ -17,41 +18,11 @@ namespace IRIS.Conecta.Identity.DbContext
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            base.OnModelCreating(builder);
-
-            builder.Entity<IdentityRole>(entity =>
-            {
-                entity.ToTable(name: "Identity.Roles");
-            });
-
-            builder.Entity<IdentityUserRole<string>>(entity =>
-            {
-                entity.ToTable(name: "Identity.UserRoles");
-            });
-
-            builder.Entity<IdentityUserClaim<string>>(entity =>
-            {
-                entity.ToTable(name: "Identity.UserClaims");
-            });
-
-            builder.Entity<IdentityUserLogin<string>>(entity =>
-            {
-                entity.ToTable(name: "Identity.UserLogins");
-            });
-
-            builder.Entity<IdentityRoleClaim<string>>(entity =>
-            {
-                entity.ToTable(name: "Identity.RoleClaims");
-            });
-
-            builder.Entity<IdentityUserToken<string>>(entity =>
-            {
-                entity.ToTable(name: "Identity.UserTokens");
-            });
+            base.OnModelCreating(builder);           
 
             builder.ApplyConfigurationsFromAssembly(typeof(IRISConectaIdentityDbContext).Assembly);
 
-        }
+        }        
 
     }
 }

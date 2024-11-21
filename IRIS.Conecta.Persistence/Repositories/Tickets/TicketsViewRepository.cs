@@ -9,6 +9,17 @@ namespace IRIS.Conecta.Persistence.Repositories.Tickets
     public class TicketsViewsRepository(IRISConectaDatabaseContext context) :
         GenericRepository<TicketsView>(context), ITicketsViewRepository
     {
+
+        public async Task<List<TicketsView>> GetTickets()
+        {
+            var tickets = await _context.TicketsViews
+                .Where(x => x.PersonalDataId != 0
+                    && x.AcademicDataId != 0)
+                .ToListAsync();
+
+            return tickets;
+        }
+
         public async Task<List<TicketsView>> GetTicketsByUser(string userId)
         {
             var tickets = await _context.TicketsViews

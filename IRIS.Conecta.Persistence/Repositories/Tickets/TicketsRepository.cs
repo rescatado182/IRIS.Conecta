@@ -11,7 +11,6 @@ namespace IRIS.Conecta.Persistence.Repositories.Tickets
         public TicketsRepository(IRISConectaDatabaseContext context) : base(context)
         {
         }
-        
 
         public async Task ChangeTicketStatus(Ticket ticket, TicketsStatus status)
         {
