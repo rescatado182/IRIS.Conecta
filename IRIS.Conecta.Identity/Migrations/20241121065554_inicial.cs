@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace IRIS.Conecta.Identity.Migrations
 {
     /// <inheritdoc />
-    public partial class DiagnosePendingChanges : Migration
+    public partial class inicial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -156,6 +158,17 @@ namespace IRIS.Conecta.Identity.Migrations
                         principalTable: "Identity.Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Identity.Roles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { "1", null, "Administrator", "ADMINISTRATOR" },
+                    { "2", null, "Assistant", "ASSISTANT" },
+                    { "3", null, "Student", "STUDENT" },
+                    { "4", null, "Head of Department", "HEAD_OF_DEPARTMENT" }
                 });
 
             migrationBuilder.CreateIndex(
