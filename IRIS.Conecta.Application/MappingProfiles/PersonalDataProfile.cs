@@ -8,8 +8,7 @@ namespace IRIS.Conecta.Application.MappingProfiles
     {
         public PersonalDataProfile()
         {
-            CreateMap<PersonalData, PersonalDataDto>().ReverseMap();
-            CreateMap<PersonalData, PersonalDataListDto>();
+            CreateMap<PersonalData, PersonalDataDto>().ReverseMap();            
         }
     }
 }

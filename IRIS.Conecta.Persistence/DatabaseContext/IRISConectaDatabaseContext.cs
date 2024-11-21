@@ -28,6 +28,7 @@ namespace IRIS.Conecta.Persistence.DatabaseContext
         public DbSet<Notifications> Notifications { get; set; }
 
         public DbSet<PersonalData> PersonalDatas { get; set; }
+        public DbSet<PersonalDataView> PersonalDatasView { get; set; }
         public DbSet<AcademicData> AcademicDatas { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

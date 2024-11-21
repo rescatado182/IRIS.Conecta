@@ -2,7 +2,7 @@
 
 namespace IRIS.Conecta.Application.Features.PersonalData.Dtos
 {
-    public class PersonalDataDto
+    public class GetPersonalDataDto
     {
         public string FullName { get; set; } = null;
         public string DocumentNumber { get; set; }

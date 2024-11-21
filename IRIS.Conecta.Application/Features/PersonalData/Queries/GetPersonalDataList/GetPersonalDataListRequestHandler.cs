@@ -8,18 +8,18 @@ namespace IRIS.Conecta.Application.Features.PersonalData.Queries.GetPersonalData
     public class GetPersonalDataListRequestHandler : IRequestHandler<GetPersonalDataListRequest, List<PersonalDataListDto>>
     {
         private readonly IMapper mapper;
-        private readonly IPersonalDataRepository personalDataRepository;
+        private readonly IPersonalDataViewRepository personalDataViewRepository;
 
-        public GetPersonalDataListRequestHandler(IMapper mapper, IPersonalDataRepository personalDataRepository)
+        public GetPersonalDataListRequestHandler(IMapper mapper, IPersonalDataViewRepository personalDataViewRepository)
         {
             this.mapper = mapper;
-            this.personalDataRepository = personalDataRepository;
+            this.personalDataViewRepository = personalDataViewRepository;
         }
 
         public async Task<List<PersonalDataListDto>> Handle(GetPersonalDataListRequest request, CancellationToken cancellationToken)
         {
             // Query DB
-            var personalData = await this.personalDataRepository.GetPersonalDatasAsync();
+            var personalData = await this.personalDataViewRepository.GetPersonalDatasAsync();
 
             // mapping data
             var data = this.mapper.Map<List<PersonalDataListDto>>(personalData);

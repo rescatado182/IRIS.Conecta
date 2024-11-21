@@ -17,7 +17,7 @@ public class PersonalData : BaseEntity
     public DateOnly BirthDate { get; set; }
     public int BornCountryId { get; set; }
     public int BornStateId { get; set; }
-    public int BornCityId { get; set; }
+    public int BornCityId { get; set; }    
     public int ResidenceStateId { get; set; }
     public int ResidenceCityId { get; set; }
     public string? AddressResidence { get; set; }

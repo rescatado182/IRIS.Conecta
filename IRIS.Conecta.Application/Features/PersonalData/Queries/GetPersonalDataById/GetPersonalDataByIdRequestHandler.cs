@@ -5,21 +5,21 @@ using MediatR;
 
 namespace IRIS.Conecta.Application.Features.PersonalData.Queries.GetPersonalDataById
 {
-    public class GetPersonalDataByIdRequestHandler : IRequestHandler<GetPersonalDataByIdRequest, PersonalDataDto>
+    public class GetPersonalDataByIdRequestHandler : IRequestHandler<GetPersonalDataByIdRequest, GetPersonalDataDto>
     {
         private readonly IMapper _mapper;
-        private readonly IPersonalDataRepository _personalDataRepository;
+        private readonly IPersonalDataViewRepository _personalDataViewRepository;
 
-        public GetPersonalDataByIdRequestHandler(IMapper mapper, IPersonalDataRepository personalDataRepository)
+        public GetPersonalDataByIdRequestHandler(IMapper mapper, IPersonalDataViewRepository personalDataViewRepository)
         {
             _mapper = mapper;
-            _personalDataRepository = personalDataRepository;
+            _personalDataViewRepository = personalDataViewRepository;
         }
-        public async Task<PersonalDataDto> Handle(GetPersonalDataByIdRequest request, CancellationToken cancellationToken)
+        public async Task<GetPersonalDataDto> Handle(GetPersonalDataByIdRequest request, CancellationToken cancellationToken)
         {
-            var personalData = await _personalDataRepository.GetPersonalDataByIdAsync(request.Id);
+            var personalData = await _personalDataViewRepository.GetPersonalDataByIdAsync(request.Id);
 
-            return _mapper.Map<PersonalDataDto>(personalData);
+            return _mapper.Map<GetPersonalDataDto>(personalData);
         }
     }
 }
