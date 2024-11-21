@@ -16,7 +16,7 @@
             </div>
 
             <!-- Formulario de inicio de sesión -->
-        <TablerForm Model="@loginModel" OnValidSubmit="HandleLogin">
+        <TablerForm Model="@loginModel">
                 <div class="mb-3">
                     <label class="form-label">Correo Electrónico</label>
                     <InputText class="form-control" @bind-Value="loginModel.email" placeholder="Ingresa tu correo" />
@@ -37,7 +37,7 @@
                 </div>
 
                 <div class="text-end mt-4">
-                    <TabBlazor.Button BackgroundColor="TablerColor.Primary" Type="ButtonType.Button" Text="Iniciar Sesión" OnClick="HandleCreateRequest" Disabled="@isFormValid"  Icon="fa fa-sign-in" Class="px-4" />
+                    <TabBlazor.Button BackgroundColor="TablerColor.Primary" Type="ButtonType.Button" Text="Iniciar Sesión" OnClick="HandleCreateRequest" Disabled="!isFormValid"  Icon="fa fa-sign-in" Class="px-4" />
                 </div>
             </TablerForm>
         </CardBody>

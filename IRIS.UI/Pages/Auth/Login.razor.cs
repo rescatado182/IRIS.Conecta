@@ -8,6 +8,9 @@ using TabBlazor;
 using IRIS.Frontend.Repositories;
 using IRIS.UI.Services;
 using System.Text.Json;
+using IRIS.UI.Interfaces;
+using IRIS.UI.Icons;
+using IRIS.UI.Models.List;
 
 namespace IRIS.UI.Pages.Auth
 {
@@ -24,52 +27,22 @@ namespace IRIS.UI.Pages.Auth
         private ContentRect containerSize;
         private string widthMessage;
         private string heightMessage;
-        private bool isFormValid = true;
+
+        public EventCallback OnClose { get; set; }
+
         private EditContext editContext;
+
+        private bool isFormValid => !string.IsNullOrWhiteSpace(loginModel.email) &&
+                            !string.IsNullOrWhiteSpace(loginModel.password) &&
+                            new EmailAddressAttribute().IsValid(loginModel.email);
         protected override void OnInitialized()
         {
             // Inicializar el EditContext y enlazar el evento OnFieldChanged
             editContext = new EditContext(loginModel);
-            editContext.OnFieldChanged += ValidateForm;
-            ValidateForm(null, null); // Validar el formulario al inicio
-        }
-
-        private void ValidateForm(object? sender, FieldChangedEventArgs? e)
-        {
-            isFormValid = editContext.Validate(); // Valida el formulario completo
-        }
-        private async Task HandleLogin(EditContext context)
-        {
-            // Lógica básica de autenticación
-
-                var responseHttp = await Repository.PostAsync<LoginVM>("/api/auth/Login", loginModel);
-                if (responseHttp.Error)
-                {
-                    var message = await responseHttp.GetErrorMessageAsync();
-
-                    await ModalService.ShowDialogAsync(new DialogOptions
-                    {
-                        MainText = "Login Exitoso",
-                        SubText = $"Bienvenido!"
-                    });
-                    return;
-
-                }
-
-                //await LoginService.LoginAsync(responseHttp.Response.t);
-                //NavigationManager.NavigateTo("/");
-
-
-
-                await ModalService.ShowDialogAsync(new DialogOptions
-                {
-                    MainText = "Login Fallido",
-                    SubText = "Usuario o contraseña incorrectos."
-                });
-            
 
 
         }
+
 
         private void ElementResized(ResizeObserverEntry resizeObserverEntry)
         {
@@ -78,7 +51,14 @@ namespace IRIS.UI.Pages.Auth
 
         private async Task HandleCreateRequest()
         {
+
+
             var responseHttp = await Repository.PostAsync<LoginVM>("/api/auth/Login", loginModel);
+
+            if (!await ValidateLoginAsync())
+            { 
+                return;
+            }
 
             if (responseHttp.Error)
             {
@@ -109,6 +89,51 @@ namespace IRIS.UI.Pages.Auth
 
         }
 
+
+        private async Task<bool> ValidateLoginAsync()
+        {
+            var validationResults = await ValidateDataAsync();
+
+            if (validationResults.Any())
+            {
+                // Mostrar mensaje de éxito
+                await ModalService.ShowDialogAsync(new DialogOptions
+                {
+                    MainText = "Valida tus datos",
+                    SubText = $"Por favor ingresa tus datos para iniciar sesión",
+                    IconType = TablerIcons.Error_404,
+                    CancelText = "",
+                    StatusColor = TablerColor.Primary
+                });
+
+                // Invocar el evento OnClose si está definido
+                if (OnClose.HasDelegate)
+                {
+                    await OnClose.InvokeAsync();
+                }
+
+                return false;
+            }
+
+            return true;
+        }
+
+        public Task<IEnumerable<ValidationResult>> ValidateDataAsync()
+        {
+            var results = new List<ValidationResult>();
+            var validationContext = new ValidationContext(loginModel, null, null);
+            Validator.TryValidateObject(loginModel, validationContext, results, true);
+
+            if (loginModel is IValidatableObject validatableModel)
+                results.AddRange(validatableModel.Validate(validationContext));
+
+            foreach (var validationResult in results)
+            {
+                Console.WriteLine(validationResult.ErrorMessage);
+            }
+
+            return Task.FromResult<IEnumerable<ValidationResult>>(results);
+        }
 
         private void WidthResized(ResizeObserverEntry resizeObserverEntry)
         {
