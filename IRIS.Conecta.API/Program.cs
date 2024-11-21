@@ -49,7 +49,7 @@ var app = builder.Build();
 
 app.UseMiddleware<ExceptionMiddleware>();
 
-using (var scope = app.Services.CreateScope())
+/*using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<IRISConectaDatabaseContext>();
     context.Database.Migrate();
@@ -64,7 +64,7 @@ using (var scope = app.Services.CreateScope())
         // Log the issue or apply migrations if in a dev environment
         context.Database.Migrate();
     }
-}
+}*/
 
 // Configure the HTTP request pipeline.
 //if (app.Environment.IsDevelopment())
