@@ -6,10 +6,9 @@
     },
     "mssql1": {
       "secretStore": "AzureAppSettings",
-      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourcegroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/irisconectaapidbdbserver/databases/IRISConectaAPIdb",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourcegroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/irisconectaitmapidbdbserver/databases/IRISConectaITMAPIdb",
       "type": "mssql.azure",
-      "connectionId": "ConnectionStrings:IRISDatabaseConnectionString",
-      "dynamicId": null
+      "connectionId": "ConnectionStrings:IRISDatabaseConnectionString"
     }
   }
 }
