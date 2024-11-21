@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Components;
 using TabBlazor.Services;
 using TabBlazor;
 using DocumentFormat.OpenXml.ExtendedProperties;
+using IRIS.UI.Models;
+using IRIS.UI.Pages.BL.Tickets.Shared;
 
 namespace IRIS.UI.Pages.BL.Tickets.SearchTickets
 {
@@ -35,11 +37,18 @@ namespace IRIS.UI.Pages.BL.Tickets.SearchTickets
 
         private bool isLoading = false;
 
+        public PersonalDataDetailVM personalDataTicket { get; set; } = null!;
+
+        public AcademyDataDetailVM academicDataTicket { get; set; } = null!;
+
+        public ProgramVM program { get; set; } = null!;
+
         protected override async Task OnInitializedAsync()
         {
             isLoading = true;
             await GetDetailTicket();
-
+            await GetListPersonalDataTicketAsync();
+            await GetListAcademicDataTicketAsync();
         }
 
         private async Task RefreshTicketDetails()
@@ -104,6 +113,51 @@ namespace IRIS.UI.Pages.BL.Tickets.SearchTickets
             ticket.UserName = user.FullName;
             return true;
         }
+
+        private async Task<bool> GetListPersonalDataTicketAsync()
+        {
+            var responseHttp = await Repository.GetAsync<PersonalDataDetailVM>($"/api/personaldata/{ticket.personalDataId}");
+            if (responseHttp.Error || responseHttp.Response == null)
+            {
+                var message = await responseHttp.GetErrorMessageAsync();
+                return false;
+            }
+
+            personalDataTicket = responseHttp.Response;
+            return true;
+        }
+
+        private async Task<bool> GetListAcademicDataTicketAsync()
+        {
+            var responseHttp = await Repository.GetAsync<AcademyDataDetailVM>($"/api/academicdata/{ticket.academicDataId}");
+
+
+            if (responseHttp.Error || responseHttp.Response == null)
+            {
+                var message = await responseHttp.GetErrorMessageAsync();
+                return false;
+            }
+
+            academicDataTicket = responseHttp.Response;
+            await GetProgramIdAsync();
+            return true;
+        }
+
+
+        //consultar programid
+        private async Task<bool> GetProgramIdAsync()
+        {
+            var responseHttp = await Repository.GetAsync<ProgramVM>($"/api/programs/{academicDataTicket.ProgramId}");
+            if (responseHttp.Error)
+            {
+                var message = await responseHttp.GetErrorMessageAsync();
+                return false;
+            }
+
+            program = responseHttp.Response;
+            return true;
+        }
+
 
         private TabBlazor.OffcanvasOptions options = new()
         {

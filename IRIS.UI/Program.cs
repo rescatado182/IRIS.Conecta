@@ -50,8 +50,8 @@ namespace IRIS.UI
             builder.Services.AddSingleton<TicketMovilityRequest>();
 
 
-                        //builder.Services.AddSingleton(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7225/") });
-                        builder.Services.AddSingleton(sp => new HttpClient { BaseAddress = new Uri("https://irisconectaitmapi.azurewebsites.net/") });
+                        builder.Services.AddSingleton(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7225/") });
+                        //builder.Services.AddSingleton(sp => new HttpClient { BaseAddress = new Uri("https://irisconectaitmapi.azurewebsites.net/") });
  
 
             builder.Services.AddScoped<SearchService>();
