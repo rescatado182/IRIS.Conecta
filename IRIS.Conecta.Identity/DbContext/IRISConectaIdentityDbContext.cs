@@ -11,9 +11,9 @@ namespace IRIS.Conecta.Identity.DbContext
 {
     public class IRISConectaIdentityDbContext : IdentityDbContext<ApplicationUser>
     {
-        public IRISConectaIdentityDbContext(DbContextOptions<IRISConectaIdentityDbContext> options) 
-            : base(options) 
-        {            
+        public IRISConectaIdentityDbContext(DbContextOptions<IRISConectaIdentityDbContext> options)
+            : base(options)
+        {
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -23,6 +23,7 @@ namespace IRIS.Conecta.Identity.DbContext
             builder.ApplyConfigurationsFromAssembly(typeof(IRISConectaIdentityDbContext).Assembly);
 
         }        
+
 
     }
 }

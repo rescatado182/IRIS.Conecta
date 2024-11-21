@@ -23,6 +23,7 @@ namespace IRIS.UI.Pages.BL.Actions
 
         [Parameter]
         public bool SendEmail { get; set; }
+        [Parameter] public string userId { get; set; }
 
         [Parameter] public int ticketId { get; set; }
 
@@ -42,44 +43,41 @@ namespace IRIS.UI.Pages.BL.Actions
                     IconType = TablerIcons.Alert_circle,
                     StatusColor = TablerColor.Red,
                     CancelText = ""
-
                 });
                 return;
             }
 
-
-
             try
             {
-                // Crear el objeto de notificación
                 var notification = new NotificationVM
                 {
                     Message = CommentText,
                     SendEmail = true,
                     TicketId = ticketId,
-                    NotificationType = NotificationType.Notification.ToString(), // Tipo de notificación
+                    ManagerUserId = userId,
+                    NotificationType = NotificationType.Notification.ToString(),
                     DateCreated = DateTime.Now
                 };
 
-                // Enviar la notificación
                 await NotificationService.SendNotificationAsync(notification);
 
                 // Mostrar modal de éxito
                 await Modal.ShowDialogAsync(new DialogOptions
                 {
-                    MainText = "Respuesta Exitosa",
-                    SubText = $"Has respondido la solicitud {ticketId}. Le enviaremos la información por correo al solicitante.",
+                    MainText = "Comentario Exitoso",
+                    SubText = "Enviaremos tu comentario por correo al usuario de la solicitud.",
                     IconType = TablerIcons.Message,
                     StatusColor = TablerColor.Primary,
                     CancelText = "",
                     OkText = "Cerrar"
                 });
 
-                // Limpia el formulario después del envío exitoso
+                // Limpiar y cerrar
                 CommentText = string.Empty;
                 SendByEmail = false;
 
-                // Llama al evento de cierre si se ha definido
+                // Cierra este modal y cualquier modal principal si aplica
+                Modal.Close();
                 if (OnClose.HasDelegate)
                 {
                     await OnClose.InvokeAsync();
@@ -87,15 +85,13 @@ namespace IRIS.UI.Pages.BL.Actions
             }
             catch (Exception ex)
             {
-                // Mostrar modal de error
                 await Modal.ShowDialogAsync(new DialogOptions
                 {
                     MainText = "Error",
                     SubText = $"Error al enviar el comentario: {ex.Message}",
                     IconType = TablerIcons.Alert_circle,
                     StatusColor = TablerColor.Red,
-                    CancelText = "",
-
+                    CancelText = ""
                 });
             }
             finally
@@ -103,6 +99,7 @@ namespace IRIS.UI.Pages.BL.Actions
                 IsSubmitting = false;
             }
         }
+
 
     }
 }

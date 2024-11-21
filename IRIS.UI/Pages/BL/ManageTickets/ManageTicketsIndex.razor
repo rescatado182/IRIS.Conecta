@@ -5,10 +5,10 @@
 <div class="page-subheader">Administra y gestiona las solicitudes pendientes y completadas.</div>
 
 
-@if (tickets is null)
+
+@if (isLoading)
 {
     <Loading></Loading>
-    @* <Progress Color="TablerColor.Blue" Indeterminate /> *@
 }
 else{
 

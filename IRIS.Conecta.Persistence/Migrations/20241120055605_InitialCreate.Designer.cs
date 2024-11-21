@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IRIS.Conecta.Persistence.Migrations
 {
     [DbContext(typeof(IRISConectaDatabaseContext))]
-    [Migration("20241120031422_TicketsData3")]
-    partial class TicketsData3
+    [Migration("20241120055605_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -754,6 +754,9 @@ namespace IRIS.Conecta.Persistence.Migrations
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ManagerUserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("Message")
                         .IsRequired()
                         .HasMaxLength(300)
@@ -777,6 +780,8 @@ namespace IRIS.Conecta.Persistence.Migrations
 
                     b.HasIndex(new[] { "Id" }, "IX_Notifications_Id")
                         .IsUnique();
+
+                    b.HasIndex(new[] { "ManagerUserId" }, "IX_Notifications_ManagerUserId");
 
                     b.HasIndex(new[] { "NotificationType" }, "IX_Notifications_NotificationType");
 

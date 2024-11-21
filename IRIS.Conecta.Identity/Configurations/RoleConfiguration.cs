@@ -39,7 +39,7 @@ namespace IRIS.Conecta.Identity.Configurations
                     Id = "4",
                     Name = "Head of Department",
                     NormalizedName = "HEAD_OF_DEPARTMENT",
-                }                
+                }
             );
         }
     }

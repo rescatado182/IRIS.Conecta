@@ -33,9 +33,11 @@ namespace IRIS.UI.Pages.BL.Tickets.SearchTickets
 
         [Parameter] public int ticketId { get; set; }
 
+        private bool isLoading = false;
+
         protected override async Task OnInitializedAsync()
         {
-
+            isLoading = true;
             await GetDetailTicket();
 
         }
@@ -52,7 +54,7 @@ namespace IRIS.UI.Pages.BL.Tickets.SearchTickets
             if (responseHttp.Error)
             {
                 var message = await responseHttp.GetErrorMessageAsync();
-
+                isLoading = false;
 
                 return false;
             }

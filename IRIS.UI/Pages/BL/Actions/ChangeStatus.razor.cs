@@ -98,16 +98,19 @@ namespace IRIS.UI.Pages.BL.Actions
 
         private async Task OnSubmit()
         {
-
+            try
+            {
                 // Llamada a la API para cambiar el estado
                 await ChangeStatusAsync(ticketId, userId, ManagerUserId);
 
-
+                // Actualiza el estado actual del ticket
                 CurrentStatusText = CurrentStatusDisplayNameText;
 
+                // Envía la notificación
                 await SendNotification();
 
-            await ModalService.ShowDialogAsync(new DialogOptions
+                // Mostrar mensaje de confirmación
+                await ModalService.ShowDialogAsync(new DialogOptions
                 {
                     MainText = "Cambio de Estado",
                     SubText = $"Has cambiado el estado a {SelectedStatus.GetDisplayName()}!",
@@ -115,11 +118,32 @@ namespace IRIS.UI.Pages.BL.Actions
                     CancelText = "",
                     StatusColor = TablerColor.Primary
                 });
-                 await OnClose.InvokeAsync();
-            return;
 
-
+                // Invocar el evento OnClose si está definido
+                if (OnClose.HasDelegate)
+                {
+                    await OnClose.InvokeAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                // Manejo de errores con un mensaje de modal
+                await ModalService.ShowDialogAsync(new DialogOptions
+                {
+                    MainText = "Error",
+                    SubText = $"Ocurrió un error al cambiar el estado: {ex.Message}",
+                    IconType = TablerIcons.Alert_circle,
+                    CancelText = "",
+                    StatusColor = TablerColor.Red
+                });
+            }
+            finally
+            {
+                // Cerrar el modal principal
+                ModalService.Close();
+            }
         }
+
 
         private async Task SendNotification()
         {

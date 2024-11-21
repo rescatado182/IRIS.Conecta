@@ -97,13 +97,12 @@ namespace IRIS.UI.Pages.BL.Actions
 
         private async Task OnSubmitAsync()
         {
-
-
             if (CurrentManagerId != selectedManager.Id)
             {
-
+                // Cambiar el gerente del ticket
                 await ChangeManagerAsync(ticketId, userId, selectedManager.Id, CurrentStatus);
 
+                // Mostrar mensaje de confirmación
                 await ModalService.ShowDialogAsync(new DialogOptions
                 {
                     MainText = "Solicitud Escalada",
@@ -113,12 +112,18 @@ namespace IRIS.UI.Pages.BL.Actions
                     StatusColor = TablerColor.Primary
                 });
 
-                await OnClose.InvokeAsync();
+                // Cerrar este modal
+                ModalService.Close();
+
+                // Invocar la acción de cierre definida en OnClose
+                if (OnClose.HasDelegate)
+                {
+                    await OnClose.InvokeAsync();
+                }
                 return;
-
-
             }
         }
+
         private void LogJsonPayload(object data)
         {
             string jsonString = JsonSerializer.Serialize(data, new JsonSerializerOptions { WriteIndented = true });

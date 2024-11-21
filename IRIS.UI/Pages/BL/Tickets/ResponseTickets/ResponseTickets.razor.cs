@@ -30,24 +30,46 @@ namespace IRIS.UI.Pages.BL.Tickets.ResponseTickets
 
         private async Task OnSubmit()
         {
-
-
-            await ResponseTicketAsync();
-
-
-            await ModalService.ShowDialogAsync(new DialogOptions
+            try
             {
-                MainText = "Respuesta Existosa",
-                SubText = $"Has respondido la solicitud {ticket.Id}. Le enviaremos la información por correo al solicitante!",
-                IconType = TablerIcons.Message,
-                CancelText = "",
-                StatusColor = TablerColor.Primary
-            });
-            await OnClose.InvokeAsync();
-            return;
+                // Ejecutar la respuesta del ticket
+                await ResponseTicketAsync();
 
+                // Mostrar mensaje de éxito
+                await ModalService.ShowDialogAsync(new DialogOptions
+                {
+                    MainText = "Respuesta Exitosa",
+                    SubText = $"Has respondido la solicitud {ticket.Id}. Le enviaremos la información por correo al solicitante!",
+                    IconType = TablerIcons.Message,
+                    CancelText = "",
+                    StatusColor = TablerColor.Primary
+                });
 
+                // Invocar el evento OnClose si está definido
+                if (OnClose.HasDelegate)
+                {
+                    await OnClose.InvokeAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                // Manejo de errores: mostrar mensaje de error
+                await ModalService.ShowDialogAsync(new DialogOptions
+                {
+                    MainText = "Error",
+                    SubText = $"Ocurrió un error al procesar la solicitud: {ex.Message}",
+                    IconType = TablerIcons.Alert_circle,
+                    CancelText = "",
+                    StatusColor = TablerColor.Red
+                });
+            }
+            finally
+            {
+                // Cerrar el modal principal
+                ModalService.Close();
+            }
         }
+
 
         private ChangeStatusVM CreateChangeStatus(int? idTicket, string? userId, string? ManagerUserId)
         {

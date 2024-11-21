@@ -237,10 +237,11 @@ namespace IRIS.UI.Pages.BL.Tickets.RequestTickets.SecondGrader
             {
                 Title = "",
                 Description = "",
-                RequestTypeId = 2,
+                RequestTypeId = 3,
                 Status = TicketsStatus.Open,
                 UserId = userId,
-                CreateDate = DateOnly.FromDateTime(DateTime.Now)
+                ManagerUserId = "1002",
+                DateCreated = (DateTime.Now)
 
             };
 
