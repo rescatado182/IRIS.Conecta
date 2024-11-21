@@ -56,37 +56,65 @@ namespace IRIS.UI.Pages.Auth
             var responseHttp = await Repository.PostAsync<LoginVM>("/api/auth/Login", loginModel);
 
             if (!await ValidateLoginAsync())
-            { 
+            {
                 return;
             }
 
             if (responseHttp.Error)
             {
-                var message = await responseHttp.GetErrorMessageAsync();
-                Console.WriteLine(message);
-
-            }
-            var resultContent = responseHttp.HttpResponseMessage.Content.ReadAsStringAsync().Result;
-
-            using (var jsonDocument = JsonDocument.Parse(resultContent))
-            {
-                var token = jsonDocument.RootElement.GetProperty("token").ToString();
-                await LoginService.LoginAsync(token);
-                if (string.IsNullOrEmpty(token))
+                // si status code es 400 dcir usuario o contraseña invalida
+                if (responseHttp.HttpResponseMessage.StatusCode == System.Net.HttpStatusCode.BadRequest || responseHttp.HttpResponseMessage.StatusCode == System.Net.HttpStatusCode.NotFound)
                 {
                     await ModalService.ShowDialogAsync(new DialogOptions
                     {
                         MainText = "Inicio de Sesión Fallido",
-                        SubText = "Usuario o contraseña incorrectos."
+                        SubText = "Usuario o contraseña incorrectos.",
+                        IconType = TablerIcons.Message,
+                        CancelText = "",
+                        StatusColor = TablerColor.Primary
                     });
+                    return;
                 }
                 else
                 {
-                    await LoginService.LoginAsync(token);
-                    NavigationManager.NavigateTo("/");
-                }
-            }
 
+                    var message = await responseHttp.GetErrorMessageAsync();
+                    Console.WriteLine(message);
+
+                }
+                var resultContent = responseHttp.HttpResponseMessage.Content.ReadAsStringAsync().Result;
+                if (responseHttp.Error)
+                {
+                    var message = await responseHttp.GetErrorMessageAsync();
+                    Console.WriteLine(message);
+
+                }
+
+
+                using (var jsonDocument = JsonDocument.Parse(resultContent))
+                {
+                    var token = jsonDocument.RootElement.GetProperty("token").ToString();
+                    await LoginService.LoginAsync(token);
+                    if (string.IsNullOrEmpty(token))
+                    {
+                        await ModalService.ShowDialogAsync(new DialogOptions
+                        {
+                            MainText = "Inicio de Sesión Fallido",
+                            SubText = "Usuario o contraseña incorrectos.",
+                            IconType = TablerIcons.Message,
+                            CancelText = "",
+                            StatusColor = TablerColor.Primary
+                        });
+
+
+} else
+                    {
+                        await LoginService.LoginAsync(token);
+                        NavigationManager.NavigateTo("/");
+                    }
+                }
+
+            }
         }
 
 
