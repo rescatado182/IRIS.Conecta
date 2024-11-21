@@ -240,8 +240,7 @@ namespace IRIS.UI.Pages.BL.Tickets.RequestTickets.Homologation
                 RequestTypeId = 2,
                 Status = TicketsStatus.Open,
                 UserId = userId,
-                ManagerUserId = "1002",
-                DateCreated = (DateTime.Now)
+                ManagerUserId = "1002"
 
             };
 

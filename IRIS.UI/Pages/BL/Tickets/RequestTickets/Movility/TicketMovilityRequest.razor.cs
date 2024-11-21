@@ -317,8 +317,7 @@ namespace IRIS.UI.Pages.BL.Tickets.RequestTickets.Movility
                 RequestTypeId = 1,
                 Status = TicketsStatus.Open,
                 UserId = userId,
-                ManagerUserId = "1002",
-                DateCreated = DateTime.Now
+                ManagerUserId = "1002"
 
             };
 

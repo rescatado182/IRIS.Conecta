@@ -50,6 +50,7 @@ namespace IRIS.UI.Pages.BL.ManageTickets
 
             tickets = responseHttp.Response;
 
+            if (tickets.Count == 0) isLoading = false;
 
             if (!await GetListManagersAsync())
                 return false;

@@ -13,6 +13,8 @@ namespace IRIS.Conecta.Identity.Configurations
     {
         public void Configure(EntityTypeBuilder<IdentityRole> builder)
         {
+            builder.ToTable(name: "Identity.Roles");
+
             builder.HasData(
                 new IdentityRole
                 {

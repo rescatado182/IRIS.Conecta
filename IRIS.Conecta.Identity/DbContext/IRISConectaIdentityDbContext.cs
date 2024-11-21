@@ -52,7 +52,7 @@ namespace IRIS.Conecta.Identity.DbContext
 
             builder.ApplyConfigurationsFromAssembly(typeof(IRISConectaIdentityDbContext).Assembly);
 
-        }
+        }        
 
 
     }
