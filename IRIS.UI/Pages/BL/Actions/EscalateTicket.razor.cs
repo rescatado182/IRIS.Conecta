@@ -1,10 +1,14 @@
+using DocumentFormat.OpenXml.Spreadsheet;
 using IRIS.Frontend.Repositories;
 using IRIS.UI.Data;
 using IRIS.UI.Icons;
 using IRIS.UI.Models;
+using IRIS.UI.Models.Enums;
 using IRIS.UI.Models.List;
+using IRIS.UI.Models.Save;
 using IRIS.UI.Models.Update;
 using IRIS.UI.Pages.BL.Tickets.RequestTickets.Movility;
+using IRIS.UI.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.IdentityModel.Tokens;
 using System.Text.Json;
@@ -18,7 +22,9 @@ namespace IRIS.UI.Pages.BL.Actions
     public partial class EscalateTicket
     {
 
+        [Inject] private INotificationService NotificationService { get; set; }
 
+        [Inject] public IModalService Modal { get; set; }
         [Inject] private IRepository Repository { get; set; } = null!;
         [Inject] IModalService ModalService { get; set; }
 
@@ -119,6 +125,33 @@ namespace IRIS.UI.Pages.BL.Actions
                 if (OnClose.HasDelegate)
                 {
                     await OnClose.InvokeAsync();
+                }
+
+                try
+                {
+                    var notification = new NotificationVM
+                    {
+                        Message = $"Solicitud escalada a {selectedManager.FullName}!",
+                        SendEmail = false,
+                        TicketId = ticketId,
+                        ManagerUserId = userId,
+                        NotificationType = NotificationType.Notification.ToString(),
+                        DateCreated = DateTime.Now
+                    };
+
+                    await NotificationService.SendNotificationAsync(notification);
+
+
+                    // Cierra este modal y cualquier modal principal si aplica
+                    Modal.Close();
+                    if (OnClose.HasDelegate)
+                    {
+                        await OnClose.InvokeAsync();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
                 }
                 return;
             }

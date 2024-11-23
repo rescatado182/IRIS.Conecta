@@ -2,6 +2,15 @@
 
 <div class="page-header">Detalle de la Solicitud @ticketId</div>
 
+<style>
+    .page-header {
+        font-size: 1.8rem;
+        font-weight: bold;
+        margin-bottom: 10px;
+        color: #343a40;
+    }
+
+</style>
 
 @if (ticket is null)
 {
@@ -94,11 +103,11 @@ else{
                 <DataGridItem Title="Nombre completo">@personalDataTicket.FullName</DataGridItem>
                 <DataGridItem Title="Documento Identidad">@personalDataTicket.DocumentNumber</DataGridItem>
                 <DataGridItem Title="Tipo Documento">@personalDataTicket.DocumentType</DataGridItem>
-                <DataGridItem Title="País de nacimiento">@personalDataTicket.BornCityId</DataGridItem>
+                @* <DataGridItem Title="País de nacimiento">@personalDataTicket.BornCityId</DataGridItem>
                 <DataGridItem Title="Departamento de nacimiento">@personalDataTicket.BornStateId</DataGridItem>
                 <DataGridItem Title="Ciudad de nacimiento">@personalDataTicket.BornCityId</DataGridItem>
                 <DataGridItem Title="Departamento de residencia">@personalDataTicket.ResidenceStateId</DataGridItem>
-                <DataGridItem Title="Ciudad de residencia">@personalDataTicket.ResidenceCityId</DataGridItem>
+                <DataGridItem Title="Ciudad de residencia">@personalDataTicket.ResidenceCityId</DataGridItem> *@
                 <DataGridItem Title="Dirección residencia">@personalDataTicket.AddressResidence</DataGridItem>
                 <DataGridItem Title="Correo personal">@personalDataTicket.PersonalEmail</DataGridItem>
                 <DataGridItem Title="Teléfono fijo">@personalDataTicket.Phone</DataGridItem>
@@ -117,7 +126,7 @@ else{
                     <DataGrid>
 
 
-                <DataGridItem Title="Programa">@academicDataTicket.ProgramId</DataGridItem>
+                <DataGridItem Title="Programa">@program.ProgramName</DataGridItem>
                 <DataGridItem Title="Proyecto de investigación (S/A)">@academicDataTicket.ResearchProject</DataGridItem>
                 <DataGridItem Title="Promedio crédito">@academicDataTicket.AverageCredit</DataGridItem>
                  <DataGridItem Title="Tipo de formación">@academicDataTicket.ProgramType.ToString()</DataGridItem> 

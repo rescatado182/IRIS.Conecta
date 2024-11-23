@@ -43,6 +43,8 @@ namespace IRIS.UI.Pages.BL.ManageTickets
 
         public AcademyDataDetailVM academicDataTicket { get; set; } = null!;
 
+        public ProgramVM program { get; set; } = null!;
+
 
         [Parameter] public int ticketId { get; set; }
 
@@ -80,6 +82,7 @@ namespace IRIS.UI.Pages.BL.ManageTickets
 
             return true;
         }
+
 
         private async Task<bool> GetListManagersAsync()
         {
@@ -140,9 +143,24 @@ namespace IRIS.UI.Pages.BL.ManageTickets
             }
 
             academicDataTicket = responseHttp.Response;
+            await GetProgramIdAsync();
             return true;
         }
 
+
+        //consultar programid
+        private async Task<bool> GetProgramIdAsync()
+        {
+            var responseHttp = await Repository.GetAsync<ProgramVM>($"/api/programs/{academicDataTicket.ProgramId}");
+            if (responseHttp.Error)
+            {
+                var message = await responseHttp.GetErrorMessageAsync();
+                return false;
+            }
+
+            program = responseHttp.Response;
+            return true;
+        }
 
 
 

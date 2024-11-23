@@ -68,19 +68,18 @@ else
         <CardBody>
             <DataGrid>
 
-@*                 <DataGridItem Title="Nombre completo">@ticket.FullName</DataGridItem>
-                <DataGridItem Title="Documento Identidad">@ticket.DocumentNumber</DataGridItem>
-                <DataGridItem Title="Tipo Documento">@ticket.DocumentType</DataGridItem>
-                <DataGridItem Title="País de nacimiento">@ticket.BornCountry</DataGridItem>
-                <DataGridItem Title="Departamento de nacimiento">@ticket.BornState</DataGridItem>
-                <DataGridItem Title="Ciudad de nacimiento">@ticket.BornCity</DataGridItem>
-                <DataGridItem Title="Departamento de residencia">@ticket.ResidenceState</DataGridItem>
-                <DataGridItem Title="Ciudad de residencia">@ticket.ResidenceCity</DataGridItem>
-                <DataGridItem Title="Dirección residencia">@ticket.BornCity</DataGridItem>
-                <DataGridItem Title="Correo personal">@ticket.Email</DataGridItem>
-                <DataGridItem Title="Teléfono fijo">@ticket.Phone</DataGridItem>
-                <DataGridItem Title="Teléfono celular">@ticket.Cellphone</DataGridItem>
- *@
+                <DataGridItem Title="Nombre completo">@personalDataTicket.FullName</DataGridItem>
+                <DataGridItem Title="Documento Identidad">@personalDataTicket.DocumentNumber</DataGridItem>
+                <DataGridItem Title="Tipo Documento">@personalDataTicket.DocumentType</DataGridItem>
+                @* <DataGridItem Title="País de nacimiento">@personalDataTicket.BornCityId</DataGridItem>
+            <DataGridItem Title="Departamento de nacimiento">@personalDataTicket.BornStateId</DataGridItem>
+            <DataGridItem Title="Ciudad de nacimiento">@personalDataTicket.BornCityId</DataGridItem>
+            <DataGridItem Title="Departamento de residencia">@personalDataTicket.ResidenceStateId</DataGridItem>
+            <DataGridItem Title="Ciudad de residencia">@personalDataTicket.ResidenceCityId</DataGridItem> *@
+                <DataGridItem Title="Dirección residencia">@personalDataTicket.AddressResidence</DataGridItem>
+                <DataGridItem Title="Correo personal">@personalDataTicket.PersonalEmail</DataGridItem>
+                <DataGridItem Title="Teléfono fijo">@personalDataTicket.Phone</DataGridItem>
+                <DataGridItem Title="Teléfono celular">@personalDataTicket.Cellphone</DataGridItem>
 
             </DataGrid>
         </CardBody>
