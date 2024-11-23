@@ -67,13 +67,13 @@ namespace IRIS.Conecta.Domain.Entities.Tickets
         #endregion
 
         #region Relationships
-        public required RequestType RequestType { get; set; }
+        public RequestType? RequestType { get; set; }
 
-        public virtual required PersonalData PersonalData { get; set; }
+        public virtual PersonalData? PersonalData { get; set; }
 
-        public required AcademicData AcademicData { get; set; }
+        public AcademicData? AcademicData { get; set; }
 
-        public required ICollection<Notifications> Notifications { get; set; }
+        public ICollection<Notifications> Notifications { get; set; } = [];
 
         #endregion
     }

@@ -29,6 +29,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IRIS.Conecta.Identity", "IR
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IRIS.Conecta.Infrastructure", "IRIS.Conecta.Infrastructure\IRIS.Conecta.Infrastructure.csproj", "{DC510C18-49A6-4E9D-9CF4-59B0D9887C6C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "text", "text", "{02535599-9F38-438E-B6C7-A7D995DBA0AF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IRIS.Conecta.Application.UnitTests", "IRIS.Conecta.Application.UnitTests\IRIS.Conecta.Application.UnitTests.csproj", "{7BD4FD14-3EA5-43AC-854A-9BD3AC572D40}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -67,6 +71,10 @@ Global
 		{DC510C18-49A6-4E9D-9CF4-59B0D9887C6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DC510C18-49A6-4E9D-9CF4-59B0D9887C6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DC510C18-49A6-4E9D-9CF4-59B0D9887C6C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7BD4FD14-3EA5-43AC-854A-9BD3AC572D40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BD4FD14-3EA5-43AC-854A-9BD3AC572D40}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BD4FD14-3EA5-43AC-854A-9BD3AC572D40}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BD4FD14-3EA5-43AC-854A-9BD3AC572D40}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -84,6 +92,7 @@ Global
 		{4A6A2D3A-26B1-4D4A-8074-3D27001699BB} = {CFC273EB-8CEF-4024-8D51-2908B65D83C8}
 		{F24948AD-2A38-49BB-BE23-EC900CD58468} = {E207C9F6-B3EF-470D-866E-ACDE28E1737B}
 		{DC510C18-49A6-4E9D-9CF4-59B0D9887C6C} = {E207C9F6-B3EF-470D-866E-ACDE28E1737B}
+		{7BD4FD14-3EA5-43AC-854A-9BD3AC572D40} = {02535599-9F38-438E-B6C7-A7D995DBA0AF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A369336A-F3C6-4D8F-A635-02D69F7AF6E5}
